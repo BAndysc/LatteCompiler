@@ -59,7 +59,6 @@
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\FunctionDefinition.cs" />
     <Compile Include="Models\IEnvironment.cs" />
-    <Compile Include="Models\IFileSource.cs" />
     <Compile Include="Models\IFunctionDefinition.cs" />
     <Compile Include="Models\IVariableDefinition.cs" />
     <Compile Include="Models\IVariableEnvironment.cs" />
