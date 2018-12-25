@@ -12,10 +12,13 @@ namespace LatteTypeChecker.Visitors
         private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
 
+        private readonly LatteExpressionTypeEvaluator expressionEvaluator;
+        
         public StatementTypeChecker(IVariableEnvironment variables, IEnvironment functions)
         {
             this.variables = variables;
             this.functions = functions;
+            expressionEvaluator = new LatteExpressionTypeEvaluator(variables, functions);
         }
 
         public override object Visit(IEmptyNode node)
@@ -34,15 +37,23 @@ namespace LatteTypeChecker.Visitors
 
         public override object Visit(IDeclarationNode node)
         {
-            var latteType = node.Type;
+            var declarationType = node.Type;
 
             foreach (var item in node.Declarations)
             {
-                var variableDefinition = new VariableDefinition(item.Name, latteType);
+                var variableDefinition = new VariableDefinition(item.Name, declarationType);
 
                 if (!variables.CanRedefine(variableDefinition))
                 {
                     throw new VariableRedefinitionException(variables[variableDefinition.Name], variableDefinition, node.FilePlace);
+                }
+
+                if (item.Value != null)
+                {
+                    var itemValueType = expressionEvaluator.Visit(item.Value);
+                    
+                    if (itemValueType != declarationType)
+                        throw new VariableDeclarationTypeMismatch(variableDefinition, itemValueType, node.FilePlace);
                 }
                 
                 variables.Define(variableDefinition);
@@ -53,7 +64,7 @@ namespace LatteTypeChecker.Visitors
 
         public override object Visit(IAssignmentNode node)
         {
-            var type = new LatteExpressionTypeEvaluator(variables, functions).Visit(node.Value);
+            var type = expressionEvaluator.Visit(node.Value);
             
             var variable = new VariableDefinition(node.Variable, type);
             
@@ -121,7 +132,7 @@ namespace LatteTypeChecker.Visitors
 
         public override object Visit(IExpressionStatementNode nodeNode)
         {
-            new LatteExpressionTypeEvaluator(variables, functions).Visit(nodeNode.Expression);
+            expressionEvaluator.Visit(nodeNode.Expression);
             return null;
         }
     }

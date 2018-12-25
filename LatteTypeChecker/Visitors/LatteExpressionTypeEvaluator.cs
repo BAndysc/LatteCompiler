@@ -39,6 +39,9 @@ namespace LatteTypeChecker.Visitors
 
         public override LatteType Visit(IVariableNode node)
         {
+            if (!variables.IsDefined(node.Variable))
+                throw new UndeclaredVariableAnyTypeException(node.Variable, node.FilePlace);
+            
             return variables[node.Variable].Type;
         }
 

@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\TypeMismatchException.cs" />
     <Compile Include="Exceptions\UndeclaredFunctionException.cs" />
     <Compile Include="Exceptions\UndeclaredVariableException.cs" />
+    <Compile Include="Exceptions\VariableDeclarationTypeMismatch.cs" />
     <Compile Include="Exceptions\VariableRedefinitionException.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\FunctionDefinition.cs" />
