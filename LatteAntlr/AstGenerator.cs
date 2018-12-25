@@ -23,7 +23,14 @@ namespace LatteAntlr
             
             parser.BuildParseTree = true;
 
-            return new ProgramGenerator().Visit(parser.program());
+            parser.ErrorHandler = new BailErrorStrategy();
+            
+            IProgram program = new ProgramGenerator().Visit(parser.program());
+
+            if (parser.NumberOfSyntaxErrors > 0)
+                program = null;
+            
+            return program;
         }
     }
 }

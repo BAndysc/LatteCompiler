@@ -89,13 +89,16 @@ namespace LatteTypeChecker.Visitors
             var left = Visit(node.Left);
             var right = Visit(node.Right);
 
-            if (left != LatteType.Int)
-                throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int);
+            if (left != LatteType.Int && left != LatteType.String)
+                throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int, LatteType.String);
 
-            if (right != LatteType.Int)
-                throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);
+            if (right != LatteType.Int && right != LatteType.String)
+                throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
             
-            return LatteType.Int;
+            if (left != right)
+                throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
+            
+            return left;
         }
 
         public override LatteType Visit(ICompareNode node)
@@ -103,12 +106,23 @@ namespace LatteTypeChecker.Visitors
             var left = Visit(node.Left);
             var right = Visit(node.Right);
 
-            if (left != LatteType.Int)
-                throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int);
+            if (node.Operator == RelOperator.Equals || node.Operator == RelOperator.NotEquals)
+            {
+                if (left != LatteType.Int && left != LatteType.Bool)
+                    throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int, LatteType.Bool);
 
-            if (right != LatteType.Int)
-                throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);
-            
+                if (right != LatteType.Int && right != LatteType.Bool)
+                    throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.Bool);
+            }
+            else
+            {
+                if (left != LatteType.Int)
+                    throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int);
+
+                if (right != LatteType.Int)
+                    throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
+            }
+                        
             return LatteType.Bool;
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using LatteBase;
 using LatteBase.AST;
@@ -14,9 +14,14 @@ namespace LatteTypeChecker
     {
         private readonly IEnvironment environment;
 
-        public TypeChecker() : this(new Environment())
+        public TypeChecker()
         {
-            
+            this.environment = new Environment();
+            environment.Define(new FunctionDefinition(LatteType.Void, "printInt", new List<LatteType>(){LatteType.Int}, new List<string>(){"number"}));
+            environment.Define(new FunctionDefinition(LatteType.Void, "printString", new List<LatteType>(){LatteType.String}, new List<string>(){"text"}));
+            environment.Define(new FunctionDefinition(LatteType.Void, "error", null, null));
+            environment.Define(new FunctionDefinition(LatteType.Int, "readInt", null, null));
+            environment.Define(new FunctionDefinition(LatteType.String, "readString", null, null));
         }
         
         public TypeChecker(IEnvironment environment)
@@ -28,12 +33,13 @@ namespace LatteTypeChecker
         {
             foreach (var function in program.Functions)
             {
-                var blockVisitor = new StatementTypeChecker(new VariableEnvironment(), environment, function.ReturnType);
-                
                 var functionDef = new FunctionDefinition(function.ReturnType, 
                     function.Name, 
                     function.Arguments.Select(t => t.Type).ToList(),
                     function.Arguments.Select(t => t.Name).ToList());
+
+                if (functionDef.ArgumentNames.Distinct().Count() != functionDef.ArgumentNames.Count)
+                    throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
                 
                 if (environment.IsDefined(functionDef))
                 {
@@ -48,10 +54,20 @@ namespace LatteTypeChecker
                 }
                 
                 environment.Define(functionDef);
-                blockVisitor.Visit(function.Body);
-                Console.WriteLine($"Function {function.Name} declaration, return type: {function.ReturnType}");
             }
 
+            foreach (var function in program.Functions)
+            {
+                var variables = new VariableEnvironment();
+
+                foreach (var arg in function.Arguments)
+                    variables.Define(new VariableDefinition(arg.Name, arg.Type));
+                
+                var blockVisitor = new StatementTypeChecker(variables, environment, function.ReturnType);
+                
+                blockVisitor.Visit(function.Body);
+            }
+            
             if (!environment.IsDefined("main"))
                 throw new NoStartingPointException("main");
 

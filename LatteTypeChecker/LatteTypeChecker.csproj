@@ -47,6 +47,7 @@
     <Compile Include="Exceptions\InvalidReturnTypeException.cs" />
     <Compile Include="Exceptions\InvalidVariableTypeException.cs" />
     <Compile Include="Exceptions\NoStartingPointException.cs" />
+    <Compile Include="Exceptions\RepeatedArgumentNameInFunctionDefinitionException.cs" />
     <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />
     <Compile Include="Exceptions\TypeCheckerException.cs" />
     <Compile Include="Exceptions\TypeMismatchException.cs" />

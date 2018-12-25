@@ -22,7 +22,8 @@ namespace Frontend
 
             var typeChecker = new TypeChecker();
 
-            typeChecker.Visit(programTree);
+            if (programTree != null)
+                typeChecker.Visit(programTree);
         }
     }
 //
