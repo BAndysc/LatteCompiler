@@ -11,7 +11,6 @@ using LatteAntlr;
 using LatteBase;
 using LatteBase.Visitors;
 using LatteTypeChecker;
-using Environment = LatteTypeChecker.Environment;
 
 namespace Frontend
 {
@@ -21,7 +20,7 @@ namespace Frontend
         {
             var programTree = new AstGenerator(text).GenerateAst();
 
-            var typeChecker = new TypeChecker(new Environment());
+            var typeChecker = new TypeChecker();
 
             typeChecker.Visit(programTree);
         }

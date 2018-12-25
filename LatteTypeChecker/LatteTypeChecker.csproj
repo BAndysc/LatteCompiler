@@ -40,20 +40,26 @@
   <ItemGroup>
     <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
     <Compile Include="Exceptions\InvalidOperatorUsageException.cs" />
+    <Compile Include="Exceptions\NoStartingPointException.cs" />
+    <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />
     <Compile Include="Exceptions\TypeCheckerException.cs" />
     <Compile Include="Exceptions\TypeMismatchException.cs" />
     <Compile Include="Exceptions\UndeclaredFunctionException.cs" />
     <Compile Include="Exceptions\UndeclaredVariableException.cs" />
     <Compile Include="Exceptions\VariableRedefinitionException.cs" />
+    <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\FunctionDefinition.cs" />
+    <Compile Include="Models\IEnvironment.cs" />
     <Compile Include="Models\IFileSource.cs" />
     <Compile Include="Models\IFunctionDefinition.cs" />
     <Compile Include="Models\IVariableDefinition.cs" />
+    <Compile Include="Models\IVariableEnvironment.cs" />
     <Compile Include="Models\VariableDefinition.cs" />
-    <Compile Include="StatementTypeChecker.cs" />
+    <Compile Include="Models\VariableEnvironment.cs" />
     <Compile Include="TypeChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\LatteExpressionTypeEvaluator.cs" />
+    <Compile Include="Visitors\StatementTypeChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">

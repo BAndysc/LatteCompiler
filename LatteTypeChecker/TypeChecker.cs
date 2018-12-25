@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
 using LatteTypeChecker.Exceptions;
 using LatteTypeChecker.Models;
+using LatteTypeChecker.Visitors;
+using Environment = LatteTypeChecker.Models.Environment;
 
 namespace LatteTypeChecker
 {
@@ -12,6 +13,11 @@ namespace LatteTypeChecker
     {
         private readonly IEnvironment environment;
 
+        public TypeChecker() : this(new Environment())
+        {
+            
+        }
+        
         public TypeChecker(IEnvironment environment)
         {
             this.environment = environment;
@@ -34,98 +40,14 @@ namespace LatteTypeChecker
                 blockVisitor.Visit(function.Body);
                 Console.WriteLine($"Function {function.Name} declaration, return type: {function.ReturnType}");
             }
-            return true;   
-        }
-    }
-    
-    public interface IEnvironment
-    {
-        bool IsDefined(string functionName);
-        bool IsDefined(IFunctionDefinition function);
-        void Define(IFunctionDefinition function);
-        IFunctionDefinition this[string functionName] { get; }
-    }
 
-    public interface IVariableEnvironement
-    {
-        bool IsDefined(IVariableDefinition variable);
+            if (!environment.IsDefined("main"))
+                throw new NoStartingPointException("main");
 
-        bool IsDefined(string name);
-        
-        void Define(IVariableDefinition variable);
-        bool CanRedefine(IVariableDefinition item);
-        
-        IVariableDefinition this[string variableName] { get; }
-        IVariableEnvironement CopyForBlock();
-    }
-
-    public class VariableEnvironment : IVariableEnvironement
-    {
-        private readonly Dictionary<string, IVariableDefinition> definedVariables;
-
-        private readonly HashSet<string> declaredHere;
-
-        public VariableEnvironment()
-        {
-            definedVariables = new Dictionary<string, IVariableDefinition>();
-            declaredHere = new HashSet<string>();
-        }
-
-        private VariableEnvironment(VariableEnvironment other)
-        {
-            definedVariables = new Dictionary<string, IVariableDefinition>(other.definedVariables);
-            declaredHere = new HashSet<string>();
+            if (environment["main"].ReturnType != LatteType.Int)
+                throw new StartingFunctionWrongReturnTypeException(environment["main"], LatteType.Int);
             
-        }
-        
-        public bool IsDefined(IVariableDefinition variable)
-        {
-            return IsDefined(variable.Name);
-        }
-
-        public bool IsDefined(string name)
-        {
-            return definedVariables.ContainsKey(name);
-        }
-
-        public void Define(IVariableDefinition variable)
-        {
-            declaredHere.Add(variable.Name);
-            definedVariables[variable.Name] = variable;
-        }
-
-        public bool CanRedefine(IVariableDefinition item)
-        {
-            return !declaredHere.Contains(item.Name);
-        }
-
-        public IVariableDefinition this[string variableName] => definedVariables[variableName];
-        public IVariableEnvironement CopyForBlock()
-        {
-            return new VariableEnvironment(this);
+            return true;
         }
     }
-
-    public class Environment : IEnvironment
-    {
-        private readonly Dictionary<string, IFunctionDefinition> definedFunctions = new Dictionary<string, IFunctionDefinition>();
-
-        public bool IsDefined(string functionName)
-        {
-            return definedFunctions.ContainsKey(functionName);
-        }
-
-        public bool IsDefined(IFunctionDefinition function)
-        {
-            return IsDefined(function.Name);
-        }
-
-        public void Define(IFunctionDefinition function)
-        {
-            definedFunctions[function.Name] = function;
-        }
-
-        public IFunctionDefinition this[string functionName] => definedFunctions[functionName];
-    }
-    
 }

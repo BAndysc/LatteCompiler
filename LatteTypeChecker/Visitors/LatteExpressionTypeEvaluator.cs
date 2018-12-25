@@ -2,15 +2,16 @@ using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
 using LatteTypeChecker.Exceptions;
+using LatteTypeChecker.Models;
 
 namespace LatteTypeChecker.Visitors
 {
     public class LatteExpressionTypeEvaluator : ExpressionVisitor<LatteType>
     {
-        private readonly IVariableEnvironement variables;
+        private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
 
-        public LatteExpressionTypeEvaluator(IVariableEnvironement variables, IEnvironment functions)
+        public LatteExpressionTypeEvaluator(IVariableEnvironment variables, IEnvironment functions)
         {
             this.variables = variables;
             this.functions = functions;

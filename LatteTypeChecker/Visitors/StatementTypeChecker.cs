@@ -4,16 +4,15 @@ using LatteBase.AST;
 using LatteBase.Visitors;
 using LatteTypeChecker.Exceptions;
 using LatteTypeChecker.Models;
-using LatteTypeChecker.Visitors;
 
-namespace LatteTypeChecker
+namespace LatteTypeChecker.Visitors
 {
     public class StatementTypeChecker : StatementVisitor<object>
     {
-        private readonly IVariableEnvironement variables;
+        private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
 
-        public StatementTypeChecker(IVariableEnvironement variables, IEnvironment functions)
+        public StatementTypeChecker(IVariableEnvironment variables, IEnvironment functions)
         {
             this.variables = variables;
             this.functions = functions;
