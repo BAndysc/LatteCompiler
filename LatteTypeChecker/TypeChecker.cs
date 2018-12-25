@@ -65,7 +65,10 @@ namespace LatteTypeChecker
                 
                 var blockVisitor = new StatementTypeChecker(variables, environment, function.ReturnType);
                 
-                blockVisitor.Visit(function.Body);
+                bool hasReturned = blockVisitor.Visit(function.Body);
+
+                if (!hasReturned && function.ReturnType != LatteType.Void)
+                    throw new ExpectedReturnInFunctionException(environment[function.Name], function.FilePlace);
             }
             
             if (!environment.IsDefined("main"))

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ArgumentsCountMismatchException.cs" />
+    <Compile Include="Exceptions\ExpectedReturnInFunctionException.cs" />
     <Compile Include="Exceptions\FunctionCallTypeMismatch.cs" />
     <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
     <Compile Include="Exceptions\InvalidConditionTypeException.cs" />
