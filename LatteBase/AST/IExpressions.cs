@@ -66,6 +66,6 @@ namespace LatteBase.AST
     public interface IFunctionCallNode : IExpressionNode
     {
         string FunctionName { get; }
-        IEnumerable<IExpressionNode> Arguments { get; }
+        IList<IExpressionNode> Arguments { get; }
     }
 }

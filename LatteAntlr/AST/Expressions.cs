@@ -144,9 +144,9 @@ namespace LatteAntlr.AST
     internal class FunctionCallNode : Node, IFunctionCallNode
     {
         public string FunctionName { get; }
-        public IEnumerable<IExpressionNode> Arguments { get; }
+        public IList<IExpressionNode> Arguments { get; }
 
-        public FunctionCallNode(string function, IEnumerable<IExpressionNode> arguments, IFilePlace context) : base(context)
+        public FunctionCallNode(string function, IList<IExpressionNode> arguments, IFilePlace context) : base(context)
         {
             FunctionName = function;
             Arguments = arguments;

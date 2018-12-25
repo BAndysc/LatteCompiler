@@ -1,3 +1,4 @@
+using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -118,6 +119,18 @@ namespace LatteTypeChecker.Visitors
             
             var function = functions[node.FunctionName];
 
+            if (function.ArgumentTypes.Count != node.Arguments.Count)
+                throw new ArgumentsCountMismatchException(function, node.Arguments.Count, node.FilePlace);
+
+            for (int i = 0; i < function.ArgumentTypes.Count; ++i)
+            {
+                var givenArgumentType = Visit(node.Arguments[i]);
+                var expectedArgumentType = function.ArgumentTypes[i];
+
+                if (givenArgumentType != expectedArgumentType)
+                    throw new FunctionCallTypeMismatch(function, i, givenArgumentType, node.FilePlace);
+            }
+            
             return function.ReturnType;
         }
     }

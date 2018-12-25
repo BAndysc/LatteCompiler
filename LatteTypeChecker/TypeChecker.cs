@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -29,7 +30,10 @@ namespace LatteTypeChecker
             {
                 var blockVisitor = new StatementTypeChecker(new VariableEnvironment(), environment);
                 
-                var functionDef = new FunctionDefinition(function.ReturnType, function.Name);
+                var functionDef = new FunctionDefinition(function.ReturnType, 
+                    function.Name, 
+                    function.Arguments.Select(t => t.Type).ToList(),
+                    function.Arguments.Select(t => t.Name).ToList());
                 
                 if (environment.IsDefined(functionDef))
                 {

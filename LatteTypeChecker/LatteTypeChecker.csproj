@@ -38,6 +38,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ArgumentsCountMismatchException.cs" />
+    <Compile Include="Exceptions\FunctionCallTypeMismatch.cs" />
     <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
     <Compile Include="Exceptions\InvalidOperatorUsageException.cs" />
     <Compile Include="Exceptions\NoStartingPointException.cs" />
