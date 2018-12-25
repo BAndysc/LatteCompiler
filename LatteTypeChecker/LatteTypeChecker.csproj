@@ -41,8 +41,10 @@
     <Compile Include="Exceptions\ArgumentsCountMismatchException.cs" />
     <Compile Include="Exceptions\FunctionCallTypeMismatch.cs" />
     <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
+    <Compile Include="Exceptions\InvalidConditionTypeException.cs" />
     <Compile Include="Exceptions\InvalidFunctionArgumentTypeException.cs" />
     <Compile Include="Exceptions\InvalidOperatorUsageException.cs" />
+    <Compile Include="Exceptions\InvalidReturnTypeException.cs" />
     <Compile Include="Exceptions\InvalidVariableTypeException.cs" />
     <Compile Include="Exceptions\NoStartingPointException.cs" />
     <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />

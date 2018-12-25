@@ -11,13 +11,16 @@ namespace LatteTypeChecker.Visitors
     {
         private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
+        private readonly LatteType expectedReturnType;
 
         private readonly LatteExpressionTypeEvaluator expressionEvaluator;
         
-        public StatementTypeChecker(IVariableEnvironment variables, IEnvironment functions)
+        public StatementTypeChecker(IVariableEnvironment variables, IEnvironment functions,
+            LatteType expectedReturnType)
         {
             this.variables = variables;
             this.functions = functions;
+            this.expectedReturnType = expectedReturnType;
             expressionEvaluator = new LatteExpressionTypeEvaluator(variables, functions);
         }
 
@@ -26,9 +29,14 @@ namespace LatteTypeChecker.Visitors
             return null;
         }
 
+        private StatementTypeChecker GetBlockTypeChecker()
+        {
+            return new StatementTypeChecker(variables.CopyForBlock(), functions, expectedReturnType);
+        }
+        
         public override object Visit(IBlockNode node)
         {
-            var blockChecker = new StatementTypeChecker(variables.CopyForBlock(), functions);
+            var blockChecker = GetBlockTypeChecker();
 
             node.Statements.Select(blockChecker.Visit).ToList();
 
@@ -110,27 +118,57 @@ namespace LatteTypeChecker.Visitors
 
         public override object Visit(IReturnNode node)
         {
-            throw new System.NotImplementedException();
+            var givenReturnType = expressionEvaluator.Visit(node.ReturnExpression);
+            
+            if (expectedReturnType != givenReturnType)
+                throw new InvalidReturnTypeException(expectedReturnType, givenReturnType, node.FilePlace);
+
+            return null;
         }
 
         public override object Visit(IVoidReturnNode node)
         {
-            throw new System.NotImplementedException();
+            if (expectedReturnType != LatteType.Void)
+                throw new InvalidReturnTypeException(expectedReturnType, LatteType.Void, node.FilePlace);
+
+            return null;
         }
 
         public override object Visit(IIfNode node)
         {
-            throw new System.NotImplementedException();
+            var conditionType = expressionEvaluator.Visit(node.Condition);
+
+            if (conditionType != LatteType.Bool)
+                throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            GetBlockTypeChecker().Visit(node.Statement);
+
+            return null;
         }
 
         public override object Visit(IIfElseNode node)
         {
-            throw new System.NotImplementedException();
+            var conditionType = expressionEvaluator.Visit(node.Condition);
+
+            if (conditionType != LatteType.Bool)
+                throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            GetBlockTypeChecker().Visit(node.Statement);
+            GetBlockTypeChecker().Visit(node.ElseStatement);
+
+            return null;
         }
 
         public override object Visit(IWhileNode node)
         {
-            throw new System.NotImplementedException();
+            var conditionType = expressionEvaluator.Visit(node.Condition);
+
+            if (conditionType != LatteType.Bool)
+                throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            GetBlockTypeChecker().Visit(node.Statement);
+
+            return null;
         }
 
         public override object Visit(IExpressionStatementNode nodeNode)

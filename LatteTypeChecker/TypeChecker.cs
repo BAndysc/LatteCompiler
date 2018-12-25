@@ -28,7 +28,7 @@ namespace LatteTypeChecker
         {
             foreach (var function in program.Functions)
             {
-                var blockVisitor = new StatementTypeChecker(new VariableEnvironment(), environment);
+                var blockVisitor = new StatementTypeChecker(new VariableEnvironment(), environment, function.ReturnType);
                 
                 var functionDef = new FunctionDefinition(function.ReturnType, 
                     function.Name, 

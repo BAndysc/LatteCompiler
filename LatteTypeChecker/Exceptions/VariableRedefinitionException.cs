@@ -22,6 +22,4 @@ namespace LatteTypeChecker.Exceptions
             return $"Invalid redeclaration of variable {prev.Name} as {curr.Type} (previously: {prev.Type}). {base.ToString()}";
         }
     }
-    
-    
 }
