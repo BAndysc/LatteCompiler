@@ -11,6 +11,7 @@ using LatteAntlr;
 using LatteBase;
 using LatteBase.Visitors;
 using LatteTypeChecker;
+using LatteTypeChecker.Exceptions;
 
 namespace Frontend
 {
@@ -22,8 +23,17 @@ namespace Frontend
 
             var typeChecker = new TypeChecker();
 
-            if (programTree != null)
+            if (programTree == null) 
+                return;
+            
+            try
+            {
                 typeChecker.Visit(programTree);
+            }
+            catch (TypeCheckerException e)
+            {
+                Console.WriteLine($"Type check error: {e}");
+            }
         }
     }
 //
