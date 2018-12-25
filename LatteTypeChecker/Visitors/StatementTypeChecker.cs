@@ -39,6 +39,9 @@ namespace LatteTypeChecker.Visitors
         {
             var declarationType = node.Type;
 
+            if (declarationType == LatteType.Void)
+                throw new InvalidVariableTypeException(declarationType, node.FilePlace);
+            
             foreach (var item in node.Declarations)
             {
                 var variableDefinition = new VariableDefinition(item.Name, declarationType);

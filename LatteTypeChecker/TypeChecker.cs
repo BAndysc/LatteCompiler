@@ -40,6 +40,13 @@ namespace LatteTypeChecker
                     throw new FunctionRedefinitionException(environment[function.Name], functionDef, function.FilePlace);
                 }
 
+                var voidArgument = function.Arguments.FirstOrDefault(t => t.Type == LatteType.Void);
+
+                if (voidArgument != null)
+                {
+                    throw new InvalidFunctionArgumentTypeException(functionDef, voidArgument, function.FilePlace);
+                }
+                
                 environment.Define(functionDef);
                 blockVisitor.Visit(function.Body);
                 Console.WriteLine($"Function {function.Name} declaration, return type: {function.ReturnType}");
