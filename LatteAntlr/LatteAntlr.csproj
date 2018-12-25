@@ -55,7 +55,9 @@
     <Compile Include="AST\RelOperatorVisitor.cs" />
     <Compile Include="AST\Statements.cs" />
     <Compile Include="AST\TopFunctionNode.cs" />
+    <Compile Include="Exceptions\IntegerOutOfRangeException.cs" />
     <Compile Include="Exceptions\ParserUnhandledException.cs" />
+    <Compile Include="Exceptions\SyntaxException.cs" />
     <Compile Include="LatteBaseListener.cs" />
     <Compile Include="LatteBaseVisitor.cs" />
     <Compile Include="LatteLexer.cs" />

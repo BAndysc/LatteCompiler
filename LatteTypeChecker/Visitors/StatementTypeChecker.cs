@@ -151,10 +151,10 @@ namespace LatteTypeChecker.Visitors
             if (conditionType != LatteType.Bool)
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
             
-            GetBlockTypeChecker().Visit(node.Statement);
-            GetBlockTypeChecker().Visit(node.ElseStatement);
+            var returnInIf = GetBlockTypeChecker().Visit(node.Statement);
+            var returnInElse = GetBlockTypeChecker().Visit(node.ElseStatement);
 
-            return false;
+            return returnInIf && returnInElse;
         }
 
         public override bool Visit(IWhileNode node)

@@ -1,4 +1,5 @@
 using System.Linq;
+using LatteAntlr.Exceptions;
 using LatteAntlr.Visitors;
 using LatteBase.AST;
 
@@ -41,7 +42,11 @@ namespace LatteAntlr.AST.Generators
 
         public override IExpressionNode VisitEInt(LatteParser.EIntContext context)
         {
-            return new IntNode(int.Parse(context.INT().GetText()), new FilePlace(context));
+            int asInt;
+            if (!int.TryParse(context.INT().GetText(), out asInt))
+                throw new IntegerOutOfRangeException(context.INT().GetText(), new FilePlace(context));
+                
+            return new IntNode(asInt, new FilePlace(context));
         }
 
         public override IExpressionNode VisitEUnOp(LatteParser.EUnOpContext context)
