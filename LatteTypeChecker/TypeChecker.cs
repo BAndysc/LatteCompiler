@@ -76,6 +76,9 @@ namespace LatteTypeChecker
 
             if (environment["main"].ReturnType != LatteType.Int)
                 throw new StartingFunctionWrongReturnTypeException(environment["main"], LatteType.Int);
+
+            if (environment["main"].ArgumentTypes.Count != 0)
+                throw new StartingFunctionInvalidArgumentsCountException(environment["main"]);
             
             return true;
         }

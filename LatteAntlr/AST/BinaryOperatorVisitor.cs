@@ -12,7 +12,7 @@ namespace LatteAntlr.AST
 
         public override BinaryOperator VisitMinus(LatteParser.MinusContext context)
         {
-            return BinaryOperator.Add;   
+            return BinaryOperator.Sub;   
         }
 
         public override BinaryOperator VisitMultiply(LatteParser.MultiplyContext context)

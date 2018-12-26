@@ -116,6 +116,9 @@ namespace LatteTypeChecker.Visitors
 
         public override bool Visit(IReturnNode node)
         {
+            if (expectedReturnType == LatteType.Void)
+                throw new InvalidReturnExpressionException(node.FilePlace);   
+            
             var givenReturnType = expressionEvaluator.Visit(node.ReturnExpression);
             
             if (expectedReturnType != givenReturnType)

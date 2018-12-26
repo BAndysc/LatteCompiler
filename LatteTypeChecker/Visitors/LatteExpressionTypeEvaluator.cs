@@ -88,11 +88,11 @@ namespace LatteTypeChecker.Visitors
         {
             var left = Visit(node.Left);
             var right = Visit(node.Right);
-
-            if (left != LatteType.Int && left != LatteType.String)
+            
+            if (left != LatteType.Int && (left != LatteType.String || node.Operator != BinaryOperator.Add))
                 throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int, LatteType.String);
 
-            if (right != LatteType.Int && right != LatteType.String)
+            if (right != LatteType.Int && (right != LatteType.String || node.Operator != BinaryOperator.Add))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
             
             if (left != right)
