@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using LatteBase.AST;
 
 namespace LatteBase.AST.Impl
@@ -10,6 +11,10 @@ namespace LatteBase.AST.Impl
             Functions = functions;
         }
 
+        public ProgramNode(params ITopFunctionNode[] functions) : this(functions.ToList())
+        {
+        }
+        
         public IEnumerable<ITopFunctionNode> Functions { get; }
     }
 }

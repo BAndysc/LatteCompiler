@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using LatteBase;
 using LatteBase.AST;
 
@@ -10,7 +12,7 @@ namespace LatteBase.AST.Impl
         {
         }
     }
-    
+
     public class BlockNode : Node, IBlockNode
     {
         public BlockNode(IFilePlace place, IEnumerable<IStatement> statements) : base(place)
@@ -18,9 +20,13 @@ namespace LatteBase.AST.Impl
             Statements = statements;
         }
 
+        public BlockNode(IFilePlace place, params IStatement[] statements) : this(place, statements.ToList())
+        {
+        }
+
         public IEnumerable<IStatement> Statements { get; }
     }
-        
+
     public class SingleDeclaration : ISingleDeclaration
     {
         public SingleDeclaration(string name, IExpressionNode value)
@@ -32,19 +38,25 @@ namespace LatteBase.AST.Impl
         public string Name { get; }
         public IExpressionNode Value { get; }
     }
-    
+
     public class DeclarationNode : Node, IDeclarationNode
     {
-        public DeclarationNode(IFilePlace place, LatteType type, IEnumerable<ISingleDeclaration> declarations) : base(place)
+        public DeclarationNode(IFilePlace place, LatteType type, IEnumerable<ISingleDeclaration> declarations) :
+            base(place)
         {
             Type = type;
             Declarations = declarations;
         }
 
+        public DeclarationNode(IFilePlace place, LatteType type, params ISingleDeclaration[] declarations) : this(place,
+            type, declarations.ToList())
+        {
+        }
+
         public LatteType Type { get; }
         public IEnumerable<ISingleDeclaration> Declarations { get; }
     }
-    
+
     public class AssignmentNode : Node, IAssignmentNode
     {
         public AssignmentNode(IFilePlace place, string variable, IExpressionNode value) : base(place)
@@ -56,7 +68,7 @@ namespace LatteBase.AST.Impl
         public string Variable { get; }
         public IExpressionNode Value { get; }
     }
-    
+
     public class IncrementNode : Node, IIncrementNode
     {
         public IncrementNode(IFilePlace place, string variable) : base(place)
@@ -66,7 +78,7 @@ namespace LatteBase.AST.Impl
 
         public string Variable { get; }
     }
-    
+
     public class DecrementNode : Node, IDecrementNode
     {
         public DecrementNode(IFilePlace place, string variable) : base(place)
@@ -76,7 +88,7 @@ namespace LatteBase.AST.Impl
 
         public string Variable { get; }
     }
-    
+
     public class ReturnNode : Node, IReturnNode
     {
         public ReturnNode(IFilePlace place, IExpressionNode returnExpression) : base(place)
@@ -86,13 +98,14 @@ namespace LatteBase.AST.Impl
 
         public IExpressionNode ReturnExpression { get; }
     }
-    
+
     public class VoidReturnNode : Node, IVoidReturnNode
     {
         public VoidReturnNode(IFilePlace place) : base(place)
         {
         }
     }
+
     public class IfNode : Node, IIfNode
     {
         public IfNode(IFilePlace place, IExpressionNode condition, IStatement statement) : base(place)
@@ -104,10 +117,11 @@ namespace LatteBase.AST.Impl
         public IExpressionNode Condition { get; }
         public IStatement Statement { get; }
     }
-    
+
     public class IfElseNode : Node, IIfElseNode
     {
-        public IfElseNode(IFilePlace place, IExpressionNode condition, IStatement statement, IStatement elseStatement) : base(place)
+        public IfElseNode(IFilePlace place, IExpressionNode condition, IStatement statement,
+            IStatement elseStatement) : base(place)
         {
             Condition = condition;
             Statement = statement;
@@ -118,7 +132,7 @@ namespace LatteBase.AST.Impl
         public IStatement Statement { get; }
         public IStatement ElseStatement { get; }
     }
-    
+
     public class WhileNode : Node, IWhileNode
     {
         public WhileNode(IFilePlace place, IExpressionNode condition, IStatement statement) : base(place)
@@ -130,7 +144,7 @@ namespace LatteBase.AST.Impl
         public IExpressionNode Condition { get; }
         public IStatement Statement { get; }
     }
-    
+
     public class ExpressionStatementNode : Node, IExpressionStatementNode
     {
         public ExpressionStatementNode(IFilePlace place, IExpressionNode expression) : base(place)

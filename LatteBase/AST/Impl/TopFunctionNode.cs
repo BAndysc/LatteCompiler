@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 
@@ -26,6 +27,12 @@ namespace LatteBase.AST.Impl
             Body = body;
         }
 
+        public TopFunctionNode(IFilePlace place, LatteType type, string name, IStatement body,
+            params IFunctionArgument[] arguments) : this(place, type, name, arguments.ToList(), body)
+        {
+            
+        }
+        
         public LatteType ReturnType { get; }
         public string Name { get; }
         public IEnumerable<IFunctionArgument> Arguments { get; }

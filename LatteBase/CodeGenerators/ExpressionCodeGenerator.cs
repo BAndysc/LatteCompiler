@@ -58,7 +58,7 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IFunctionCallNode node)
         {
-            return $"new FunctionCallNode(\"{node.FunctionName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}}, new DummyFilePlace())";
+            return $"new FunctionCallNode(new DummyFilePlace(), \"{node.FunctionName}\"{string.Join("", node.Arguments.Select(Visit).Select(t => ", " +  t))})";
         }
     }
 }

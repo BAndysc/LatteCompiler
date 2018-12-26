@@ -9,7 +9,7 @@ namespace LatteBase.CodeGenerators
         public override string Visit(IProgram program)
         {
             var funGenerator = new FunctionCodeGenerator();
-            return $"new ProgramNode(new List<ITopFunctionNode>(){{ {string.Join(",\n", program.Functions.Select(t => funGenerator.Visit(t)))} }})";
+            return $"new ProgramNode({string.Join(",\n", program.Functions.Select(t => funGenerator.Visit(t)))})";
         }
     }
 }

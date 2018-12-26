@@ -10,7 +10,7 @@ namespace LatteBase.CodeGenerators
         {
             var statementGenerator = new StatementCodeGenerator();
             var args = topFunction.Arguments.Select(t => $"new FunctionArgument(LatteType.{t.Type}, \"{t.Name}\")");
-            return $"new TopFunctionNode(new DummyFilePlace(), LatteType.{topFunction.ReturnType}, \"{topFunction.Name}\", new List<IFunctionArgument>(){{{string.Join(", ", args)}}}, {statementGenerator.Visit(topFunction.Body)})";
+            return $"new TopFunctionNode(new DummyFilePlace(), LatteType.{topFunction.ReturnType}, \"{topFunction.Name}\", {statementGenerator.Visit(topFunction.Body)}{string.Join("", args.Select(t => ", " + t))})";
         }
     }
 }

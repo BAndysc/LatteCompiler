@@ -20,13 +20,13 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IBlockNode node)
         {
-            return $"new BlockNode(new DummyFilePlace(), new List<IStatement>(){{\n {string.Join(", \n", node.Statements.Select(Visit))} \n}})";
+            return $"new BlockNode(new DummyFilePlace(), {string.Join(", \n", node.Statements.Select(Visit))})";
         }
 
         public override string Visit(IDeclarationNode node)
         {
             var declarations = node.Declarations.Select(t => $"new SingleDeclaration(\"{t.Name}\", {(t.Value == null ? "null" : expressionGenerator.Visit(t.Value))})");
-            return $"new DeclarationNode(new DummyFilePlace(), LatteType.{node.Type}, new List<ISingleDeclaration>(){{ {string.Join(", ", declarations)} }})";
+            return $"new DeclarationNode(new DummyFilePlace(), LatteType.{node.Type}, {string.Join(", ", declarations)})";
         }
 
         public override string Visit(IAssignmentNode node)

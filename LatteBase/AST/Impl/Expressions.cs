@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using LatteBase.AST;
 
 namespace LatteBase.AST.Impl
@@ -130,5 +131,7 @@ namespace LatteBase.AST.Impl
             FunctionName = function;
             Arguments = arguments;
         }
+        
+        public FunctionCallNode(IFilePlace place, string name, params IExpressionNode[] arguments) : this(name, arguments.ToList(), place) {}
     }
 }

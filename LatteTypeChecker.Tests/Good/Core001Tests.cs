@@ -93,195 +93,124 @@ namespace LatteTypeChecker.Tests.Good
         public void Core001Test()
         {
             var program =
-                new ProgramNode(new List<ITopFunctionNode>()
-                {
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
-                        new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                        {
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printInt",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("fac",
-                                            new List<IExpressionNode>() {new IntNode(10, new DummyFilePlace())},
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printInt",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("rfac",
-                                            new List<IExpressionNode>() {new IntNode(10, new DummyFilePlace())},
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printInt",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("mfac",
-                                            new List<IExpressionNode>() {new IntNode(10, new DummyFilePlace())},
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printInt",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("ifac",
-                                            new List<IExpressionNode>() {new IntNode(10, new DummyFilePlace())},
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new DeclarationNode(new DummyFilePlace(), LatteType.String,
-                                new List<ISingleDeclaration>() {new SingleDeclaration("r", null)}),
-                            new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                    new List<ISingleDeclaration>()
-                                        {new SingleDeclaration("n", new IntNode(10, new DummyFilePlace()))}),
-                                new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                    new List<ISingleDeclaration>()
-                                        {new SingleDeclaration("r", new IntNode(1, new DummyFilePlace()))}),
-                                new WhileNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
-                                    new VariableNode("n", new DummyFilePlace()),
-                                    new IntNode(0, new DummyFilePlace()),
-                                    new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                                {
-                                    new AssignmentNode(new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Mul,
+                new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+                        new DummyFilePlace(),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printInt",
+                                new FunctionCallNode(new DummyFilePlace(), "fac",
+                                    new IntNode(10, new DummyFilePlace())))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printInt",
+                                new FunctionCallNode(new DummyFilePlace(), "rfac",
+                                    new IntNode(10, new DummyFilePlace())))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printInt",
+                                new FunctionCallNode(new DummyFilePlace(), "mfac",
+                                    new IntNode(10, new DummyFilePlace())))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printInt",
+                                new FunctionCallNode(new DummyFilePlace(), "ifac",
+                                    new IntNode(10, new DummyFilePlace())))),
+                        new DeclarationNode(new DummyFilePlace(), LatteType.String, new SingleDeclaration("r", null)),
+                        new BlockNode(new DummyFilePlace(),
+                            new DeclarationNode(new DummyFilePlace(), LatteType.Int,
+                                new SingleDeclaration("n", new IntNode(10, new DummyFilePlace()))),
+                            new DeclarationNode(new DummyFilePlace(), LatteType.Int,
+                                new SingleDeclaration("r", new IntNode(1, new DummyFilePlace()))),
+                            new WhileNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
+                                new VariableNode("n", new DummyFilePlace()),
+                                new IntNode(0, new DummyFilePlace()),
+                                new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new AssignmentNode(
+                                    new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Mul,
                                         new VariableNode("r", new DummyFilePlace()),
                                         new VariableNode("n", new DummyFilePlace()),
                                         new DummyFilePlace())),
-                                    new IncrementNode(new DummyFilePlace(), "n")
-                                })),
-                                new ExpressionStatementNode(new DummyFilePlace(),
-                                    new FunctionCallNode("printInt",
-                                        new List<IExpressionNode>() {new VariableNode("r", new DummyFilePlace())},
-                                        new DummyFilePlace()))
-                            }),
+                                new IncrementNode(new DummyFilePlace(), "n"))),
                             new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printString",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("repStr",
-                                            new List<IExpressionNode>()
-                                            {
-                                                new StringNode("=", new DummyFilePlace()),
-                                                new IntNode(60, new DummyFilePlace())
-                                            }, new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printString",
-                                    new List<IExpressionNode>() {new StringNode("hello */", new DummyFilePlace())},
-                                    new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printString",
-                                    new List<IExpressionNode>() {new StringNode("/* world", new DummyFilePlace())},
-                                    new DummyFilePlace())),
-                            new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
-                        })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "fac",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "a")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                    new List<ISingleDeclaration>() {new SingleDeclaration("r", null)}),
-                                new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                    new List<ISingleDeclaration>() {new SingleDeclaration("n", null)}),
-                                new AssignmentNode(new DummyFilePlace(), "r", new IntNode(1, new DummyFilePlace())),
-                                new AssignmentNode(new DummyFilePlace(), "n",
-                                    new VariableNode("a", new DummyFilePlace())),
-                                new WhileNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
-                                    new VariableNode("n", new DummyFilePlace()),
-                                    new IntNode(0, new DummyFilePlace()),
-                                    new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                                {
-                                    new AssignmentNode(new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Mul,
+                                new FunctionCallNode(new DummyFilePlace(), "printInt",
+                                    new VariableNode("r", new DummyFilePlace())))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printString",
+                                new FunctionCallNode(new DummyFilePlace(), "repStr",
+                                    new StringNode("=", new DummyFilePlace()), new IntNode(60, new DummyFilePlace())))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printString",
+                                new StringNode("hello */", new DummyFilePlace()))),
+                        new ExpressionStatementNode(new DummyFilePlace(),
+                            new FunctionCallNode(new DummyFilePlace(), "printString",
+                                new StringNode("/* world", new DummyFilePlace()))),
+                        new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "fac", new BlockNode(new DummyFilePlace(),
+                            new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("r", null)),
+                            new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("n", null)),
+                            new AssignmentNode(new DummyFilePlace(), "r", new IntNode(1, new DummyFilePlace())),
+                            new AssignmentNode(new DummyFilePlace(), "n", new VariableNode("a", new DummyFilePlace())),
+                            new WhileNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
+                                new VariableNode("n", new DummyFilePlace()),
+                                new IntNode(0, new DummyFilePlace()),
+                                new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new AssignmentNode(
+                                    new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Mul,
                                         new VariableNode("r", new DummyFilePlace()),
                                         new VariableNode("n", new DummyFilePlace()),
                                         new DummyFilePlace())),
-                                    new AssignmentNode(new DummyFilePlace(), "n", new BinaryNode(BinaryOperator.Sub,
+                                new AssignmentNode(new DummyFilePlace(), "n", new BinaryNode(BinaryOperator.Sub,
+                                    new VariableNode("n", new DummyFilePlace()),
+                                    new IntNode(1, new DummyFilePlace()),
+                                    new DummyFilePlace())))),
+                            new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))),
+                        new FunctionArgument(LatteType.Int, "a")),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "rfac", new BlockNode(new DummyFilePlace(),
+                        new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
+                                new VariableNode("n", new DummyFilePlace()),
+                                new IntNode(0, new DummyFilePlace()),
+                                new DummyFilePlace()),
+                            new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())), new ReturnNode(
+                                new DummyFilePlace(), new BinaryNode(BinaryOperator.Mul,
+                                    new VariableNode("n", new DummyFilePlace()),
+                                    new FunctionCallNode(new DummyFilePlace(), "rfac", new BinaryNode(
+                                        BinaryOperator.Sub,
                                         new VariableNode("n", new DummyFilePlace()),
                                         new IntNode(1, new DummyFilePlace()),
-                                        new DummyFilePlace()))
-                                })),
-                                new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))
-                            })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "rfac",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "n")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
-                                        new VariableNode("n", new DummyFilePlace()),
-                                        new IntNode(0, new DummyFilePlace()),
-                                        new DummyFilePlace()),
-                                    new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())),
-                                    new ReturnNode(new DummyFilePlace(), new BinaryNode(BinaryOperator.Mul,
-                                        new VariableNode("n", new DummyFilePlace()),
-                                        new FunctionCallNode("rfac", new List<IExpressionNode>()
-                                        {
-                                            new BinaryNode(BinaryOperator.Sub,
-                                                new VariableNode("n", new DummyFilePlace()),
-                                                new IntNode(1, new DummyFilePlace()),
-                                                new DummyFilePlace())
-                                        }, new DummyFilePlace()),
-                                        new DummyFilePlace())))
-                            })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "mfac",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "n")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
-                                        new VariableNode("n", new DummyFilePlace()),
-                                        new IntNode(0, new DummyFilePlace()),
-                                        new DummyFilePlace()),
-                                    new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())),
-                                    new ReturnNode(new DummyFilePlace(), new BinaryNode(BinaryOperator.Mul,
-                                        new VariableNode("n", new DummyFilePlace()),
-                                        new FunctionCallNode("nfac", new List<IExpressionNode>()
-                                        {
-                                            new BinaryNode(BinaryOperator.Sub,
-                                                new VariableNode("n", new DummyFilePlace()),
-                                                new IntNode(1, new DummyFilePlace()),
-                                                new DummyFilePlace())
-                                        }, new DummyFilePlace()),
-                                        new DummyFilePlace())))
-                            })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "nfac",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "n")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.NotEquals,
-                                        new VariableNode("n", new DummyFilePlace()),
-                                        new IntNode(0, new DummyFilePlace()),
-                                        new DummyFilePlace()), new ReturnNode(new DummyFilePlace(), new BinaryNode(
-                                        BinaryOperator.Mul,
-                                        new FunctionCallNode("mfac", new List<IExpressionNode>()
-                                        {
-                                            new BinaryNode(BinaryOperator.Sub,
-                                                new VariableNode("n", new DummyFilePlace()),
-                                                new IntNode(1, new DummyFilePlace()),
-                                                new DummyFilePlace())
-                                        }, new DummyFilePlace()),
-                                        new VariableNode("n", new DummyFilePlace()),
                                         new DummyFilePlace())),
-                                    new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())))
-                            })),
+                                    new DummyFilePlace())))), new FunctionArgument(LatteType.Int, "n")),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "mfac", new BlockNode(new DummyFilePlace(),
+                        new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
+                                new VariableNode("n", new DummyFilePlace()),
+                                new IntNode(0, new DummyFilePlace()),
+                                new DummyFilePlace()),
+                            new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())), new ReturnNode(
+                                new DummyFilePlace(), new BinaryNode(BinaryOperator.Mul,
+                                    new VariableNode("n", new DummyFilePlace()),
+                                    new FunctionCallNode(new DummyFilePlace(), "nfac", new BinaryNode(
+                                        BinaryOperator.Sub,
+                                        new VariableNode("n", new DummyFilePlace()),
+                                        new IntNode(1, new DummyFilePlace()),
+                                        new DummyFilePlace())),
+                                    new DummyFilePlace())))), new FunctionArgument(LatteType.Int, "n")),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "nfac", new BlockNode(new DummyFilePlace(),
+                            new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.NotEquals,
+                                    new VariableNode("n", new DummyFilePlace()),
+                                    new IntNode(0, new DummyFilePlace()),
+                                    new DummyFilePlace()), new ReturnNode(new DummyFilePlace(), new BinaryNode(
+                                    BinaryOperator.Mul,
+                                    new FunctionCallNode(new DummyFilePlace(), "mfac", new BinaryNode(
+                                        BinaryOperator.Sub,
+                                        new VariableNode("n", new DummyFilePlace()),
+                                        new IntNode(1, new DummyFilePlace()),
+                                        new DummyFilePlace())),
+                                    new VariableNode("n", new DummyFilePlace()),
+                                    new DummyFilePlace())),
+                                new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())))),
+                        new FunctionArgument(LatteType.Int, "n")),
                     new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "ifac",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "n")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new ReturnNode(new DummyFilePlace(),
-                                    new FunctionCallNode("ifac2f",
-                                        new List<IExpressionNode>()
-                                        {
-                                            new IntNode(1, new DummyFilePlace()),
-                                            new VariableNode("n", new DummyFilePlace())
-                                        }, new DummyFilePlace()))
-                            })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "ifac2f",
-                        new List<IFunctionArgument>()
-                            {new FunctionArgument(LatteType.Int, "l"), new FunctionArgument(LatteType.Int, "h")},
-                        new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                        {
-                            new IfNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
+                        new BlockNode(new DummyFilePlace(),
+                            new ReturnNode(new DummyFilePlace(),
+                                new FunctionCallNode(new DummyFilePlace(), "ifac2f",
+                                    new IntNode(1, new DummyFilePlace()),
+                                    new VariableNode("n", new DummyFilePlace())))),
+                        new FunctionArgument(LatteType.Int, "n")),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "ifac2f", new BlockNode(
+                            new DummyFilePlace(), new IfNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
                                     new VariableNode("l", new DummyFilePlace()),
                                     new VariableNode("h", new DummyFilePlace()),
                                     new DummyFilePlace()),
@@ -291,8 +220,7 @@ namespace LatteTypeChecker.Tests.Good
                                     new VariableNode("h", new DummyFilePlace()),
                                     new DummyFilePlace()),
                                 new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace()))),
-                            new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                new List<ISingleDeclaration>() {new SingleDeclaration("m", null)}),
+                            new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("m", null)),
                             new AssignmentNode(new DummyFilePlace(), "m", new BinaryNode(BinaryOperator.Div,
                                 new BinaryNode(BinaryOperator.Add,
                                     new VariableNode("l", new DummyFilePlace()),
@@ -301,48 +229,33 @@ namespace LatteTypeChecker.Tests.Good
                                 new IntNode(2, new DummyFilePlace()),
                                 new DummyFilePlace())),
                             new ReturnNode(new DummyFilePlace(), new BinaryNode(BinaryOperator.Mul,
-                                new FunctionCallNode("ifac2f",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new VariableNode("l", new DummyFilePlace()),
-                                        new VariableNode("m", new DummyFilePlace())
-                                    }, new DummyFilePlace()),
-                                new FunctionCallNode("ifac2f", new List<IExpressionNode>()
-                                {
-                                    new BinaryNode(BinaryOperator.Add,
-                                        new VariableNode("m", new DummyFilePlace()),
-                                        new IntNode(1, new DummyFilePlace()),
-                                        new DummyFilePlace()),
-                                    new VariableNode("h", new DummyFilePlace())
-                                }, new DummyFilePlace()),
-                                new DummyFilePlace()))
-                        })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.String, "repStr",
-                        new List<IFunctionArgument>()
-                            {new FunctionArgument(LatteType.String, "s"), new FunctionArgument(LatteType.Int, "n")},
-                        new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                        {
+                                new FunctionCallNode(new DummyFilePlace(), "ifac2f",
+                                    new VariableNode("l", new DummyFilePlace()),
+                                    new VariableNode("m", new DummyFilePlace())),
+                                new FunctionCallNode(new DummyFilePlace(), "ifac2f", new BinaryNode(BinaryOperator.Add,
+                                    new VariableNode("m", new DummyFilePlace()),
+                                    new IntNode(1, new DummyFilePlace()),
+                                    new DummyFilePlace()), new VariableNode("h", new DummyFilePlace())),
+                                new DummyFilePlace()))), new FunctionArgument(LatteType.Int, "l"),
+                        new FunctionArgument(LatteType.Int, "h")),
+                    new TopFunctionNode(new DummyFilePlace(), LatteType.String, "repStr", new BlockNode(
+                            new DummyFilePlace(),
                             new DeclarationNode(new DummyFilePlace(), LatteType.String,
-                                new List<ISingleDeclaration>()
-                                    {new SingleDeclaration("r", new StringNode("", new DummyFilePlace()))}),
+                                new SingleDeclaration("r", new StringNode("", new DummyFilePlace()))),
                             new DeclarationNode(new DummyFilePlace(), LatteType.Int,
-                                new List<ISingleDeclaration>()
-                                    {new SingleDeclaration("i", new IntNode(0, new DummyFilePlace()))}),
+                                new SingleDeclaration("i", new IntNode(0, new DummyFilePlace()))),
                             new WhileNode(new DummyFilePlace(), new CompareNode(RelOperator.LessThan,
                                 new VariableNode("i", new DummyFilePlace()),
                                 new VariableNode("n", new DummyFilePlace()),
-                                new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new AssignmentNode(new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Add,
-                                    new VariableNode("r", new DummyFilePlace()),
-                                    new VariableNode("s", new DummyFilePlace()),
-                                    new DummyFilePlace())),
-                                new IncrementNode(new DummyFilePlace(), "i")
-                            })),
-                            new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))
-                        }))
-                });
-
+                                new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new AssignmentNode(
+                                    new DummyFilePlace(), "r", new BinaryNode(BinaryOperator.Add,
+                                        new VariableNode("r", new DummyFilePlace()),
+                                        new VariableNode("s", new DummyFilePlace()),
+                                        new DummyFilePlace())),
+                                new IncrementNode(new DummyFilePlace(), "i"))),
+                            new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))),
+                        new FunctionArgument(LatteType.String, "s"), new FunctionArgument(LatteType.Int, "n")));
+            
             var treeOptimizer = new TreeOptimizer();
             Assert.AreEqual(true, new TypeChecker().Visit(treeOptimizer.Visit(program)));
         }
