@@ -89,6 +89,7 @@
     <Compile Include="Good\Core020Tests.cs" />
     <Compile Include="Good\Core021Tests.cs" />
     <Compile Include="Good\Core022Tests.cs" />
+    <Compile Include="Optimization\OptimizeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
