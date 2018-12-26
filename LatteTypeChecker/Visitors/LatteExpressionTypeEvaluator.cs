@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using LatteBase;
 using LatteBase.AST;
@@ -108,24 +109,34 @@ namespace LatteTypeChecker.Visitors
 
             if (node.Operator == RelOperator.Equals || node.Operator == RelOperator.NotEquals)
             {
-                if (left != LatteType.Int && left != LatteType.Bool)
+                if (!IsDefinedEquality(left))
                     throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int, LatteType.Bool);
 
-                if (right != LatteType.Int && right != LatteType.Bool)
+                if (!IsDefinedEquality(right))
                     throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.Bool);
             }
             else
             {
-                if (left != LatteType.Int)
+                if (!IsDefinedComparison(left))
                     throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int);
 
-                if (right != LatteType.Int)
+                if (!IsDefinedComparison(right))
                     throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
             }
                         
             return LatteType.Bool;
         }
 
+        private bool IsDefinedEquality(LatteType type)
+        {
+            return type != LatteType.Void;
+        }
+
+        private bool IsDefinedComparison(LatteType type)
+        {
+            return type == LatteType.Int;
+        }
+        
         public override LatteType Visit(IFunctionCallNode node)
         { 
             if (!functions.IsDefined(node.FunctionName))
