@@ -28,9 +28,19 @@ namespace LatteAntlr
             parser.BuildParseTree = true;
 
             parser.ErrorHandler = new BailErrorStrategy();
-            
-            IProgram program = new ProgramGenerator().Visit(parser.program());
 
+            IProgram program;
+            
+            try
+            {
+                program = new ProgramGenerator().Visit(parser.program());
+            }
+            catch (Antlr4.Runtime.Misc.ParseCanceledException e)
+            {
+                program = null;
+            }
+            
+            
             if (parser.NumberOfSyntaxErrors > 0)
                 program = null;
             
