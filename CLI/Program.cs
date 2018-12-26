@@ -8,17 +8,21 @@ namespace CLI
     {
         public static void Main(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 Console.WriteLine("Usage: ./cli [program] ");
                 Environment.Exit(-1);
             }
-            
-            var text = File.ReadAllText(args[0]);
-            
-            Parser parser = new Parser();
 
-            parser.Parse(text);
+            foreach (var arg in args)
+            {
+                var text = File.ReadAllText(arg);
+            
+                Parser parser = new Parser();
+
+                parser.Parse(Path.GetFileNameWithoutExtension(arg), text);                
+            }
+
         }
     }
 }

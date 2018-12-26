@@ -22,4 +22,25 @@ namespace LatteBase.Visitors
             return Visit((dynamic)node);
         }
     }
+    
+    public abstract class StatementVoidVisitor
+    {
+        public abstract void Visit(IEmptyNode node);
+        public abstract void Visit(IBlockNode node);
+        public abstract void Visit(IDeclarationNode node);
+        public abstract void Visit(IAssignmentNode node);
+        public abstract void Visit(IIncrementNode node);
+        public abstract void Visit(IDecrementNode node);
+        public abstract void Visit(IReturnNode node);
+        public abstract void Visit(IVoidReturnNode node);
+        public abstract void Visit(IIfNode node);
+        public abstract void Visit(IIfElseNode node);
+        public abstract void Visit(IWhileNode node);
+        public abstract void Visit(IExpressionStatementNode nodeNode);
+
+        public void Visit(IStatement node)
+        {
+            Visit((dynamic)node);
+        }
+    }
 }

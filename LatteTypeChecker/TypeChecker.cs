@@ -10,7 +10,7 @@ using Environment = LatteTypeChecker.Models.Environment;
 
 namespace LatteTypeChecker
 {
-    public class TypeChecker : ProgramVisitor<bool>
+    internal class TypeChecker : ProgramVisitor<bool>
     {
         private readonly IEnvironment environment;
 
@@ -65,10 +65,7 @@ namespace LatteTypeChecker
                 
                 var blockVisitor = new StatementTypeChecker(variables, environment, function.ReturnType);
                 
-                bool hasReturned = blockVisitor.Visit(function.Body);
-
-                if (!hasReturned && function.ReturnType != LatteType.Void)
-                    throw new ExpectedReturnInFunctionException(environment[function.Name], function.FilePlace);
+                blockVisitor.Visit(function.Body);
             }
             
             if (!environment.IsDefined("main"))

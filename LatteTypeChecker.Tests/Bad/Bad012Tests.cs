@@ -47,10 +47,8 @@ namespace LatteTypeChecker.Tests.Bad
                                 new AssignmentNode(new DummyFilePlace(), "b", new TrueNode(new DummyFilePlace()))
                             }))
                 });
-
-            var treeOptimizer = new TreeOptimizer();
             Assert.Catch<ExpectedReturnInFunctionException>(() =>
-                new TypeChecker().Visit(treeOptimizer.Visit(program))
+                new StaticAnalysisChecker().Visit(program)
             );
         }
     }

@@ -6,16 +6,16 @@ namespace LatteTypeChecker.Exceptions
 {
     public class ExpectedReturnInFunctionException : TypeCheckerException
     {
-        private readonly IFunctionDefinition function;
+        private readonly string function;
 
-        public ExpectedReturnInFunctionException(IFunctionDefinition function, IFilePlace filePlace) : base(filePlace)
+        public ExpectedReturnInFunctionException(string function, IFilePlace filePlace) : base(filePlace)
         {
             this.function = function;
         }
 
         public override string ToString()
         {
-            return $"No return in function {function.Name}. {base.ToString()}";
+            return $"No return in function {function}. {base.ToString()}";
         }
     }
 }

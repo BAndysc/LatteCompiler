@@ -55,10 +55,8 @@ namespace LatteTypeChecker.Tests.Bad
                                 new ReturnNode(new DummyFilePlace(), new VariableNode("y", new DummyFilePlace()))
                             }))
                 });
-
-            var treeOptimizer = new TreeOptimizer();
             Assert.Catch<ArgumentsCountMismatchException>(() =>
-                new TypeChecker().Visit(treeOptimizer.Visit(program))
+                new StaticAnalysisChecker().Visit(program)
             );
         }
     }

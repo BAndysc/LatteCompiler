@@ -255,9 +255,7 @@ namespace LatteTypeChecker.Tests.Good
                                 new IncrementNode(new DummyFilePlace(), "i"))),
                             new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))),
                         new FunctionArgument(LatteType.String, "s"), new FunctionArgument(LatteType.Int, "n")));
-            
-            var treeOptimizer = new TreeOptimizer();
-            Assert.AreEqual(true, new TypeChecker().Visit(treeOptimizer.Visit(program)));
+            Assert.AreEqual(true, new StaticAnalysisChecker().Visit(program));
         }
     }
 }

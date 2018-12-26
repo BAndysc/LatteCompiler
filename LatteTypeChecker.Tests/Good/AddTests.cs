@@ -28,7 +28,7 @@ namespace LatteTypeChecker.Tests.Good
                     }))
             });
 
-            Assert.AreEqual(true, new TypeChecker().Visit(program));
+            Assert.AreEqual(true, new StaticAnalysisChecker().Visit(program));
         }
     }
 

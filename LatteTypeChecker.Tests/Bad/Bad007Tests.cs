@@ -36,10 +36,8 @@ namespace LatteTypeChecker.Tests.Bad
                             new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
                         }))
                 });
-
-            var treeOptimizer = new TreeOptimizer();
             Assert.Catch<VariableRedefinitionException>(() =>
-                new TypeChecker().Visit(treeOptimizer.Visit(program))
+                new StaticAnalysisChecker().Visit(program)
             );
         }
     }

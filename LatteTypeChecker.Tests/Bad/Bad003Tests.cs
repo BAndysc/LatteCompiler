@@ -33,10 +33,8 @@ namespace LatteTypeChecker.Tests.Bad
                         }))
                 });
 
-            var treeOptimizer = new TreeOptimizer();
-
             Assert.Catch<RepeatedArgumentNameInFunctionDefinitionException>(() =>
-                new TypeChecker().Visit(treeOptimizer.Visit(program))
+                new StaticAnalysisChecker().Visit(program)
             );
         }
     }

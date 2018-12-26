@@ -7,7 +7,7 @@ using LatteTypeChecker.Models;
 
 namespace LatteTypeChecker.Visitors
 {
-    public class StatementTypeChecker : StatementVisitor<bool>
+    public class StatementTypeChecker : StatementVoidVisitor
     {
         private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
@@ -24,9 +24,8 @@ namespace LatteTypeChecker.Visitors
             expressionEvaluator = new LatteExpressionTypeEvaluator(variables, functions);
         }
 
-        public override bool Visit(IEmptyNode node)
+        public override void Visit(IEmptyNode node)
         {
-            return false;
         }
 
         private StatementTypeChecker GetBlockTypeChecker()
@@ -34,14 +33,15 @@ namespace LatteTypeChecker.Visitors
             return new StatementTypeChecker(variables.CopyForBlock(), functions, expectedReturnType);
         }
         
-        public override bool Visit(IBlockNode node)
+        public override void Visit(IBlockNode node)
         {
             var blockChecker = GetBlockTypeChecker();
 
-            return node.Statements.Select(blockChecker.Visit).Aggregate(false, (aggregate, value) => aggregate | value);
+            foreach (var stmt in node.Statements)
+                blockChecker.Visit(stmt);
         }
 
-        public override bool Visit(IDeclarationNode node)
+        public override void Visit(IDeclarationNode node)
         {
             var declarationType = node.Type;
 
@@ -67,11 +67,9 @@ namespace LatteTypeChecker.Visitors
                 
                 variables.Define(variableDefinition);
             }
-            
-            return false;
         }
 
-        public override bool Visit(IAssignmentNode node)
+        public override void Visit(IAssignmentNode node)
         {
             var type = expressionEvaluator.Visit(node.Value);
             
@@ -84,11 +82,9 @@ namespace LatteTypeChecker.Visitors
             {
                 throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
             }
-            
-            return false;
         }
 
-        public override bool Visit(IIncrementNode node)
+        public override void Visit(IIncrementNode node)
         {
             var variable = new VariableDefinition(node.Variable, LatteType.Int);
             
@@ -97,11 +93,9 @@ namespace LatteTypeChecker.Visitors
 
             if (variables[node.Variable].Type != LatteType.Int)
                 throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
-
-            return false;
         }
 
-        public override bool Visit(IDecrementNode node)
+        public override void Visit(IDecrementNode node)
         {
             var variable = new VariableDefinition(node.Variable, LatteType.Int);
             
@@ -110,11 +104,9 @@ namespace LatteTypeChecker.Visitors
 
             if (variables[node.Variable].Type != LatteType.Int)
                 throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
-
-            return false;
         }
 
-        public override bool Visit(IReturnNode node)
+        public override void Visit(IReturnNode node)
         {
             if (expectedReturnType == LatteType.Void)
                 throw new InvalidReturnExpressionException(node.FilePlace);   
@@ -123,19 +115,15 @@ namespace LatteTypeChecker.Visitors
             
             if (expectedReturnType != givenReturnType)
                 throw new InvalidReturnTypeException(expectedReturnType, givenReturnType, node.FilePlace);
-
-            return true;
         }
 
-        public override bool Visit(IVoidReturnNode node)
+        public override void Visit(IVoidReturnNode node)
         {
             if (expectedReturnType != LatteType.Void)
                 throw new InvalidReturnTypeException(expectedReturnType, LatteType.Void, node.FilePlace);
-
-            return true;
         }
 
-        public override bool Visit(IIfNode node)
+        public override void Visit(IIfNode node)
         {
             var conditionType = expressionEvaluator.Visit(node.Condition);
 
@@ -143,24 +131,9 @@ namespace LatteTypeChecker.Visitors
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
             
             GetBlockTypeChecker().Visit(node.Statement);
-
-            return false;
         }
 
-        public override bool Visit(IIfElseNode node)
-        {
-            var conditionType = expressionEvaluator.Visit(node.Condition);
-
-            if (conditionType != LatteType.Bool)
-                throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
-            
-            var returnInIf = GetBlockTypeChecker().Visit(node.Statement);
-            var returnInElse = GetBlockTypeChecker().Visit(node.ElseStatement);
-
-            return returnInIf && returnInElse;
-        }
-
-        public override bool Visit(IWhileNode node)
+        public override void Visit(IIfElseNode node)
         {
             var conditionType = expressionEvaluator.Visit(node.Condition);
 
@@ -168,14 +141,22 @@ namespace LatteTypeChecker.Visitors
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
             
             GetBlockTypeChecker().Visit(node.Statement);
-
-            return false;
+            GetBlockTypeChecker().Visit(node.ElseStatement);
         }
 
-        public override bool Visit(IExpressionStatementNode nodeNode)
+        public override void Visit(IWhileNode node)
+        {
+            var conditionType = expressionEvaluator.Visit(node.Condition);
+
+            if (conditionType != LatteType.Bool)
+                throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            GetBlockTypeChecker().Visit(node.Statement);
+        }
+
+        public override void Visit(IExpressionStatementNode nodeNode)
         {
             expressionEvaluator.Visit(nodeNode.Expression);
-            return false;
         }
     }
 }

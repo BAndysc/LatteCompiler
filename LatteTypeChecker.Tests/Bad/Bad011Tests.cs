@@ -30,10 +30,8 @@ namespace LatteTypeChecker.Tests.Bad
                             new ReturnNode(new DummyFilePlace(), new TrueNode(new DummyFilePlace()))
                         }))
                 });
-
-            var treeOptimizer = new TreeOptimizer();
             Assert.Catch<InvalidReturnTypeException>(() =>
-                new TypeChecker().Visit(treeOptimizer.Visit(program))
+                new StaticAnalysisChecker().Visit(program)
             );
         }
     }

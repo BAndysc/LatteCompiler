@@ -123,6 +123,9 @@ namespace LatteTypeChecker.Visitors
                 if (!IsDefinedComparison(right))
                     throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
             }
+            
+            if (left != right)
+                throw new InvalidOperatorUsageException(right, node.FilePlace, left);
                         
             return LatteType.Bool;
         }

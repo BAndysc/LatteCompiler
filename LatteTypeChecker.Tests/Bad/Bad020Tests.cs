@@ -3,6 +3,7 @@ using LatteBase;
 using LatteBase.AST;
 using LatteBase.AST.Impl;
 using LatteTreeOptimizer;
+using LatteTypeChecker.Exceptions;
 using NUnit.Framework;
 
 // Author: p. Marcin Benke
@@ -43,9 +44,7 @@ namespace LatteTypeChecker.Tests.Bad
                             new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
                         }))
                 });
-
-            var treeOptimizer = new TreeOptimizer();
-            Assert.AreEqual(true, new TypeChecker().Visit(treeOptimizer.Visit(program)));
+            Assert.Catch<InvalidOperatorUsageException>(() => new StaticAnalysisChecker().Visit(program));
         }
     }
 }

@@ -66,6 +66,8 @@
     <Compile Include="Models\IVariableEnvironment.cs" />
     <Compile Include="Models\VariableDefinition.cs" />
     <Compile Include="Models\VariableEnvironment.cs" />
+    <Compile Include="ReturnPresenceChecker.cs" />
+    <Compile Include="StaticAnalysisChecker.cs" />
     <Compile Include="TypeChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\LatteExpressionTypeEvaluator.cs" />
@@ -75,6 +77,10 @@
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
       <Project>{a4a1d9fa-6689-4869-b68c-729c3081aae7}</Project>
       <Name>LatteBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LatteTreeOptimizer\LatteTreeOptimizer.csproj">
+      <Project>{70a0fea2-5e7e-4eef-ac43-b34b80775e03}</Project>
+      <Name>LatteTreeOptimizer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
