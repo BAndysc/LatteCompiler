@@ -14,13 +14,13 @@ namespace CLI
                 Environment.Exit(-1);
             }
 
-            //foreach (var arg in args)
+                foreach (var arg in args)
             {
-                var text = File.ReadAllText("/home/bartek/RiderProjects/Latte/test.lat");
+                var text = File.ReadAllText(arg);
             
                 Parser parser = new Parser();
 
-                parser.Parse(Path.GetFileNameWithoutExtension("/home/bartek/RiderProjects/Latte/test.lat"), text);                
+                parser.Parse(Path.GetFileNameWithoutExtension(arg), text);                
             }
 
         }

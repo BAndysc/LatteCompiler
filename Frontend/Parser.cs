@@ -30,14 +30,18 @@ namespace Frontend
                 var typeChecker = new StaticAnalysisChecker();
 
                 typeChecker.Visit(programTree);
+                
+                Console.WriteLine("OK");
             }
             catch (TypeCheckerException e)
             {
+                Console.WriteLine("ERROR");
                 Console.WriteLine($"Type check error: {e}");
                 Environment.Exit(-1);
             }
             catch (SyntaxException e)
             {
+                Console.WriteLine("ERROR");
                 Console.WriteLine($"Syntax error: {e}");
                 Environment.Exit(-1);
             }

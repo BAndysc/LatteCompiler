@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Antlr4.Runtime;
 using LatteAntlr.AST;
 using LatteAntlr.AST.Generators;
@@ -27,8 +28,9 @@ namespace LatteAntlr
             LatteParser parser = new LatteParser(stream);
             
             parser.BuildParseTree = true;
-
-            parser.ErrorHandler = new BailErrorStrategy();
+            parser.RemoveErrorListeners();
+            parser.AddErrorListener(new CustomErrorListener());
+            //parser.ErrorHandler = new BailErrorStrategy();
 
             IProgram program;
             
@@ -45,6 +47,15 @@ namespace LatteAntlr
                 program = null;
             
             return program;
+        }
+    }
+
+    public class CustomErrorListener : IAntlrErrorListener<IToken>
+    {
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine,
+            string msg, RecognitionException e)
+        {
+            throw new ParserException(new Exception(msg), null);
         }
     }
 }
