@@ -1,5 +1,6 @@
 all:
 	xbuild /p:Configuration=Release
+	mkdir -p lib
 	cp -r CLI/bin/Release/* lib/
 	cp scripts/latc_x86 .
 	cp scripts/latc_x86 latc

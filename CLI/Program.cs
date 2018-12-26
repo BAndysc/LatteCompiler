@@ -8,7 +8,7 @@ namespace CLI
     {
         public static void Main(string[] args)
         {
-            if (args.Length < 0)
+            if (args.Length < 1)
             {
                 Console.WriteLine("Usage: ./cli [program] ");
                 Environment.Exit(-1);
