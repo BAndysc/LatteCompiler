@@ -2,9 +2,11 @@ all:
 	xbuild /p:Configuration=Release
 	cp -r CLI/bin/Release/* lib/
 	cp scripts/latc_x86 .
+	cp scripts/latc_x86 latc
 
 clean:
 	rm -rf latc_x86
+	rm -rf latc
 	rm -rf lib
 
 test:
