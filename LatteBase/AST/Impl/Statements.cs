@@ -2,16 +2,16 @@ using System.Collections.Generic;
 using LatteBase;
 using LatteBase.AST;
 
-namespace LatteAntlr.AST
+namespace LatteBase.AST.Impl
 {
-    internal class EmptyNode : Node, IEmptyNode
+    public class EmptyNode : Node, IEmptyNode
     {
         public EmptyNode(IFilePlace place) : base(place)
         {
         }
     }
     
-    internal class BlockNode : Node, IBlockNode
+    public class BlockNode : Node, IBlockNode
     {
         public BlockNode(IFilePlace place, IEnumerable<IStatement> statements) : base(place)
         {
@@ -21,7 +21,7 @@ namespace LatteAntlr.AST
         public IEnumerable<IStatement> Statements { get; }
     }
         
-    internal class SingleDeclaration : ISingleDeclaration
+    public class SingleDeclaration : ISingleDeclaration
     {
         public SingleDeclaration(string name, IExpressionNode value)
         {
@@ -33,7 +33,7 @@ namespace LatteAntlr.AST
         public IExpressionNode Value { get; }
     }
     
-    internal class DeclarationNode : Node, IDeclarationNode
+    public class DeclarationNode : Node, IDeclarationNode
     {
         public DeclarationNode(IFilePlace place, LatteType type, IEnumerable<ISingleDeclaration> declarations) : base(place)
         {
@@ -45,7 +45,7 @@ namespace LatteAntlr.AST
         public IEnumerable<ISingleDeclaration> Declarations { get; }
     }
     
-    internal class AssignmentNode : Node, IAssignmentNode
+    public class AssignmentNode : Node, IAssignmentNode
     {
         public AssignmentNode(IFilePlace place, string variable, IExpressionNode value) : base(place)
         {
@@ -57,7 +57,7 @@ namespace LatteAntlr.AST
         public IExpressionNode Value { get; }
     }
     
-    internal class IncrementNode : Node, IIncrementNode
+    public class IncrementNode : Node, IIncrementNode
     {
         public IncrementNode(IFilePlace place, string variable) : base(place)
         {
@@ -67,7 +67,7 @@ namespace LatteAntlr.AST
         public string Variable { get; }
     }
     
-    internal class DecrementNode : Node, IDecrementNode
+    public class DecrementNode : Node, IDecrementNode
     {
         public DecrementNode(IFilePlace place, string variable) : base(place)
         {
@@ -77,7 +77,7 @@ namespace LatteAntlr.AST
         public string Variable { get; }
     }
     
-    internal class ReturnNode : Node, IReturnNode
+    public class ReturnNode : Node, IReturnNode
     {
         public ReturnNode(IFilePlace place, IExpressionNode returnExpression) : base(place)
         {
@@ -87,13 +87,13 @@ namespace LatteAntlr.AST
         public IExpressionNode ReturnExpression { get; }
     }
     
-    internal class VoidReturnNode : Node, IVoidReturnNode
+    public class VoidReturnNode : Node, IVoidReturnNode
     {
         public VoidReturnNode(IFilePlace place) : base(place)
         {
         }
     }
-    internal class IfNode : Node, IIfNode
+    public class IfNode : Node, IIfNode
     {
         public IfNode(IFilePlace place, IExpressionNode condition, IStatement statement) : base(place)
         {
@@ -105,7 +105,7 @@ namespace LatteAntlr.AST
         public IStatement Statement { get; }
     }
     
-    internal class IfElseNode : Node, IIfElseNode
+    public class IfElseNode : Node, IIfElseNode
     {
         public IfElseNode(IFilePlace place, IExpressionNode condition, IStatement statement, IStatement elseStatement) : base(place)
         {
@@ -119,7 +119,7 @@ namespace LatteAntlr.AST
         public IStatement ElseStatement { get; }
     }
     
-    internal class WhileNode : Node, IWhileNode
+    public class WhileNode : Node, IWhileNode
     {
         public WhileNode(IFilePlace place, IExpressionNode condition, IStatement statement) : base(place)
         {
@@ -131,7 +131,7 @@ namespace LatteAntlr.AST
         public IStatement Statement { get; }
     }
     
-    internal class ExpressionStatementNode : Node, IExpressionStatementNode
+    public class ExpressionStatementNode : Node, IExpressionStatementNode
     {
         public ExpressionStatementNode(IFilePlace place, IExpressionNode expression) : base(place)
         {

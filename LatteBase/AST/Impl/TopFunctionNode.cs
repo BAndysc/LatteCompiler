@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using LatteBase;
 using LatteBase.AST;
 
-namespace LatteAntlr.AST
+namespace LatteBase.AST.Impl
 {
-    internal class FunctionArgument : IFunctionArgument
+    public class FunctionArgument : IFunctionArgument
     {
         public FunctionArgument(LatteType type, string name)
         {
@@ -16,7 +16,7 @@ namespace LatteAntlr.AST
         public string Name { get; }
     }
     
-    internal class TopFunctionNode : Node, ITopFunctionNode
+    public class TopFunctionNode : Node, ITopFunctionNode
     {
         public TopFunctionNode(IFilePlace place, LatteType type, string name, IEnumerable<IFunctionArgument> arguments, IStatement body) : base(place)
         {

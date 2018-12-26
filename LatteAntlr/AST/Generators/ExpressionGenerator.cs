@@ -2,6 +2,7 @@ using System.Linq;
 using LatteAntlr.Exceptions;
 using LatteAntlr.Visitors;
 using LatteBase.AST;
+using LatteBase.AST.Impl;
 
 namespace LatteAntlr.AST.Generators
 {

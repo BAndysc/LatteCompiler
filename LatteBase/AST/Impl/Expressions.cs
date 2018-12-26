@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 using LatteBase.AST;
 
-namespace LatteAntlr.AST
+namespace LatteBase.AST.Impl
 {
 
-    internal class Node : INode
+    public class Node : INode
     {
         public IFilePlace FilePlace { get; }
         
@@ -15,27 +13,8 @@ namespace LatteAntlr.AST
             FilePlace = place;
         }
     }
-
-    internal class FilePlace : IFilePlace
-    {
-        public int LineNumber { get; }
-        public string Text { get; }
-
-        public FilePlace(int line, string text)
-        {
-            LineNumber = line;
-            Text = text;
-        }
-        
-        public FilePlace(ParserRuleContext context)
-        {
-            LineNumber = context.Start.Line;
-            Text = context.Start.InputStream.GetText(new Interval(context.Start.StartIndex, context.Stop.StopIndex));
-        }
-    }
     
-    
-    internal class IntNode : Node, IIntNode
+    public class IntNode : Node, IIntNode
     {
         public int Value { get; }
 
@@ -45,21 +24,21 @@ namespace LatteAntlr.AST
         }
     }
 
-    internal class TrueNode : Node, ITrueNode
+    public class TrueNode : Node, ITrueNode
     {
         public TrueNode(IFilePlace place) : base(place)
         {
         }
     }
 
-    internal class FalseNode : Node, IFalseNode
+    public class FalseNode : Node, IFalseNode
     {
         public FalseNode(IFilePlace place) : base(place)
         {
         }
     }
 
-    internal class StringNode : Node, IStringNode
+    public class StringNode : Node, IStringNode
     {
         public string Text { get; }
 
@@ -69,7 +48,7 @@ namespace LatteAntlr.AST
         }
     }
 
-    internal class VariableNode : Node, IVariableNode
+    public class VariableNode : Node, IVariableNode
     {
         public string Variable { get; }
 
@@ -79,7 +58,7 @@ namespace LatteAntlr.AST
         }
     }
     
-    internal class NegateNode : Node, INegateNode
+    public class NegateNode : Node, INegateNode
     {
         public IExpressionNode Expression { get; }
 
@@ -89,7 +68,7 @@ namespace LatteAntlr.AST
         }
     }
 
-    internal class AndNode : Node, IAndNode
+    public class AndNode : Node, IAndNode
     {
         public IExpressionNode Left { get; }
         public IExpressionNode Right { get; }
@@ -101,7 +80,7 @@ namespace LatteAntlr.AST
         }
     }
     
-    internal class OrNode : Node, IOrNode
+    public class OrNode : Node, IOrNode
     {
         public IExpressionNode Left { get; }
         public IExpressionNode Right { get; }
@@ -113,7 +92,7 @@ namespace LatteAntlr.AST
         }
     }
     
-    internal class BinaryNode : Node, IBinaryNode
+    public class BinaryNode : Node, IBinaryNode
     {
         public BinaryOperator Operator { get; }
         public IExpressionNode Left { get; }
@@ -127,7 +106,7 @@ namespace LatteAntlr.AST
         }
     }
     
-    internal class CompareNode : Node, ICompareNode
+    public class CompareNode : Node, ICompareNode
     {
         public RelOperator Operator { get; }
         public IExpressionNode Left { get; }
@@ -141,7 +120,7 @@ namespace LatteAntlr.AST
         }
     }
 
-    internal class FunctionCallNode : Node, IFunctionCallNode
+    public class FunctionCallNode : Node, IFunctionCallNode
     {
         public string FunctionName { get; }
         public IList<IExpressionNode> Arguments { get; }

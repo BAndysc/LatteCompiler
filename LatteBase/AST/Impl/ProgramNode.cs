@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using LatteBase.AST;
 
-namespace LatteAntlr.AST
+namespace LatteBase.AST.Impl
 {
-    internal class ProgramNode : IProgram
+    public class ProgramNode : IProgram
     {
         public ProgramNode(IEnumerable<ITopFunctionNode> functions)
         {

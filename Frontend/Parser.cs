@@ -9,6 +9,7 @@ using Antlr4.Runtime.Sharpen;
 using Antlr4.Runtime.Tree;
 using LatteAntlr;
 using LatteBase;
+using LatteBase.AST;
 using LatteBase.Visitors;
 using LatteTypeChecker;
 using LatteTypeChecker.Exceptions;
@@ -35,6 +36,7 @@ namespace Frontend
                 Console.WriteLine($"Type check error: {e}");
             }
         }
+
     }
 //
 //    public class Listener2 : LatteBaseListener

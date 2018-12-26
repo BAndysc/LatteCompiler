@@ -44,17 +44,14 @@
   <ItemGroup>
     <Compile Include="AstGenerator.cs" />
     <Compile Include="AST\BinaryOperatorVisitor.cs" />
-    <Compile Include="AST\Expressions.cs" />
+    <Compile Include="AST\FilePlace.cs" />
     <Compile Include="AST\Generators\BlockGenerator.cs" />
     <Compile Include="AST\Generators\ExpressionGenerator.cs" />
     <Compile Include="AST\Generators\LatteTypeGenerator.cs" />
     <Compile Include="AST\Generators\ProgramGenerator.cs" />
     <Compile Include="AST\Generators\StatementGenerator.cs" />
     <Compile Include="AST\Generators\TopFunctionGenerator.cs" />
-    <Compile Include="AST\ProgramNode.cs" />
     <Compile Include="AST\RelOperatorVisitor.cs" />
-    <Compile Include="AST\Statements.cs" />
-    <Compile Include="AST\TopFunctionNode.cs" />
     <Compile Include="Exceptions\IntegerOutOfRangeException.cs" />
     <Compile Include="Exceptions\ParserUnhandledException.cs" />
     <Compile Include="Exceptions\SyntaxException.cs" />
