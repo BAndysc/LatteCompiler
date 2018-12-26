@@ -1,3 +1,4 @@
+using System;
 using LatteBase.AST;
 using LatteBase.Visitors;
 
@@ -83,6 +84,39 @@ namespace LatteTreeOptimizer
 
         public override bool? Visit(ICompareNode node)
         {
+            var boolLeft = Visit(node.Left);
+            var boolRight = Visit(node.Right);
+
+            var intLeft = new IntCompileTimeEvaluator().Visit(node.Left);
+            var intRight = new IntCompileTimeEvaluator().Visit(node.Right);
+
+            if (boolLeft.HasValue && boolRight.HasValue)
+            {
+                if (node.Operator == RelOperator.Equals)
+                    return boolLeft.Value == boolRight.Value;
+                else if (node.Operator == RelOperator.NotEquals)
+                    return boolLeft.Value != boolRight.Value;
+            }
+
+            if (intLeft.HasValue && intRight.HasValue)
+            {
+                switch (node.Operator)
+                {
+                    case RelOperator.LessThan:
+                        return intLeft.Value < intRight.Value;
+                    case RelOperator.LessEquals:
+                        return intLeft.Value <= intRight.Value;
+                    case RelOperator.GreaterThan:
+                        return intLeft.Value > intRight.Value;
+                    case RelOperator.GreaterEquals:
+                        return intLeft.Value >= intRight.Value;
+                    case RelOperator.Equals:
+                        return intLeft.Value == intRight.Value;
+                    case RelOperator.NotEquals:
+                        return intLeft.Value != intRight.Value;
+                }
+            }
+
             return null;
         }
 

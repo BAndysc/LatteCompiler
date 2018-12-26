@@ -41,6 +41,7 @@
     <Compile Include="BoolCompileTimeEvaluator.cs" />
     <Compile Include="ExpressionOptimizer.cs" />
     <Compile Include="FunctionOptimizer.cs" />
+    <Compile Include="IntCompileTimeEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatementOptimizer.cs" />
     <Compile Include="TreeOptimizer.cs" />

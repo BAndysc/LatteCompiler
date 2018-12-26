@@ -1,10 +1,14 @@
 using LatteBase.AST;
+using LatteBase.AST.Impl;
 using LatteBase.Visitors;
 
 namespace LatteTreeOptimizer
 {
     internal class ExpressionOptimizer : ExpressionVisitor<IExpressionNode>
     {
+        private BoolCompileTimeEvaluator boolOptimizer = new BoolCompileTimeEvaluator();
+        private IntCompileTimeEvaluator intOptimizer = new IntCompileTimeEvaluator();
+        
         public override IExpressionNode Visit(IIntNode node)
         {
             return node;
@@ -37,22 +41,56 @@ namespace LatteTreeOptimizer
 
         public override IExpressionNode Visit(IAndNode node)
         {
-            return node;
+            var val = boolOptimizer.Visit(node);
+
+            if (val.HasValue)
+            {
+                if (val.Value)
+                    return new TrueNode(node.FilePlace);
+                return new FalseNode(node.FilePlace);
+            }
+            
+            return new AndNode(Visit(node.Left), Visit(node.Right), node.FilePlace);
+
         }
 
         public override IExpressionNode Visit(IOrNode node)
         {
-            return node;
+            var val = boolOptimizer.Visit(node);
+
+            if (val.HasValue)
+            {
+                if (val.Value)
+                    return new TrueNode(node.FilePlace);
+                return new FalseNode(node.FilePlace);
+            }
+            
+            return new OrNode(Visit(node.Left), Visit(node.Right), node.FilePlace);
+
         }
 
         public override IExpressionNode Visit(IBinaryNode node)
         {
-            return node;
+            var val = intOptimizer.Visit(node);
+            
+            if (val.HasValue)
+                return new IntNode(val.Value, node.FilePlace);
+            
+            return new BinaryNode(node.Operator, Visit(node.Left), Visit(node.Right), node.FilePlace);
         }
 
         public override IExpressionNode Visit(ICompareNode node)
         {
-            return node;
+            var val = boolOptimizer.Visit(node);
+
+            if (val.HasValue)
+            {
+                if (val.Value)
+                    return new TrueNode(node.FilePlace);
+                return new FalseNode(node.FilePlace);
+            }
+            
+            return new CompareNode(node.Operator, Visit(node.Left), Visit(node.Right), node.FilePlace);
         }
 
         public override IExpressionNode Visit(IFunctionCallNode node)
