@@ -53,6 +53,7 @@
     <Compile Include="AST\Generators\TopFunctionGenerator.cs" />
     <Compile Include="AST\RelOperatorVisitor.cs" />
     <Compile Include="Exceptions\IntegerOutOfRangeException.cs" />
+    <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Exceptions\ParserUnhandledException.cs" />
     <Compile Include="Exceptions\SyntaxException.cs" />
     <Compile Include="LatteBaseListener.cs" />

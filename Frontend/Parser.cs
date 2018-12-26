@@ -8,6 +8,7 @@ using Antlr4.Runtime.Dfa;
 using Antlr4.Runtime.Sharpen;
 using Antlr4.Runtime.Tree;
 using LatteAntlr;
+using LatteAntlr.Exceptions;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.CodeGenerators;
@@ -22,22 +23,22 @@ namespace Frontend
     {
         public void Parse(string file, string text)
         {
-            var programTree = new AstGenerator(text).GenerateAst();
-
-            var typeChecker = new StaticAnalysisChecker();
-
-            if (programTree == null)
+            try
             {
-                Console.WriteLine("Syntax error");
-                Environment.Exit(-1);
-            }
-            
-            try {
+                var programTree = new AstGenerator(text).GenerateAst();
+
+                var typeChecker = new StaticAnalysisChecker();
+
                 typeChecker.Visit(programTree);
-            } 
+            }
             catch (TypeCheckerException e)
             {
                 Console.WriteLine($"Type check error: {e}");
+                Environment.Exit(-1);
+            }
+            catch (SyntaxException e)
+            {
+                Console.WriteLine($"Syntax error: {e}");
                 Environment.Exit(-1);
             }
         }

@@ -8,19 +8,19 @@ namespace CLI
     {
         public static void Main(string[] args)
         {
-            if (args.Length < 1)
+            if (args.Length < 0)
             {
                 Console.WriteLine("Usage: ./cli [program] ");
                 Environment.Exit(-1);
             }
 
-            foreach (var arg in args)
+            //foreach (var arg in args)
             {
-                var text = File.ReadAllText(arg);
+                var text = File.ReadAllText("/home/bartek/RiderProjects/Latte/test.lat");
             
                 Parser parser = new Parser();
 
-                parser.Parse(Path.GetFileNameWithoutExtension(arg), text);                
+                parser.Parse(Path.GetFileNameWithoutExtension("/home/bartek/RiderProjects/Latte/test.lat"), text);                
             }
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Antlr4.Runtime;
 using LatteAntlr.AST;
 using LatteAntlr.AST.Generators;
+using LatteAntlr.Exceptions;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.AST.Impl;
@@ -37,9 +38,8 @@ namespace LatteAntlr
             }
             catch (Antlr4.Runtime.Misc.ParseCanceledException e)
             {
-                program = null;
+                throw new ParserException(e.InnerException, new FilePlace(0, ""));
             }
-            
             
             if (parser.NumberOfSyntaxErrors > 0)
                 program = null;
