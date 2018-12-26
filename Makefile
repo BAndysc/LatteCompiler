@@ -1,6 +1,6 @@
 all:
 	xbuild /p:Configuration=Release
-	cp -r CLI/bin/Release lib/
+	cp -r CLI/bin/Release/* lib/
 	cp scripts/latc_x86 .
 
 clean:
