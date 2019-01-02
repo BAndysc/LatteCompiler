@@ -12,4 +12,4 @@ clean:
 
 test:
 	xbuild
-	mono packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe LatteTypeChecker.Tests/bin/Debug/LatteTypeChecker.Tests.dll
+	mono packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe LatteTypeChecker.Tests/bin/Debug/LatteTypeChecker.Tests.dll QuadruplesGenerator.Tests/bin/Debug/QuadruplesGenerator.Tests.dll
