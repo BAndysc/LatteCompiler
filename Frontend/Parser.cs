@@ -21,7 +21,7 @@ namespace Frontend
 {
     public class Parser
     {
-        public void Parse(string file, string text)
+        public IProgram Parse(string file, string text)
         {
             try
             {
@@ -32,6 +32,8 @@ namespace Frontend
                 typeChecker.Visit(programTree);
                 
                 Console.WriteLine("OK");
+
+                return programTree;
             }
             catch (TypeCheckerException e)
             {
@@ -45,6 +47,8 @@ namespace Frontend
                 Console.WriteLine($"Syntax error: {e}");
                 Environment.Exit(-1);
             }
+
+            return null;
         }
     }
 }

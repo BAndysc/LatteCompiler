@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}</ProjectGuid>
+    <ProjectGuid>{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LatteTreeOptimizer</RootNamespace>
-    <AssemblyName>LatteTreeOptimizer</AssemblyName>
+    <RootNamespace>QuadruplesCommon</RootNamespace>
+    <AssemblyName>QuadruplesCommon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,20 +32,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoolCompileTimeEvaluator.cs" />
-    <Compile Include="ExpressionOptimizer.cs" />
-    <Compile Include="FunctionOptimizer.cs" />
-    <Compile Include="IntCompileTimeEvaluator.cs" />
-    <Compile Include="IsReturnStatement.cs" />
+    <Compile Include="DirectValue.cs" />
+    <Compile Include="IRegister.cs" />
+    <Compile Include="IStore.cs" />
+    <Compile Include="Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatementOptimizer.cs" />
-    <Compile Include="TreeOptimizer.cs" />
+    <Compile Include="QuadrupleBase.cs" />
+    <Compile Include="QuadruplesProgram.cs" />
+    <Compile Include="Quadruples\AddQuadruple.cs" />
+    <Compile Include="Quadruples\CompareQuadruple.cs" />
+    <Compile Include="Quadruples\DivQuadruple.cs" />
+    <Compile Include="Quadruples\FuncDefQuadruple.cs" />
+    <Compile Include="Quadruples\FunctionCallQuadruple.cs" />
+    <Compile Include="Quadruples\ImmediateValueQuadruple.cs" />
+    <Compile Include="Quadruples\JumpAlwaysQuadruple.cs" />
+    <Compile Include="Quadruples\JumpQuadruple.cs" />
+    <Compile Include="Quadruples\LabelQuadruple.cs" />
+    <Compile Include="Quadruples\LoadLabelPtrQuadruple.cs" />
+    <Compile Include="Quadruples\LoadQuadruple.cs" />
+    <Compile Include="Quadruples\LocalQuadruple.cs" />
+    <Compile Include="Quadruples\ModQuadruple.cs" />
+    <Compile Include="Quadruples\MulQuadruple.cs" />
+    <Compile Include="Quadruples\QuadrupleVisitor.cs" />
+    <Compile Include="Quadruples\ReturnQuadruple.cs" />
+    <Compile Include="Quadruples\ReturnVoidQuadruple.cs" />
+    <Compile Include="Quadruples\SetIfQuadruple.cs" />
+    <Compile Include="Quadruples\StoreQuadruple.cs" />
+    <Compile Include="Quadruples\SubQuadruple.cs" />
+    <Compile Include="Register.cs" />
+    <Compile Include="Store.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">

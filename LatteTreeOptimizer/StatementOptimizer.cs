@@ -19,7 +19,21 @@ namespace LatteTreeOptimizer
 
         public override IStatement Visit(IBlockNode node)
         {
-            return new BlockNode(node.FilePlace, node.Statements.Select(Visit));
+            var returnDetector = new IsReturnStatement();
+
+            var stmts = new List<IStatement>();
+            
+            foreach (var stmt in node.Statements)
+            {
+                var optimized = Visit(stmt);
+
+                stmts.Add(optimized);
+                
+                if (returnDetector.Visit(optimized))
+                    break;
+            }
+            
+            return new BlockNode(node.FilePlace, stmts);
         }
 
         public override IStatement Visit(IDeclarationNode node)

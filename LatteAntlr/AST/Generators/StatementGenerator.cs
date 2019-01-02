@@ -44,7 +44,7 @@ namespace LatteAntlr.AST.Generators
 
         public override IStatement VisitDecr(LatteParser.DecrContext context)
         {
-            return new IncrementNode(new FilePlace(context), context.ID().GetText());
+            return new DecrementNode(new FilePlace(context), context.ID().GetText());
         }
 
         public override IStatement VisitRet(LatteParser.RetContext context)

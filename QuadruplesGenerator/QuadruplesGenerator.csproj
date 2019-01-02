@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}</ProjectGuid>
+    <ProjectGuid>{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LatteTreeOptimizer</RootNamespace>
-    <AssemblyName>LatteTreeOptimizer</AssemblyName>
+    <RootNamespace>QuadruplesGenerator</RootNamespace>
+    <AssemblyName>QuadruplesGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,19 +38,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoolCompileTimeEvaluator.cs" />
-    <Compile Include="ExpressionOptimizer.cs" />
-    <Compile Include="FunctionOptimizer.cs" />
-    <Compile Include="IntCompileTimeEvaluator.cs" />
-    <Compile Include="IsReturnStatement.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="Generators\ExpressionGenerator.cs" />
+    <Compile Include="Generators\StatementGenerator.cs" />
+    <Compile Include="LocalValuesCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatementOptimizer.cs" />
-    <Compile Include="TreeOptimizer.cs" />
+    <Compile Include="RegisterAllocators\DefiningRegisterEvaluator.cs" />
+    <Compile Include="RegisterAllocators\INativeRegister.cs" />
+    <Compile Include="RegisterAllocators\IRegisterAllocator.cs" />
+    <Compile Include="RegisterAllocators\NaiveRegisterAllocator.cs" />
+    <Compile Include="RegisterAllocators\IRegisterAllocation.cs" />
+    <Compile Include="RegisterAllocators\RegisterAllocation.cs" />
+    <Compile Include="RegisterAllocators\RequiredRegistersEvaluator.cs" />
+    <Compile Include="ValueMaxCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
       <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
       <Name>LatteBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuadruplesCommon\QuadruplesCommon.csproj">
+      <Project>{2acaf98e-a6cc-4e55-be0e-0b0bce19309d}</Project>
+      <Name>QuadruplesCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

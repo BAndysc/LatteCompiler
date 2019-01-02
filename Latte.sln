@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteTypeChecker.Tests", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteTreeOptimizer", "LatteTreeOptimizer\LatteTreeOptimizer.csproj", "{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadruplesCommon", "QuadruplesCommon\QuadruplesCommon.csproj", "{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadruplesGenerator", "QuadruplesGenerator\QuadruplesGenerator.csproj", "{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadruplesGenerator.Tests", "QuadruplesGenerator.Tests\QuadruplesGenerator.Tests.csproj", "{A943F07B-277F-4514-9A2F-5E87E4A2755E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +54,17 @@ Global
 		{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A0FEA2-5E7E-4EEF-AC43-B34B80775E03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ACAF98E-A6CC-4E55-BE0E-0B0BCE19309D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D60B2E15-165F-4489-AEE9-AB24DCFA0EF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A943F07B-277F-4514-9A2F-5E87E4A2755E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A943F07B-277F-4514-9A2F-5E87E4A2755E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A943F07B-277F-4514-9A2F-5E87E4A2755E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A943F07B-277F-4514-9A2F-5E87E4A2755E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
