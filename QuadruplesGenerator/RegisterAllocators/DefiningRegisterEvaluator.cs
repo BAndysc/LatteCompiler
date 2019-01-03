@@ -99,5 +99,10 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return null;
         }
+
+        public override IRegister Visit(LoadArgumentQuadruple quadruple)
+        {
+            return null;
+        }
     }
 }

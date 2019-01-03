@@ -1,6 +1,6 @@
-using QuadruplesGenerator.RegisterAllocators;
+using QuadruplesCommon;
 
-namespace CLI
+namespace X86Generator
 {
     public class X86Register : INativeRegister
     {

@@ -1,18 +1,20 @@
 using System;
 using System.Linq;
+using System.Text;
 using LatteBase.AST;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
-using QuadruplesGenerator.RegisterAllocators;
 
-namespace CLI
+namespace X86Generator
 {
-    public class X86Generator : QuadrupleVisitor<object>
+    public class QuadrupleToX86Generator : QuadrupleVisitor<object>
     {
+        private readonly StringBuilder builder;
         private readonly IRegisterAllocation mapping;
 
-        public X86Generator(IRegisterAllocation mapping)
+        public QuadrupleToX86Generator(StringBuilder builder, IRegisterAllocation mapping)
         {
+            this.builder = builder;
             this.mapping = mapping;
         }
 
@@ -24,12 +26,12 @@ namespace CLI
         
         private void EmitLabel(string asm, QuadrupleBase quad)
         {
-            Console.Write($"{asm}");
+            builder.Append($"{asm}");
 
             for (int i = 0; i < 50 - asm.Length; ++i)
-                Console.Write(" ");
+                builder.Append(" ");
             
-            Console.WriteLine($"; {quad.FilePlace.Text.Split('\n')[0]}");
+            builder.AppendLine($"; {quad.FilePlace.Text.Split('\n')[0]}");
         }
         
         public override object Visit(AddQuadruple quadruple)
@@ -262,6 +264,14 @@ namespace CLI
             Emit($"push ebx", quadruple);
             Emit($"push ebp", quadruple);
             Emit($"mov ebp, esp", quadruple);
+
+            return null;
+        }
+
+        public override object Visit(LoadArgumentQuadruple quadruple)
+        {
+            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 2)}]", quadruple);
+            Emit($"mov [ebp - {4 * (quadruple.localIndex + 1)}], eax", quadruple);
 
             return null;
         }

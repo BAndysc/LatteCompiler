@@ -100,5 +100,10 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return new HashSet<IRegister>();
         }
+
+        public override HashSet<IRegister> Visit(LoadArgumentQuadruple quadruple)
+        {
+            return new HashSet<IRegister>();
+        }
     }
 }

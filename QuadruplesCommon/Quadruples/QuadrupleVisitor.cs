@@ -21,6 +21,7 @@ namespace QuadruplesCommon.Quadruples
         public abstract T Visit(LabelQuadruple quadruple);
         public abstract T Visit(LoadLabelPtrQuadruple quadruple);
         public abstract T Visit(FuncDefQuadruple quadruple);
+        public abstract T Visit(LoadArgumentQuadruple quadruple);
 
         public T Visit(QuadrupleBase quadruple)
         {

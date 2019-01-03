@@ -44,10 +44,7 @@
     <Compile Include="LocalValuesCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterAllocators\DefiningRegisterEvaluator.cs" />
-    <Compile Include="RegisterAllocators\INativeRegister.cs" />
-    <Compile Include="RegisterAllocators\IRegisterAllocator.cs" />
     <Compile Include="RegisterAllocators\NaiveRegisterAllocator.cs" />
-    <Compile Include="RegisterAllocators\IRegisterAllocation.cs" />
     <Compile Include="RegisterAllocators\RegisterAllocation.cs" />
     <Compile Include="RegisterAllocators\RequiredRegistersEvaluator.cs" />
     <Compile Include="ValueMaxCounter.cs" />

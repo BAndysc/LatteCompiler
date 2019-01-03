@@ -1,14 +1,15 @@
 all:
 	xbuild /p:Configuration=Release
-	mkdir -p lib
-	cp -r CLI/bin/Release/* lib/
+	mkdir -p latc_data
+	cp -r CLI/bin/Release/* latc_data/
 	cp scripts/latc_x86 .
 	cp scripts/latc_x86 latc
+	gcc -m32 -c lib/runtime.c -o lib/runtime.o
 
 clean:
 	rm -rf latc_x86
 	rm -rf latc
-	rm -rf lib
+	rm -rf latc_data
 
 test:
 	xbuild

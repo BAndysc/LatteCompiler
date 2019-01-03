@@ -40,7 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectValue.cs" />
+    <Compile Include="INativeRegister.cs" />
     <Compile Include="IRegister.cs" />
+    <Compile Include="IRegisterAllocation.cs" />
+    <Compile Include="IRegisterAllocator.cs" />
     <Compile Include="IStore.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="Quadruples\JumpAlwaysQuadruple.cs" />
     <Compile Include="Quadruples\JumpQuadruple.cs" />
     <Compile Include="Quadruples\LabelQuadruple.cs" />
+    <Compile Include="Quadruples\LoadArgumentQuadruple.cs" />
     <Compile Include="Quadruples\LoadLabelPtrQuadruple.cs" />
     <Compile Include="Quadruples\LoadQuadruple.cs" />
     <Compile Include="Quadruples\LocalQuadruple.cs" />

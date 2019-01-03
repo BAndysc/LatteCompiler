@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FADB5642-EA9E-4C00-BBC9-1303EB1221B7}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{3109DBB3-92F9-470C-A9E5-44BE409C7687}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CLI</RootNamespace>
-    <AssemblyName>CLI</AssemblyName>
+    <RootNamespace>Utils</RootNamespace>
+    <AssemblyName>Utils</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,26 +38,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="IRunner.cs" />
+    <Compile Include="ITempFileCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Backend\Backend.csproj">
-      <Project>{d72b5ae7-6faf-44c6-bdc3-1bf94488394a}</Project>
-      <Name>Backend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Frontend\Frontend.csproj">
-      <Project>{10e0f23e-c49e-4bac-95d3-0073fc079c67}</Project>
-      <Name>Frontend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteBase\LatteBase.csproj">
-      <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
-      <Name>LatteBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{3109dbb3-92f9-470c-a9e5-44be409c7687}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
+    <Compile Include="Runner.cs" />
+    <Compile Include="TempFileCreator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

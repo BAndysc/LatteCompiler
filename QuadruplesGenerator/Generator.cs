@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -30,16 +31,25 @@ namespace QuadruplesGenerator
             var counter = new ValueMaxCounter();
             new LocalValuesCounter(counter).Visit(topFunction.Body);
 
-            var locals = counter.Max;
+            var locals = counter.Max + topFunction.Arguments.Count();
             IStore store = new Store(locals);
 
             for (int i = 0; i < locals; ++i)
             {
                 prog.Emit(new LocalQuadruple(topFunction.FilePlace, i));
             }
+
+            int j = 0;
+            foreach (var arg in topFunction.Arguments)
+            {
+                var argIndex = store.Alloc(arg.Name);
+                prog.Emit(new LoadArgumentQuadruple(topFunction.FilePlace, j++, argIndex));
+            }
             
             new StatementGenerator(prog, store).Visit(topFunction.Body);
 
+            prog.Emit(new ReturnVoidQuadruple(topFunction.FilePlace));
+            
             return prog;
         }
     }

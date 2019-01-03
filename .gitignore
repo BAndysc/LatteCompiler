@@ -5,7 +5,8 @@
 
 latc
 latc_x86
-lib/
+latc_data
+lib/runtime.o
 # User-specific files
 *.rsuser
 *.suo

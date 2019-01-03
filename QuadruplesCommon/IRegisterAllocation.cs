@@ -1,6 +1,6 @@
 using QuadruplesCommon;
 
-namespace QuadruplesGenerator.RegisterAllocators
+namespace QuadruplesCommon
 {
     public interface IRegisterAllocation
     {

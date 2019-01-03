@@ -1,4 +1,4 @@
-namespace QuadruplesGenerator.RegisterAllocators
+namespace QuadruplesCommon
 {
     public interface INativeRegister
     {
