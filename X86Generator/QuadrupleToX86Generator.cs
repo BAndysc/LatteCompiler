@@ -154,9 +154,14 @@ namespace X86Generator
             
             Emit($"call {quadruple.FunctionName}", quadruple);
             
+            
+            
             if (mapping.IsAllocated(quadruple.ResultRegister) && mapping.Get(quadruple.ResultRegister)!= X86Register.EAX)
                 Emit($"mov {mapping.Get(quadruple.ResultRegister)}, eax", quadruple);
 
+            if (quadruple.Arguments.Any())    
+                Emit($"add esp, {4 * quadruple.Arguments.Count()}", quadruple);
+            
             if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.EDX)
                 Emit($"pop EDX", quadruple);
    
@@ -232,6 +237,8 @@ namespace X86Generator
                     throw new ArgumentOutOfRangeException();
             }
 
+            Emit($"and ecx, 1", quadruple);
+            
             if (mapping.Get(quadruple.Destination)!= X86Register.ECX)
             {
                 Emit($"movzx {mapping.Get(quadruple.Destination)}, cl", quadruple);            
@@ -270,7 +277,7 @@ namespace X86Generator
 
         public override object Visit(LoadArgumentQuadruple quadruple)
         {
-            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 2)}]", quadruple);
+            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 3)}]", quadruple);
             Emit($"mov [ebp - {4 * (quadruple.localIndex + 1)}], eax", quadruple);
 
             return null;

@@ -38,7 +38,6 @@ namespace QuadruplesGenerator.Generators
         {
             foreach (var decl in node.Declarations)
             {
-                int loc = store.Alloc(decl.Name);
                 IRegister dest;
 
                 if (decl.Value == null)
@@ -61,6 +60,7 @@ namespace QuadruplesGenerator.Generators
                 {
                     dest = exprGen.Visit(decl.Value);
                 }
+                int loc = store.Alloc(decl.Name);
                 
                 program.Emit(new StoreQuadruple(node.FilePlace, loc, dest));
             }
@@ -174,8 +174,6 @@ namespace QuadruplesGenerator.Generators
             var bodyLabel = program.GetNextLabel();
             var conditionLabel = program.GetNextLabel();
             
-            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), zeroReg));
-            
             program.Emit(new JumpAlwaysQuadruple(node.FilePlace, conditionLabel));
             
             program.Emit(new LabelQuadruple(node.FilePlace, bodyLabel));
@@ -186,6 +184,7 @@ namespace QuadruplesGenerator.Generators
             
             var condExpr = exprGen.Visit(node.Condition);
             
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), zeroReg));
             program.Emit(new CompareQuadruple(node.FilePlace, condExpr, zeroReg));
 
             program.Emit(new JumpQuadruple(node.FilePlace, bodyLabel, RelOperator.NotEquals));

@@ -45,7 +45,7 @@ namespace Backend
             
             File.WriteAllText(outputAsm, asm);
 
-            runner.Run("nasm", $"-f elf32 {outputAsm} -o {outputObjectFile}");
+            runner.Run("nasm", $"-f elf32 -g -F dwarf  {outputAsm} -o {outputObjectFile}");
 
             runner.Run("gcc", $"-m32 {outputObjectFile} {runtimeObject} -o {outputBinary}");
         }
