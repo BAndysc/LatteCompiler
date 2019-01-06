@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -11,12 +13,16 @@ namespace QuadruplesGenerator.Generators
     {
         private readonly QuadruplesProgram program;
         private readonly IStore store;
+        private readonly ITopFunctionNode currentFunction;
+        private readonly Label startLabel;
         private readonly ExpressionGenerator exprGen;
 
-        public StatementGenerator(QuadruplesProgram program, IStore store)
+        public StatementGenerator(QuadruplesProgram program, IStore store, ITopFunctionNode currentFunction, Label startLabel)
         {
             this.program = program;
             this.store = store;
+            this.currentFunction = currentFunction;
+            this.startLabel = startLabel;
             exprGen = new ExpressionGenerator(program, store);
         }
         
@@ -27,7 +33,7 @@ namespace QuadruplesGenerator.Generators
 
         public override object Visit(IBlockNode node)
         {
-            var newVisitor = new StatementGenerator(program, store.CopyForBlock());
+            var newVisitor = new StatementGenerator(program, store.CopyForBlock(), currentFunction, startLabel);
             foreach (var stmt in node.Statements)
                 newVisitor.Visit(stmt);
 
@@ -107,9 +113,23 @@ namespace QuadruplesGenerator.Generators
 
         public override object Visit(IReturnNode node)
         {
-            var registerWithValue = exprGen.Visit(node.ReturnExpression);
-            
-            program.Emit(new ReturnQuadruple(node.FilePlace, registerWithValue));
+            var functionCall = node.ReturnExpression as IFunctionCallNode;
+            if (functionCall != null && functionCall.FunctionName == currentFunction.Name)
+            { // tail call optimization
+                var argumentValues = functionCall.Arguments.Select(exprGen.Visit).ToList();
+
+                foreach (var arg in currentFunction.Arguments.Zip(argumentValues, (arg, val) => new KeyValuePair<string, IRegister>(arg.Name, val)))
+                {
+                    program.Emit(new StoreQuadruple(node.FilePlace, store.Get(arg.Key), arg.Value));
+                }
+                
+                program.Emit(new JumpAlwaysQuadruple(node.FilePlace, startLabel));
+            }
+            else
+            {
+                var registerWithValue = exprGen.Visit(node.ReturnExpression);
+                program.Emit(new ReturnQuadruple(node.FilePlace, registerWithValue));
+            }
             
             return null;
         }

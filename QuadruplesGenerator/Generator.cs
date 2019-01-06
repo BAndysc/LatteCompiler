@@ -50,8 +50,12 @@ namespace QuadruplesGenerator
                 var argIndex = store.Alloc(arg.Name);
                 prog.Emit(new LoadArgumentQuadruple(topFunction.FilePlace, j++, argIndex));
             }
+
+            var startLabel = prog.GetNextLabel();
             
-            new StatementGenerator(prog, store).Visit(topFunction.Body);
+            prog.Emit(new LabelQuadruple(topFunction.FilePlace, startLabel));
+            
+            new StatementGenerator(prog, store, topFunction, startLabel).Visit(topFunction.Body);
 
             if (topFunction.ReturnType == LatteType.Void)
                 prog.Emit(new ReturnVoidQuadruple(topFunction.FilePlace));
