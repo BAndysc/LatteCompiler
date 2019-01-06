@@ -3,7 +3,7 @@ using TestPrograms.Good;
 
 namespace Backend.Tests.Good
 {
-    public class AddTest : CompilerTestBase
+    public class SimpleAddTest : CompilerTestBase
     {
         [Test]
         public void TestAdd()

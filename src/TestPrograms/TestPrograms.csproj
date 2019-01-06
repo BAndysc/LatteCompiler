@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37AB0326-2B41-4459-AB37-C491C81C1CAF}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestPrograms</RootNamespace>
     <AssemblyName>TestPrograms</AssemblyName>
@@ -62,6 +62,26 @@
     <Compile Include="Bad\Bad027Tests.cs" />
     <Compile Include="DummyFilePlace.cs" />
     <Compile Include="Good\AddTests.cs" />
+    <Compile Include="Good\Basic\add.cs" />
+    <Compile Include="Good\Basic\bool_operations.cs" />
+    <Compile Include="Good\Basic\bool_overoptymization.cs" />
+    <Compile Include="Good\Basic\compare.cs" />
+    <Compile Include="Good\Basic\concatenation.cs" />
+    <Compile Include="Good\Basic\empty_if.cs" />
+    <Compile Include="Good\Basic\empty_instructions.cs" />
+    <Compile Include="Good\Basic\empty_while.cs" />
+    <Compile Include="Good\Basic\escaped_string.cs" />
+    <Compile Include="Good\Basic\fibonacci.cs" />
+    <Compile Include="Good\Basic\fine_ident.cs" />
+    <Compile Include="Good\Basic\mod.cs" />
+    <Compile Include="Good\Basic\negation.cs" />
+    <Compile Include="Good\Basic\print_complicated_string.cs" />
+    <Compile Include="Good\Basic\print_int.cs" />
+    <Compile Include="Good\Basic\print_string.cs" />
+    <Compile Include="Good\Basic\scopes.cs" />
+    <Compile Include="Good\Basic\void_return.cs" />
+    <Compile Include="Good\Basic\while_true.cs" />
+    <Compile Include="Good\Basic\while_true2.cs" />
     <Compile Include="Good\Core001Tests.cs" />
     <Compile Include="Good\Core002Tests.cs" />
     <Compile Include="Good\Core003Tests.cs" />
@@ -89,8 +109,13 @@
     <Compile Include="Optimization\OptimizeTest3.cs" />
     <Compile Include="Optimization\OptimizeTest2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LatteAntlr\LatteAntlr.csproj">
+      <Project>{a4a1d9fa-6689-4869-b68c-729c3081aae7}</Project>
+      <Name>LatteAntlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
       <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
       <Name>LatteBase</Name>

@@ -10,6 +10,5 @@ namespace Backend.Tests.Good
         {
             TestProgram(new TestProgramProviderCore014());
         }
-        
     }
 }

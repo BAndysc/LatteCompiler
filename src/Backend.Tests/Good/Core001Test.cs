@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using TestPrograms.Good;
+using TestPrograms.Good.Basic;
+using TestProgramProviderAdd = TestPrograms.Good.TestProgramProviderAdd;
 
 namespace Backend.Tests.Good
 {
@@ -13,4 +15,6 @@ namespace Backend.Tests.Good
         }
         
     }
+    
+
 }

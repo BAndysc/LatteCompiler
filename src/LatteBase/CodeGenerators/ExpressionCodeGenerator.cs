@@ -23,7 +23,7 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IStringNode node)
         {
-            return $"new StringNode({node.Text}, new DummyFilePlace())";
+            return $"new StringNode(\"{node.Text}\", new DummyFilePlace())";
         }
 
         public override string Visit(IVariableNode node)

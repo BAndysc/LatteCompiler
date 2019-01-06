@@ -45,6 +45,26 @@
   <ItemGroup>
     <Compile Include="CompilerTestBase.cs" />
     <Compile Include="Good\AddTest.cs" />
+    <Compile Include="Good\Basic\BoolOperationsTest.cs" />
+    <Compile Include="Good\Basic\BoolOveroptymizationTest.cs" />
+    <Compile Include="Good\Basic\AddTest.cs" />
+    <Compile Include="Good\Basic\CompareTest.cs" />
+    <Compile Include="Good\Basic\ConcatenationTest.cs" />
+    <Compile Include="Good\Basic\EmptyIfTest.cs" />
+    <Compile Include="Good\Basic\EmptyInstructionsTest.cs" />
+    <Compile Include="Good\Basic\EmptyWhileTest.cs" />
+    <Compile Include="Good\Basic\EscapedStringTest.cs" />
+    <Compile Include="Good\Basic\FibonacciTest.cs" />
+    <Compile Include="Good\Basic\FineIdentTest.cs" />
+    <Compile Include="Good\Basic\ModTest.cs" />
+    <Compile Include="Good\Basic\NegationTest.cs" />
+    <Compile Include="Good\Basic\PrintComplicatedStringTest.cs" />
+    <Compile Include="Good\Basic\PrintIntTest.cs" />
+    <Compile Include="Good\Basic\PrintStringTest.cs" />
+    <Compile Include="Good\Basic\ScopesTest.cs" />
+    <Compile Include="Good\Basic\VoidReturnTest.cs" />
+    <Compile Include="Good\Basic\WhileTrue2Test.cs" />
+    <Compile Include="Good\Basic\WhileTrueTest.cs" />
     <Compile Include="Good\Core001Test.cs" />
     <Compile Include="Good\Core002Test.cs" />
     <Compile Include="Good\Core003Test.cs" />
