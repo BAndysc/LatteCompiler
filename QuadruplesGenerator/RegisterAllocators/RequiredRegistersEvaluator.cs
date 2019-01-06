@@ -30,7 +30,12 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return new HashSet<IRegister>() {quadruple.RegisterA, quadruple.RegisterB};
         }
-
+        
+        public override HashSet<IRegister> Visit(ConcatQuadruple quadruple)
+        {
+            return new HashSet<IRegister>() {quadruple.RegisterA, quadruple.RegisterB};
+        }
+        
         public override HashSet<IRegister> Visit(ImmediateValueQuadruple quadruple)
         {
             return new HashSet<IRegister>() {};
@@ -59,6 +64,16 @@ namespace QuadruplesGenerator.RegisterAllocators
         public override HashSet<IRegister> Visit(FunctionCallQuadruple quadruple)
         {
             return new HashSet<IRegister>(quadruple.Arguments);
+        }
+
+        public override HashSet<IRegister> Visit(NegateQuadruple quadruple)
+        {
+            return new HashSet<IRegister>() {quadruple.Value};
+        }
+
+        public override HashSet<IRegister> Visit(LogicalNegateQuadruple quadruple)
+        {
+            return new HashSet<IRegister>(){quadruple.Value};
         }
 
         public override HashSet<IRegister> Visit(CompareQuadruple quadruple)

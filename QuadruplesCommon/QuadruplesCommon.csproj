@@ -51,6 +51,7 @@
     <Compile Include="QuadruplesProgram.cs" />
     <Compile Include="Quadruples\AddQuadruple.cs" />
     <Compile Include="Quadruples\CompareQuadruple.cs" />
+    <Compile Include="Quadruples\ConcatQuadruple.cs" />
     <Compile Include="Quadruples\DivQuadruple.cs" />
     <Compile Include="Quadruples\FuncDefQuadruple.cs" />
     <Compile Include="Quadruples\FunctionCallQuadruple.cs" />
@@ -62,8 +63,10 @@
     <Compile Include="Quadruples\LoadLabelPtrQuadruple.cs" />
     <Compile Include="Quadruples\LoadQuadruple.cs" />
     <Compile Include="Quadruples\LocalQuadruple.cs" />
+    <Compile Include="Quadruples\LogicalNegateQuadruple.cs" />
     <Compile Include="Quadruples\ModQuadruple.cs" />
     <Compile Include="Quadruples\MulQuadruple.cs" />
+    <Compile Include="Quadruples\NegateQuadruple.cs" />
     <Compile Include="Quadruples\QuadrupleVisitor.cs" />
     <Compile Include="Quadruples\ReturnQuadruple.cs" />
     <Compile Include="Quadruples\ReturnVoidQuadruple.cs" />

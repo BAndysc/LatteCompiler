@@ -39,6 +39,11 @@ namespace LatteTreeOptimizer
             return node;
         }
 
+        public override IExpressionNode Visit(ILogicalNegateNode node)
+        {
+            return node;
+        }
+
         public override IExpressionNode Visit(IAndNode node)
         {
             var val = boolOptimizer.Visit(node);

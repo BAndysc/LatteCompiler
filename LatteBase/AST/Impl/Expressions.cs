@@ -69,6 +69,16 @@ namespace LatteBase.AST.Impl
         }
     }
 
+    public class LogicalNegateNode : Node, ILogicalNegateNode
+    {
+        public IExpressionNode Expression { get; }
+
+        public LogicalNegateNode(IExpressionNode expr, IFilePlace context) : base(context)
+        {
+            Expression = expr;
+        }
+    }
+    
     public class AndNode : Node, IAndNode
     {
         public IExpressionNode Left { get; }
@@ -95,10 +105,10 @@ namespace LatteBase.AST.Impl
     
     public class BinaryNode : Node, IBinaryNode
     {
-        public BinaryOperator Operator { get; }
+        public BinaryOperator Operator { get; set;  }
         public IExpressionNode Left { get; }
         public IExpressionNode Right { get; }
-
+        
         public BinaryNode(BinaryOperator oper, IExpressionNode left, IExpressionNode right, IFilePlace context) : base(context)
         {
             Operator = oper;

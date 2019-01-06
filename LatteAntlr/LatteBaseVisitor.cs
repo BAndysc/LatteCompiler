@@ -33,7 +33,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 /// <typeparam name="Result">The return type of the visit operation.</typeparam>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.7.2")]
 [System.CLSCompliant(false)]
-internal partial class LatteBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ILatteVisitor<Result> {
+public partial class LatteBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ILatteVisitor<Result> {
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.program"/>.
 	/// <para>
@@ -403,6 +403,28 @@ internal partial class LatteBaseVisitor<Result> : AbstractParseTreeVisitor<Resul
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitEAddOp([NotNull] LatteParser.EAddOpContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>UnaryMinus</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitUnaryMinus([NotNull] LatteParser.UnaryMinusContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>UnaryNeg</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitUnaryNeg([NotNull] LatteParser.UnaryNegContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>Plus</c>
 	/// labeled alternative in <see cref="LatteParser.addOp"/>.

@@ -36,6 +36,11 @@ namespace LatteBase.CodeGenerators
             return $"new NegateNode({Visit(node.Expression)}, new DummyFilePlace())";
         }
 
+        public override string Visit(ILogicalNegateNode node)
+        {
+            return $"new LogicalNegateNode({Visit(node.Expression)}, new DummyFilePlace())";
+        }
+        
         public override string Visit(IAndNode node)
         {
             return $"new AndNode(\n{Visit(node.Left)}, \n{Visit(node.Right)}, \nnew DummyFilePlace())";

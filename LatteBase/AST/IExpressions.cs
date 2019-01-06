@@ -37,6 +37,11 @@ namespace LatteBase.AST
         IExpressionNode Expression { get; }
     }
 
+    public interface ILogicalNegateNode : IExpressionNode
+    {
+        IExpressionNode Expression { get; }
+    }
+    
     public interface IAndNode : IExpressionNode
     {
         IExpressionNode Left { get; }
@@ -51,7 +56,7 @@ namespace LatteBase.AST
     
     public interface IBinaryNode : IExpressionNode
     {
-        BinaryOperator Operator { get; }
+        BinaryOperator Operator { get; set; }
         IExpressionNode Left { get; }
         IExpressionNode Right { get; }
     }

@@ -7,5 +7,6 @@ namespace QuadruplesCommon
         INativeRegister Get(IRegister register);
         void AllocRegister(IRegister register, INativeRegister nativeRegister);
         bool IsAllocated(IRegister required);
+        int MaxUsedRegisters { get; set; }
     }
 }

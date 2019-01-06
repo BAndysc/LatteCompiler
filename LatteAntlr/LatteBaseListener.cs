@@ -34,7 +34,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.7.2")]
 [System.CLSCompliant(false)]
-internal partial class LatteBaseListener : ILatteListener {
+public partial class LatteBaseListener : ILatteListener {
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.program"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -501,6 +501,34 @@ internal partial class LatteBaseListener : ILatteListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEAddOp([NotNull] LatteParser.EAddOpContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>UnaryMinus</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterUnaryMinus([NotNull] LatteParser.UnaryMinusContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>UnaryMinus</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitUnaryMinus([NotNull] LatteParser.UnaryMinusContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>UnaryNeg</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterUnaryNeg([NotNull] LatteParser.UnaryNegContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>UnaryNeg</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitUnaryNeg([NotNull] LatteParser.UnaryNegContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by the <c>Plus</c>
 	/// labeled alternative in <see cref="LatteParser.addOp"/>.

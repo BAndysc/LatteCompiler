@@ -33,6 +33,11 @@ namespace LatteTreeOptimizer
 
         public override bool? Visit(INegateNode node)
         {
+            return null;
+        }
+
+        public override bool? Visit(ILogicalNegateNode node)
+        {
             var compileValue = Visit(node.Expression);
 
             if (!compileValue.HasValue)

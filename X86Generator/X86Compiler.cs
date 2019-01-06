@@ -9,24 +9,17 @@ namespace X86Generator
     {
         public string Compile(QuadruplesProgram program)
         {
-            var allocator = new NaiveRegisterAllocator();
-            allocator.AddRegisterToPool(X86Register.EAX);
-            allocator.AddRegisterToPool(X86Register.ECX);
-            allocator.AddRegisterToPool(X86Register.EBX);
-            allocator.AddRegisterToPool(X86Register.EDX);
-
-            var regs = allocator.AllocateRegisters(program);
+            
 
             StringBuilder builder = new StringBuilder();
 
-            var generator = new QuadrupleToX86Generator(builder, regs);
 
             if (program.ConstStrings.Count > 0)
             {
                 builder.AppendLine("segment .data");
                 foreach (var str in program.ConstStrings)
                 {
-                    builder.AppendLine($"    {str.Key}: db {str.Value}, 0");
+                    builder.AppendLine($"    {str.Key}: db `{str.Value.Replace("`", "\\`")}`, 0");
                 }
             }
 
@@ -37,10 +30,23 @@ namespace X86Generator
             builder.AppendLine("    extern error");
             builder.AppendLine("    extern readInt");
             builder.AppendLine("    extern readString");
-            foreach (var quad in program.Program)
+            builder.AppendLine("    extern concat_string");
+
+            foreach (var func in program.Functions)
             {
-                generator.Visit(quad);
+                var allocator = new NaiveRegisterAllocator();
+                for (int i = 10; i >= 0; --i)
+                    allocator.AddRegisterToPool(new X86Register($"[EBP - {4 * (1 + func.Locals + i)}]"));
+                
+                var regs = allocator.AllocateRegisters(func.Instructions);
+                var generator = new QuadrupleToX86Generator(builder, regs, regs.MaxUsedRegisters);
+                
+                foreach (var quad in func.Instructions)
+                {
+                    generator.Visit(quad);
+                }
             }
+
 
             return builder.ToString();
         }

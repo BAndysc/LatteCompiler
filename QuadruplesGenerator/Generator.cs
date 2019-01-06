@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
 using QuadruplesCommon;
@@ -19,7 +20,6 @@ namespace QuadruplesGenerator
 
             foreach (var func in program.Functions)
             {
-                prog.Emit(new FuncDefQuadruple(func.FilePlace, func.Name));
                 Visit(func);
             }
 
@@ -28,12 +28,17 @@ namespace QuadruplesGenerator
 
         public override QuadruplesProgram Visit(ITopFunctionNode topFunction)
         {
+            
             var counter = new ValueMaxCounter();
             new LocalValuesCounter(counter).Visit(topFunction.Body);
 
             var locals = counter.Max + topFunction.Arguments.Count();
             IStore store = new Store(locals);
 
+            
+            prog.EmitFunction(topFunction.Name, locals);
+            prog.Emit(new FuncDefQuadruple(topFunction.FilePlace, topFunction.Name));
+            
             for (int i = 0; i < locals; ++i)
             {
                 prog.Emit(new LocalQuadruple(topFunction.FilePlace, i));
@@ -48,7 +53,8 @@ namespace QuadruplesGenerator
             
             new StatementGenerator(prog, store).Visit(topFunction.Body);
 
-            prog.Emit(new ReturnVoidQuadruple(topFunction.FilePlace));
+            if (topFunction.ReturnType == LatteType.Void)
+                prog.Emit(new ReturnVoidQuadruple(topFunction.FilePlace));
             
             return prog;
         }

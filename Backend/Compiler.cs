@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using LatteBase.AST;
 using LatteTreeOptimizer;
@@ -35,7 +36,7 @@ namespace Backend
 
             if (intermediateOutputFile != null)
             {
-                File.WriteAllText(intermediateOutputFile, string.Join("\n", quadProgram));
+                File.WriteAllText(intermediateOutputFile, string.Join("\n", quadProgram.Functions.SelectMany(f => f.Instructions).Select(q => $"{q,-40} ; {q.FilePlace.Text.Split('\n').FirstOrDefault()}")));
             }
             
             X86Compiler compiler = new X86Compiler();

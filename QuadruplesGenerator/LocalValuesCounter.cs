@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -65,17 +66,17 @@ namespace QuadruplesGenerator
 
         public override int Visit(IIfNode node)
         {
-            return 0;
+            return Visit(node.Statement);
         }
 
         public override int Visit(IIfElseNode node)
         {
-            return 0;
+            return Math.Max(Visit(node.Statement), Visit(node.ElseStatement));
         }
 
         public override int Visit(IWhileNode node)
         {
-            return 0;
+            return Visit(node.Statement);
         }
 
         public override int Visit(IExpressionStatementNode nodeNode)

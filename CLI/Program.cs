@@ -31,6 +31,9 @@ namespace CLI
                 var outputAsmFile = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg) + ".s";
                 var outputFile = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg);
 
+                var intermediate = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg) + ".q";
+                
+                compiler.SetIntermediateOutput(intermediate);
                 compiler.SetAssemblyOutput(outputAsmFile);
                 compiler.SetOutput(outputFile);
                 compiler.Compile(program);

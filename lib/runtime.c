@@ -18,7 +18,20 @@ extern int readInt()
 {
 	int a;
 	scanf("%d", &a);
+	getchar();
 	return a;
+}
+
+extern char* concat_string(char* str1, char* str2)
+{
+	int str1_len = strlen(str1);
+	int str2_len = strlen(str2);
+	int totalLen = str1_len + str2_len + 1;
+	char* newstr = malloc(sizeof(char) * totalLen);
+	memcpy(newstr, str1, str1_len);
+	memcpy(newstr + str1_len, str2, str2_len);
+	newstr[totalLen - 1] = 0;
+	return newstr;
 }
 
 static char* append(char* base, char c, int* curIndex, int* len)

@@ -51,6 +51,7 @@
     <Compile Include="AST\Generators\ProgramGenerator.cs" />
     <Compile Include="AST\Generators\StatementGenerator.cs" />
     <Compile Include="AST\Generators\TopFunctionGenerator.cs" />
+    <Compile Include="AST\IsLogicalNegationVisitor.cs" />
     <Compile Include="AST\RelOperatorVisitor.cs" />
     <Compile Include="Exceptions\IntegerOutOfRangeException.cs" />
     <Compile Include="Exceptions\ParserException.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Visitors\LatteBaseStatementVisitor.cs" />
     <Compile Include="Visitors\LatteBaseTopDefVisitor.cs" />
     <Compile Include="Visitors\LatteBaseTypeVisitor.cs" />
+    <Compile Include="Visitors\LatteBaseUnaryOperatorVisitor.cs" />
     <Compile Include="Visitors\LatteLimitedVisitor.cs" />
   </ItemGroup>
   <ItemGroup>

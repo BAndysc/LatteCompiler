@@ -31,7 +31,7 @@ using IToken = Antlr4.Runtime.IToken;
 /// <typeparam name="Result">The return type of the visit operation.</typeparam>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.7.2")]
 [System.CLSCompliant(false)]
-internal interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
+public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.program"/>.
 	/// </summary>
@@ -265,6 +265,20 @@ internal interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitEAddOp([NotNull] LatteParser.EAddOpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>UnaryMinus</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnaryMinus([NotNull] LatteParser.UnaryMinusContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>UnaryNeg</c>
+	/// labeled alternative in <see cref="LatteParser.unOp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnaryNeg([NotNull] LatteParser.UnaryNegContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>Plus</c>
 	/// labeled alternative in <see cref="LatteParser.addOp"/>.

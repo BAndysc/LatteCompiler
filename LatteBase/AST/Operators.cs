@@ -6,7 +6,8 @@ namespace LatteBase.AST
         Sub,
         Mul,
         Div,
-        Mod
+        Mod,
+        Concat
     }
 
     public enum RelOperator

@@ -1,7 +1,12 @@
 namespace LatteAntlr.Visitors
 {
-    internal class LatteBaseProgramVisitor<T> : LatteLimitedVisitor<T>
+    internal class LatteBaseUnaryOperatorVisitor<T> : LatteLimitedVisitor<T>
     {
+        public sealed override T VisitProgram(LatteParser.ProgramContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
         public sealed override T VisitTopDef(LatteParser.TopDefContext context)
         {
             return ThrowInvalidContext(context);
@@ -167,21 +172,6 @@ namespace LatteAntlr.Visitors
             return ThrowInvalidContext(context);
         }
 
-        public sealed override T VisitAddOp(LatteParser.AddOpContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
-        public sealed override T VisitMulOp(LatteParser.MulOpContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
-        public sealed override T VisitRelOp(LatteParser.RelOpContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
         public sealed override T VisitPlus(LatteParser.PlusContext context)
         {
             return ThrowInvalidContext(context);
@@ -236,13 +226,18 @@ namespace LatteAntlr.Visitors
         {
             return ThrowInvalidContext(context);
         }
-        
-        public sealed override T VisitUnaryMinus(LatteParser.UnaryMinusContext context)
+
+        public sealed override T VisitAddOp(LatteParser.AddOpContext context)
         {
             return ThrowInvalidContext(context);
         }
 
-        public sealed override T VisitUnaryNeg(LatteParser.UnaryNegContext context)
+        public sealed override T VisitMulOp(LatteParser.MulOpContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitRelOp(LatteParser.RelOpContext context)
         {
             return ThrowInvalidContext(context);
         }

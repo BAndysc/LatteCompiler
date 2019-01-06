@@ -7,6 +7,7 @@ namespace QuadruplesCommon.Quadruples
         public abstract T Visit(MulQuadruple quadruple);
         public abstract T Visit(DivQuadruple quadruple);
         public abstract T Visit(ModQuadruple quadruple);
+        public abstract T Visit(ConcatQuadruple quadruple);
         public abstract T Visit(ImmediateValueQuadruple quadruple);
         public abstract T Visit(LoadQuadruple quadruple);
         public abstract T Visit(LocalQuadruple quadruple);
@@ -21,7 +22,10 @@ namespace QuadruplesCommon.Quadruples
         public abstract T Visit(LabelQuadruple quadruple);
         public abstract T Visit(LoadLabelPtrQuadruple quadruple);
         public abstract T Visit(FuncDefQuadruple quadruple);
-        public abstract T Visit(LoadArgumentQuadruple quadruple);
+        public abstract T Visit(LoadArgumentQuadruple quadruple); 
+        public abstract T Visit(NegateQuadruple quadruple);
+        public abstract T Visit(LogicalNegateQuadruple quadruple);
+
 
         public T Visit(QuadrupleBase quadruple)
         {

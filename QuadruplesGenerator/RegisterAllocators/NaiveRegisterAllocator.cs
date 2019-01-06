@@ -15,37 +15,74 @@ namespace QuadruplesGenerator.RegisterAllocators
             nativeRegisters.Add(register);
         }
         
-        public IRegisterAllocation AllocateRegisters(QuadruplesProgram program)
+        public IRegisterAllocation AllocateRegisters(IList<QuadrupleBase> instrs)
         {
-            var x86Registers = new List<INativeRegister>(nativeRegisters); //{"EAX", "EDX", "ECX", "EBX"};//, "EBX", "EDI", "ESI"};
+            var x86Registers = new List<INativeRegister>(nativeRegisters);
             var mapping = new RegisterAllocation();
-            var currentUsedRegisters = new HashSet<IRegister>();
-            int maxUsed = 0;
-            for (int i = program.Program.Count - 1; i >= 0; --i)
+            
+            
+            var defining = new DefiningRegisterEvaluator();
+            var required = new RequiredRegistersEvaluator();
+            
+            HashSet<IRegister> allregisters = new HashSet<IRegister>();
+            
+            Dictionary<IRegister, int> firstUsage = new Dictionary<IRegister, int>();
+            Dictionary<IRegister, int> lastUsage = new Dictionary<IRegister, int>();
+            
+            for(int i = 0; i < instrs.Count; ++i)
             {
-                var quad = program.Program[i];
-                var definingRegister = new DefiningRegisterEvaluator().Visit(quad);
-                var usedRegisters = new RequiredRegistersEvaluator().Visit(quad);
+                var instr = instrs[i];
+                var def = defining.Visit(instr);
+                var usng = required.Visit(instr);
 
-                foreach (var required in usedRegisters)
+                if (def != null)
+                    usng.Add(def);
+
+                foreach (var reg in usng)
                 {
-                    if (!mapping.IsAllocated(required))
+                    allregisters.Add(reg);
+                    if (firstUsage.ContainsKey(reg))
+                        firstUsage[reg] = Math.Min(i, firstUsage[reg]);
+                    else
+                        firstUsage[reg] = i;
+                
+                
+                    if (lastUsage.ContainsKey(reg))
+                        lastUsage[reg] = Math.Max(i, lastUsage[reg]);
+                    else
+                        lastUsage[reg] = i;       
+                }
+            }
+
+            int used = 0;
+            mapping.MaxUsedRegisters = 0;
+            for (int i = 0; i < instrs.Count; ++i)
+            {
+                var instr = instrs[i];
+                var def = defining.Visit(instr);
+                var usng = required.Visit(instr);
+                
+                if (def != null)
+                    usng.Add(def);
+
+                foreach (var reg in usng)
+                {
+                    if (i == firstUsage[reg])
                     {
-                        if (x86Registers.Count == 0)
-                            throw new OutOfMemoryException();
-                        mapping.AllocRegister(required, x86Registers[0]);
-                        x86Registers.RemoveAt(0);
+                        var native = x86Registers[x86Registers.Count - 1];
+                        x86Registers.RemoveAt(x86Registers.Count - 1);
+                        mapping.AllocRegister(reg, native);
+                        used++;
                     }
-                    currentUsedRegisters.Add(required);
+
+                    if (i == lastUsage[reg])
+                    {
+                        x86Registers.Add(mapping.Get(reg));
+                        used--;
+                    }
                 }
 
-                if (definingRegister != null && mapping.IsAllocated(definingRegister))
-                {
-                    x86Registers.Add(mapping.Get(definingRegister));
-                    currentUsedRegisters.Remove(definingRegister);
-                }
-
-                maxUsed = Math.Max(maxUsed, currentUsedRegisters.Count);
+                mapping.MaxUsedRegisters = Math.Max(mapping.MaxUsedRegisters, used);
             }
 
             return mapping;

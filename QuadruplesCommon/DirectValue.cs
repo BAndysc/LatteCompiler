@@ -31,7 +31,9 @@ namespace QuadruplesCommon
         
         public override string ToString()
         {
-            return $"{Value}";
+            if (Value)
+                return "1";
+            return "0";
         }
     }
 }

@@ -10,6 +10,7 @@ namespace LatteBase.Visitors
         public abstract T Visit(IStringNode node);
         public abstract T Visit(IVariableNode node);
         public abstract T Visit(INegateNode node);
+        public abstract T Visit(ILogicalNegateNode node);
         public abstract T Visit(IAndNode node);
         public abstract T Visit(IOrNode node);
         public abstract T Visit(IBinaryNode node);

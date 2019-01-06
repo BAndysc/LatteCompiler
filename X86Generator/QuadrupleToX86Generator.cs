@@ -11,11 +11,13 @@ namespace X86Generator
     {
         private readonly StringBuilder builder;
         private readonly IRegisterAllocation mapping;
+        private readonly int regsMaxUsedRegisters;
 
-        public QuadrupleToX86Generator(StringBuilder builder, IRegisterAllocation mapping)
+        public QuadrupleToX86Generator(StringBuilder builder, IRegisterAllocation mapping, int regsMaxUsedRegisters)
         {
             this.builder = builder;
             this.mapping = mapping;
+            this.regsMaxUsedRegisters = regsMaxUsedRegisters;
         }
 
         private void Emit(string asm, QuadrupleBase quad)
@@ -31,7 +33,7 @@ namespace X86Generator
             for (int i = 0; i < 50 - asm.Length; ++i)
                 builder.Append(" ");
             
-            builder.AppendLine($"; {quad.FilePlace.Text.Split('\n')[0]}");
+            builder.AppendLine($"; {quad.FilePlace.Text.Split('\n')[0]} ; {quad}");
         }
         
         public override object Visit(AddQuadruple quadruple)
@@ -39,19 +41,44 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit($"mov {dest}, {a}", quadruple);
-            Emit($"add {dest}, {b}", quadruple);
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"add eax, {b}", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
 
             return null;
         }
+        
+        public override object Visit(NegateQuadruple quadruple)
+        {
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.Value);
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"neg eax", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
 
+            return null;
+        }
+        
+        public override object Visit(LogicalNegateQuadruple quadruple)
+        {
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.Value);
+            Emit($"cmp dword {a}, 0", quadruple);
+            Emit($"sete al", quadruple);
+            Emit($"movzx eax, al", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
+
+            return null;
+        }
+        
         public override object Visit(SubQuadruple quadruple)
         {
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit($"mov {dest}, {a}", quadruple);
-            Emit($"sub {dest}, {b}", quadruple);
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"sub eax, {b}", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
 
             return null;
         }
@@ -61,33 +88,58 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            if (dest == X86Register.EAX)
-                Emit($"push eax", quadruple);
-            Emit($"mov eax, {a}", quadruple);
-            Emit($"mul {b}", quadruple);
-            if (dest == X86Register.EAX)
-            {
-                Emit($"mov {dest}, eax", quadruple);
-                Emit($"pop eax", quadruple);
-            }
+            
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"mul dword {b}", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
 
             return null;
         }
 
         public override object Visit(DivQuadruple quadruple)
         {
-            throw new NotImplementedException();
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.RegisterA);
+            var b = mapping.Get(quadruple.RegisterB);
+
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"cdq", quadruple);
+            Emit($"idiv dword {b}", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
+            
+            return null;
         }
 
         public override object Visit(ModQuadruple quadruple)
         {
-            throw new NotImplementedException();
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.RegisterA);
+            var b = mapping.Get(quadruple.RegisterB);
+            Emit($"mov dword eax, {a}", quadruple);
+            Emit($"cdq", quadruple);
+            Emit($"idiv dword {b}", quadruple);
+            Emit($"mov {dest}, edx", quadruple);
+            return null;
         }
 
+        public override object Visit(ConcatQuadruple quadruple)
+        {
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.RegisterA);
+            var b = mapping.Get(quadruple.RegisterB);
+            Emit($"push dword {b}", quadruple);
+            Emit($"push dword {a}", quadruple);
+            Emit($"call concat_string", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
+            Emit($"add esp, 8", quadruple);
+
+            return null;
+        }
+        
         public override object Visit(ImmediateValueQuadruple quadruple)
         {
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit($"mov {dest}, {quadruple.Value}", quadruple);
+            Emit($"mov dword {dest}, {quadruple.Value}", quadruple);
 
             return null;
         }
@@ -95,7 +147,8 @@ namespace X86Generator
         public override object Visit(LoadQuadruple quadruple)
         {
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit($"mov {dest}, [ebp - {4 * (quadruple.Local+1)}]", quadruple);
+            Emit($"mov eax, [ebp - {4 * (quadruple.Local+1)}]", quadruple);
+            Emit($"mov {dest}, eax", quadruple);
 
             return null;
         }
@@ -111,7 +164,6 @@ namespace X86Generator
             var value = mapping.Get(quadruple.ValueRegister);
             Emit($"mov eax, {value}", quadruple);
             Emit($"leave", quadruple);
-            Emit("pop ebx", quadruple);
             Emit($"ret", quadruple);
 
             return null;
@@ -120,7 +172,6 @@ namespace X86Generator
         public override object Visit(ReturnVoidQuadruple quadruple)
         { 
             Emit($"leave", quadruple);
-            Emit("pop ebx", quadruple);
             Emit($"ret", quadruple);
 
             return null;
@@ -129,53 +180,29 @@ namespace X86Generator
         public override object Visit(StoreQuadruple quadruple)
         {
             var value = mapping.Get(quadruple.Value);
-            Emit($"mov [ebp - {4 * (quadruple.Local+1)}], {value}", quadruple);
+            Emit($"mov dword eax, {value}", quadruple);
+            Emit($"mov [ebp - {4 * (quadruple.Local+1)}], eax", quadruple);
 
             return null;
         }
-
+        
         public override object Visit(FunctionCallQuadruple quadruple)
         {
-            // todo: optimize
-            
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.EAX)
-                Emit($"push EAX", quadruple);
-
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.ECX)
-                Emit($"push ECX", quadruple);
-            
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.EDX)
-                Emit($"push EDX", quadruple);
-            
             foreach (var arg in quadruple.Arguments.Reverse())
-            {
-                Emit($"push {mapping.Get(arg)}", quadruple);
-            }
+                Emit($"push dword {mapping.Get(arg)}", quadruple);
             
             Emit($"call {quadruple.FunctionName}", quadruple);
-            
-            
             
             if (mapping.IsAllocated(quadruple.ResultRegister) && mapping.Get(quadruple.ResultRegister)!= X86Register.EAX)
                 Emit($"mov {mapping.Get(quadruple.ResultRegister)}, eax", quadruple);
 
-            if (quadruple.Arguments.Any())    
-                Emit($"add esp, {4 * quadruple.Arguments.Count()}", quadruple);
-            
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.EDX)
-                Emit($"pop EDX", quadruple);
-   
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.ECX)
-                Emit($"pop ECX", quadruple);
-    
-            if (!mapping.IsAllocated(quadruple.ResultRegister) || mapping.Get(quadruple.ResultRegister)!= X86Register.EAX)
-                Emit($"pop EAX", quadruple);
             return null;
         }
 
         public override object Visit(CompareQuadruple quadruple)
         {
-            Emit($"cmp {mapping.Get(quadruple.RegValue)}, {mapping.Get(quadruple.CompareTo)}", quadruple);
+            Emit($"mov dword eax, {mapping.Get(quadruple.CompareTo)}", quadruple);
+            Emit($"cmp {mapping.Get(quadruple.RegValue)}, eax", quadruple);
             return null;
         }
 
@@ -204,15 +231,13 @@ namespace X86Generator
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            Emit($"jmp {quadruple.Else}", quadruple);
 
             return null;
         }
 
         public override object Visit(SetIfQuadruple quadruple)
         {
-            if (mapping.Get(quadruple.Destination)!= X86Register.ECX)
-                Emit($"push ecx", quadruple);
-            
             switch (quadruple.Operator)
             {
                 case RelOperator.LessThan:
@@ -239,11 +264,7 @@ namespace X86Generator
 
             Emit($"and ecx, 1", quadruple);
             
-            if (mapping.Get(quadruple.Destination)!= X86Register.ECX)
-            {
-                Emit($"movzx {mapping.Get(quadruple.Destination)}, cl", quadruple);            
-                Emit($"pop ecx", quadruple);
-            }
+            Emit($"mov dword {mapping.Get(quadruple.Destination)}, ecx", quadruple);
             return null;
         }
 
@@ -261,23 +282,22 @@ namespace X86Generator
 
         public override object Visit(LoadLabelPtrQuadruple quadruple)
         {
-            Emit($"mov {mapping.Get(quadruple.ResultRegister)}, {quadruple.LabelToLoad}", quadruple);
+            Emit($"mov dword {mapping.Get(quadruple.ResultRegister)}, {quadruple.LabelToLoad}", quadruple);
             return null;
         }
 
         public override object Visit(FuncDefQuadruple quadruple)
         {
             EmitLabel($"{quadruple.FunctionName}: ", quadruple);
-            Emit($"push ebx", quadruple);
             Emit($"push ebp", quadruple);
             Emit($"mov ebp, esp", quadruple);
-
+            Emit($"sub esp, {regsMaxUsedRegisters * 4}", quadruple);
             return null;
         }
 
         public override object Visit(LoadArgumentQuadruple quadruple)
         {
-            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 3)}]", quadruple);
+            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 2)}]", quadruple);
             Emit($"mov [ebp - {4 * (quadruple.localIndex + 1)}], eax", quadruple);
 
             return null;

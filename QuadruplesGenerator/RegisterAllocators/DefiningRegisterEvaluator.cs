@@ -30,12 +30,27 @@ namespace QuadruplesGenerator.RegisterAllocators
             return quadruple.ResultRegister;
         }
 
+        public override IRegister Visit(ConcatQuadruple quadruple)
+        {
+            return quadruple.ResultRegister;
+        }
+        
         public override IRegister Visit(ImmediateValueQuadruple quadruple)
         {
             return quadruple.ResultRegister;
         }
 
         public override IRegister Visit(LoadQuadruple quadruple)
+        {
+            return quadruple.ResultRegister;
+        }
+
+        public override IRegister Visit(NegateQuadruple quadruple)
+        {
+            return quadruple.ResultRegister;
+        }
+        
+        public override IRegister Visit(LogicalNegateQuadruple quadruple)
         {
             return quadruple.ResultRegister;
         }

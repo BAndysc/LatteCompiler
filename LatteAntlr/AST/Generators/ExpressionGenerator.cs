@@ -52,13 +52,17 @@ namespace LatteAntlr.AST.Generators
 
         public override IExpressionNode VisitEUnOp(LatteParser.EUnOpContext context)
         {
+            var logical = new IsLogicalNegationVisitor().Visit(context.unOp());
             var expr = Visit(context.expr());
+            if (logical)
+                return new LogicalNegateNode(expr, new FilePlace(context));
+            
             return new NegateNode(expr, new FilePlace(context));
         }
 
         public override IExpressionNode VisitEStr(LatteParser.EStrContext context)
         {
-            return new StringNode(context.STR().GetText(), new FilePlace(context));
+            return new StringNode(context.STR().GetText().Substring(1, context.STR().GetText().Length-2), new FilePlace(context));
         }
 
         public override IExpressionNode VisitEMulOp(LatteParser.EMulOpContext context)

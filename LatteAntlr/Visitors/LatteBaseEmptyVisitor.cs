@@ -183,6 +183,16 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitUnaryMinus(LatteParser.UnaryMinusContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitUnaryNeg(LatteParser.UnaryNegContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitPlus(LatteParser.PlusContext context)
         {
             return ReportError(context);

@@ -51,12 +51,22 @@ namespace LatteTypeChecker.Visitors
         {
             var exprType = Visit(node.Expression);
             
-            if (exprType != LatteType.Bool && exprType != LatteType.Int)
+            if (exprType != LatteType.Int)
                 throw new InvalidOperatorUsageException(exprType, node.FilePlace, LatteType.Bool, LatteType.Int);
-
+            
             return exprType;
         }
 
+        public override LatteType Visit(ILogicalNegateNode node)
+        {
+            var exprType = Visit(node.Expression);
+            
+            if (exprType != LatteType.Bool)
+                throw new InvalidOperatorUsageException(exprType, node.FilePlace, LatteType.Bool, LatteType.Int);
+            
+            return exprType;
+        }
+        
         public override LatteType Visit(IAndNode node)
         {
             var left = Visit(node.Left);
@@ -98,6 +108,9 @@ namespace LatteTypeChecker.Visitors
             
             if (left != right)
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
+
+            if (left == LatteType.String)
+                node.Operator = BinaryOperator.Concat;
             
             return left;
         }

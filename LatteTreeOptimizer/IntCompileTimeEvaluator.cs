@@ -41,6 +41,11 @@ namespace LatteTreeOptimizer
             return null;
         }
 
+        public override int? Visit(ILogicalNegateNode node)
+        {
+            return null;
+        }
+
         public override int? Visit(IAndNode node)
         {
             return null;

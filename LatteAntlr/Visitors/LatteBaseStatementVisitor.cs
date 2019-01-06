@@ -181,5 +181,15 @@ namespace LatteAntlr.Visitors
         {
             return ThrowInvalidContext(context);
         }
+        
+        public sealed override T VisitUnaryMinus(LatteParser.UnaryMinusContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitUnaryNeg(LatteParser.UnaryNegContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
     }
 }

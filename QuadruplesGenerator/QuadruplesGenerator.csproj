@@ -54,6 +54,10 @@
       <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
       <Name>LatteBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LatteTypeChecker\LatteTypeChecker.csproj">
+      <Project>{bef6d4e6-4745-4140-b4aa-919b7a05ddce}</Project>
+      <Name>LatteTypeChecker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuadruplesCommon\QuadruplesCommon.csproj">
       <Project>{2acaf98e-a6cc-4e55-be0e-0b0bce19309d}</Project>
       <Name>QuadruplesCommon</Name>

@@ -127,12 +127,15 @@ namespace QuadruplesGenerator.Generators
             var zeroReg = program.GetNextRegister();
             
             var afterIfLabel = program.GetNextLabel();
+            var statementLabel = program.GetNextLabel();
             
             program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), zeroReg));
             
             program.Emit(new CompareQuadruple(node.FilePlace, condExpr, zeroReg));
 
-            program.Emit(new JumpQuadruple(node.FilePlace, afterIfLabel, RelOperator.Equals));
+            program.Emit(new JumpQuadruple(node.FilePlace, afterIfLabel, statementLabel,RelOperator.Equals));
+            
+            program.Emit(new LabelQuadruple(node.FilePlace, statementLabel));
             
             Visit(node.Statement);
             
@@ -147,13 +150,16 @@ namespace QuadruplesGenerator.Generators
             var zeroReg = program.GetNextRegister();
             
             var afterIfLabel = program.GetNextLabel();
+            var statementLabel = program.GetNextLabel();
             var elseLabel = program.GetNextLabel();
             
             program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), zeroReg));
             
             program.Emit(new CompareQuadruple(node.FilePlace, condExpr, zeroReg));
 
-            program.Emit(new JumpQuadruple(node.FilePlace, elseLabel, RelOperator.Equals));
+            program.Emit(new JumpQuadruple(node.FilePlace, elseLabel, statementLabel, RelOperator.Equals));
+            
+            program.Emit(new LabelQuadruple(node.FilePlace, statementLabel));
             
             Visit(node.Statement);
             
@@ -172,6 +178,7 @@ namespace QuadruplesGenerator.Generators
         {
             var zeroReg = program.GetNextRegister();
             var bodyLabel = program.GetNextLabel();
+            var outsideLabel = program.GetNextLabel();
             var conditionLabel = program.GetNextLabel();
             
             program.Emit(new JumpAlwaysQuadruple(node.FilePlace, conditionLabel));
@@ -187,7 +194,9 @@ namespace QuadruplesGenerator.Generators
             program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), zeroReg));
             program.Emit(new CompareQuadruple(node.FilePlace, condExpr, zeroReg));
 
-            program.Emit(new JumpQuadruple(node.FilePlace, bodyLabel, RelOperator.NotEquals));
+            program.Emit(new JumpQuadruple(node.FilePlace, bodyLabel, outsideLabel, RelOperator.NotEquals));
+            
+            program.Emit(new LabelQuadruple(node.FilePlace, outsideLabel));
             
             return null;
         }
