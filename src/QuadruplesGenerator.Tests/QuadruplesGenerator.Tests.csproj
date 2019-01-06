@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4A1D9FA-6689-4869-B68C-729C3081AAE7}</ProjectGuid>
+    <ProjectGuid>{A943F07B-277F-4514-9A2F-5E87E4A2755E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LatteAntlr</RootNamespace>
-    <AssemblyName>LatteAntlr</AssemblyName>
+    <RootNamespace>QuadruplesGenerator.Tests</RootNamespace>
+    <AssemblyName>QuadruplesGenerator.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.Runtime.Standard, Version=4.7.2.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f">
-      <HintPath>..\packages\Antlr4.Runtime.Standard.4.7.2\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+      <HintPath>..\..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -42,51 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AstGenerator.cs" />
-    <Compile Include="AST\BinaryOperatorVisitor.cs" />
-    <Compile Include="AST\FilePlace.cs" />
-    <Compile Include="AST\Generators\BlockGenerator.cs" />
-    <Compile Include="AST\Generators\ExpressionGenerator.cs" />
-    <Compile Include="AST\Generators\LatteTypeGenerator.cs" />
-    <Compile Include="AST\Generators\ProgramGenerator.cs" />
-    <Compile Include="AST\Generators\StatementGenerator.cs" />
-    <Compile Include="AST\Generators\TopFunctionGenerator.cs" />
-    <Compile Include="AST\IsLogicalNegationVisitor.cs" />
-    <Compile Include="AST\RelOperatorVisitor.cs" />
-    <Compile Include="Exceptions\IntegerOutOfRangeException.cs" />
-    <Compile Include="Exceptions\ParserException.cs" />
-    <Compile Include="Exceptions\ParserUnhandledException.cs" />
-    <Compile Include="Exceptions\SyntaxException.cs" />
-    <Compile Include="LatteBaseListener.cs" />
-    <Compile Include="LatteBaseVisitor.cs" />
-    <Compile Include="LatteLexer.cs" />
-    <Compile Include="LatteListener.cs" />
-    <Compile Include="LatteParser.cs" />
-    <Compile Include="LatteVisitor.cs" />
+    <Compile Include="LocalValuesCounterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Visitors\LatteBaseBinaryOperatorVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseArgsVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseBlockVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseEmptyVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseExpressionVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseProgramVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseRelOperatorVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseStatementVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseTopDefVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseTypeVisitor.cs" />
-    <Compile Include="Visitors\LatteBaseUnaryOperatorVisitor.cs" />
-    <Compile Include="Visitors\LatteLimitedVisitor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
       <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
       <Name>LatteBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuadruplesGenerator\QuadruplesGenerator.csproj">
+      <Project>{d60b2e15-165f-4489-aee9-ab24dcfa0ef1}</Project>
+      <Name>QuadruplesGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit.3.11.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
