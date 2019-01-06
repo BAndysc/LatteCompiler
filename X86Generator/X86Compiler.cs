@@ -12,18 +12,13 @@ namespace X86Generator
     {
         public string Compile(QuadruplesProgram program)
         {
-            
-
             StringBuilder builder = new StringBuilder();
-
 
             if (program.ConstStrings.Count > 0)
             {
                 builder.AppendLine("segment .data");
                 foreach (var str in program.ConstStrings)
-                {
                     builder.AppendLine($"    {str.Key}: db `{str.Value.Replace("`", "\\`")}`, 0");
-                }
             }
 
             builder.AppendLine("segment .text");
@@ -39,12 +34,10 @@ namespace X86Generator
             
             foreach (var func in program.Functions)
             {
-                var allocator = new NaiveRegisterAllocator<Memory32>();
-                for (int i = 10; i >= 0; --i)
-                    allocator.AddRegisterToPool(new Memory32(Register32.EBP, - 4 * (1 + func.Locals + i)));
-                
+                var registerProvider = new EndlessStackRegisterProvider(-4 * (1 + func.Locals));
+                var allocator = new NaiveRegisterAllocator<Memory32>(registerProvider);
                 var regs = allocator.AllocateRegisters(func.Instructions);
-                var generator = new QuadrupleToX86Generator(regs, regs.MaxUsedRegisters);
+                var generator = new QuadrupleToX86Generator(regs, registerProvider.MaxUsedRegisters);
 
                 foreach (var quad in func.Instructions)
                 {
@@ -59,6 +52,28 @@ namespace X86Generator
 
 
             return builder.ToString();
+        }
+
+        internal class EndlessStackRegisterProvider : IRegisterProvider<Memory32>
+        {
+            private int nextOffset = 0;
+
+            private int usedRegister = 0;
+
+            public int MaxUsedRegisters => usedRegister;
+            
+            public EndlessStackRegisterProvider(int startOffset)
+            {
+                nextOffset = startOffset;
+            }
+
+            public Memory32 GetNextFreeRegister()
+            {
+                var offset = nextOffset;
+                nextOffset -= 4;
+                usedRegister++;
+                return new Memory32(Register32.EBP, offset);
+            }
         }
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="IRegister.cs" />
     <Compile Include="IRegisterAllocation.cs" />
     <Compile Include="IRegisterAllocator.cs" />
+    <Compile Include="IRegisterProvider.cs" />
     <Compile Include="IStore.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

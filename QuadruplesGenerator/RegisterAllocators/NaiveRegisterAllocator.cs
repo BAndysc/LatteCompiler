@@ -8,16 +8,16 @@ namespace QuadruplesGenerator.RegisterAllocators
 {
     public class NaiveRegisterAllocator<T> : IRegisterAllocator<T>
     {
-        private List<T> nativeRegisters = new List<T>();
-        
-        public void AddRegisterToPool(T register)
+        private readonly IRegisterProvider<T> registerProvider;
+
+        public NaiveRegisterAllocator(IRegisterProvider<T> registerProvider)
         {
-            nativeRegisters.Add(register);
+            this.registerProvider = registerProvider;
         }
         
         public IRegisterAllocation<T> AllocateRegisters(IList<QuadrupleBase> instrs)
         {
-            var x86Registers = new List<T>(nativeRegisters);
+            var x86Registers = new List<T>();
             var mapping = new RegisterAllocation<T>();
             
             
@@ -55,7 +55,6 @@ namespace QuadruplesGenerator.RegisterAllocators
             }
 
             int used = 0;
-            mapping.MaxUsedRegisters = 0;
             for (int i = 0; i < instrs.Count; ++i)
             {
                 var instr = instrs[i];
@@ -69,6 +68,9 @@ namespace QuadruplesGenerator.RegisterAllocators
                 {
                     if (i == firstUsage[reg])
                     {
+                        if (x86Registers.Count == 0)
+                            x86Registers.Add(registerProvider.GetNextFreeRegister());
+
                         var native = x86Registers[x86Registers.Count - 1];
                         x86Registers.RemoveAt(x86Registers.Count - 1);
                         mapping.AllocRegister(reg, native);
@@ -81,8 +83,6 @@ namespace QuadruplesGenerator.RegisterAllocators
                         used--;
                     }
                 }
-
-                mapping.MaxUsedRegisters = Math.Max(mapping.MaxUsedRegisters, used);
             }
 
             return mapping;

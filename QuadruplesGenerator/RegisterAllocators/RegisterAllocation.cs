@@ -26,7 +26,5 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return mapping.ContainsKey(required);
         }
-
-        public int MaxUsedRegisters { get; set;  }
     }
 }
