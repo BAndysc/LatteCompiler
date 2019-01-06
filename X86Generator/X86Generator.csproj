@@ -55,9 +55,9 @@
       <Project>{d60b2e15-165f-4489-aee9-ab24dcfa0ef1}</Project>
       <Name>QuadruplesGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X86Assembler\X86Assembler.csproj">
+    <ProjectReference Include="..\X86Assembly\X86Assembly.csproj">
       <Project>{e8d451e6-c26d-4940-92c8-a80468e69d55}</Project>
-      <Name>X86Assembler</Name>
+      <Name>X86Assembly</Name>
     </ProjectReference>
     <ProjectReference Include="..\X86IntelAsm\X86IntelAsm.csproj">
       <Project>{d9d31555-c264-4bfa-8ce5-73a00fa1ea7f}</Project>

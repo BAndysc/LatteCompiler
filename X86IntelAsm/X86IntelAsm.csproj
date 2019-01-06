@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\X86Assembler\X86Assembler.csproj">
+    <ProjectReference Include="..\X86Assembly\X86Assembly.csproj">
       <Project>{e8d451e6-c26d-4940-92c8-a80468e69d55}</Project>
-      <Name>X86Assembler</Name>
+      <Name>X86Assembly</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

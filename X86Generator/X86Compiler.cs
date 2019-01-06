@@ -3,7 +3,7 @@ using System.Text;
 using LatteBase.AST;
 using QuadruplesCommon;
 using QuadruplesGenerator.RegisterAllocators;
-using X86Assembler.Operands;
+using X86Assembly.Operands;
 using X86IntelAsm;
 
 namespace X86Generator

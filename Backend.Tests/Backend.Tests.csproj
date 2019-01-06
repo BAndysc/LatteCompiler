@@ -102,9 +102,9 @@
       <Project>{3109dbb3-92f9-470c-a9e5-44be409c7687}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X86Assembler\X86Assembler.csproj">
+    <ProjectReference Include="..\X86Assembly\X86Assembly.csproj">
       <Project>{e8d451e6-c26d-4940-92c8-a80468e69d55}</Project>
-      <Name>X86Assembler</Name>
+      <Name>X86Assembly</Name>
     </ProjectReference>
     <ProjectReference Include="..\X86Generator\X86Generator.csproj">
       <Project>{66036b17-d9c1-4fb0-bd55-487764c59d24}</Project>

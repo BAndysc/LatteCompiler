@@ -1,7 +1,7 @@
 ﻿using System;
-using X86Assembler;
-using X86Assembler.Instructions;
-using X86Assembler.Visitors;
+using X86Assembly;
+using X86Assembly.Instructions;
+using X86Assembly.Visitors;
 
 namespace X86IntelAsm
 {

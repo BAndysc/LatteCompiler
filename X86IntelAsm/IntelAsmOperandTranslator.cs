@@ -1,5 +1,5 @@
-using X86Assembler.Operands;
-using X86Assembler.Visitors;
+using X86Assembly.Operands;
+using X86Assembly.Visitors;
 
 namespace X86IntelAsm
 {

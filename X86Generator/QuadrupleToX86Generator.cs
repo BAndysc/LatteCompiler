@@ -5,9 +5,9 @@ using System.Text;
 using LatteBase.AST;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
-using X86Assembler;
-using X86Assembler.Instructions;
-using X86Assembler.Operands;
+using X86Assembly;
+using X86Assembly.Instructions;
+using X86Assembly.Operands;
 
 namespace X86Generator
 {
