@@ -26,7 +26,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Good
 {
-    public class TestProgramProviderCore015
+    public class TestProgramProviderCore015 : ITestProgramProvider
     {
         public IProgram GetProgram()
         {
@@ -68,6 +68,16 @@ namespace TestPrograms.Good
                                     new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace()))))
                             }))
                 });
+        }
+
+        public string GetOutput()
+        {
+            return "0\n";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

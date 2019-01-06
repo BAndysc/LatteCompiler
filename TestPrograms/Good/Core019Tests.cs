@@ -36,7 +36,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Good
 {
-    public class TestProgramProviderCore019
+    public class TestProgramProviderCore019 : ITestProgramProvider
     {
         public IProgram GetProgram()
         {
@@ -67,7 +67,7 @@ namespace TestPrograms.Good
                                 new IntNode(76, new DummyFilePlace()),
                                 new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new List<IStatement>()
                             {
-                                new IncrementNode(new DummyFilePlace(), "i"),
+                                new DecrementNode(new DummyFilePlace(), "i"),
                                 new ExpressionStatementNode(new DummyFilePlace(),
                                     new FunctionCallNode("printInt",
                                         new List<IExpressionNode>() {new VariableNode("i", new DummyFilePlace())},
@@ -114,6 +114,25 @@ namespace TestPrograms.Good
                             new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
                         }))
                 });
+        }
+
+        public string GetOutput()
+        {
+            return @"1
+78
+77
+84
+76
+83
+76
+4
+76
+";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

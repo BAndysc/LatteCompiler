@@ -85,7 +85,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Good
 {
-    public class TestProgramProviderCore001
+    public class TestProgramProviderCore001 : ITestProgramProvider
     {
         public IProgram GetProgram()
         {
@@ -121,7 +121,7 @@ namespace TestPrograms.Good
                                         new VariableNode("r", new DummyFilePlace()),
                                         new VariableNode("n", new DummyFilePlace()),
                                         new DummyFilePlace())),
-                                new IncrementNode(new DummyFilePlace(), "n"))),
+                                new DecrementNode(new DummyFilePlace(), "n"))),
                             new ExpressionStatementNode(new DummyFilePlace(),
                                 new FunctionCallNode(new DummyFilePlace(), "printInt",
                                     new VariableNode("r", new DummyFilePlace())))),
@@ -251,6 +251,24 @@ namespace TestPrograms.Good
                                 new IncrementNode(new DummyFilePlace(), "i"))),
                             new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))),
                         new FunctionArgument(LatteType.String, "s"), new FunctionArgument(LatteType.Int, "n")));
+        }
+
+        public string GetOutput()
+        {
+            return @"3628800
+3628800
+3628800
+3628800
+3628800
+============================================================
+hello */
+/* world
+";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

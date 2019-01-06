@@ -50,9 +50,11 @@ namespace Backend
             
             File.WriteAllText(outputAsm, asm);
 
-            runner.Run("nasm", $"-f elf32 -g -F dwarf  {outputAsm} -o {outputObjectFile}");
+            string res;
+            
+            runner.Run("nasm", $"-f elf32 -g -F dwarf  {outputAsm} -o {outputObjectFile}", out res);
 
-            runner.Run("ld", $"-o {outputBinary} -melf_i386 {outputObjectFile} {runtimeObject}");
+            runner.Run("ld", $"-o {outputBinary} -melf_i386 {outputObjectFile} {runtimeObject}", out res);
         }
 
         public void SetIntermediateOutput(string intermediateOutput)

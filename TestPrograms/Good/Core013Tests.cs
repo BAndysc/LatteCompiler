@@ -43,7 +43,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Good
 {
-    public class TestProgramProviderCore013
+    public class TestProgramProviderCore013 : ITestProgramProvider
     {
         public IProgram GetProgram()
         {
@@ -225,6 +225,41 @@ namespace TestPrograms.Good
                                     new DummyFilePlace()))
                             }))
                 });
+        }
+
+        public string GetOutput()
+        {
+            return @"&&
+-1
+false
+-2
+false
+3
+-5
+false
+234234
+21321
+true
+||
+-1
+0
+false
+-2
+1
+true
+3
+true
+234234
+true
+!
+true
+false
+";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

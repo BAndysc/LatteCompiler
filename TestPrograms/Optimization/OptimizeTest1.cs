@@ -4,7 +4,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Optimization
 {
-    public class TestProgramProviderOptimize1
+    public class TestProgramProviderOptimize1 : ITestProgramProvider
     {
         /*
          * int main() {
@@ -18,6 +18,16 @@ namespace TestPrograms.Optimization
             var zero = new IntNode(0, d);
             return new ProgramNode(new TopFunctionNode(d, LatteType.Int, "main",
                 new IfNode(d, new TrueNode(d), new ReturnNode(d, zero))));
+        }
+
+        public string GetOutput()
+        {
+            return "";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

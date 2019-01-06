@@ -5,7 +5,7 @@ namespace Utils
 {
     public class Runner : IRunner
     {
-        public bool Run(string command, string arguments)
+        public bool Run(string command, string arguments, out string standardOut, string[] inputs = null)
         {
             try
             {
@@ -13,6 +13,7 @@ namespace Utils
 
                 procStartInfo.FileName = command;
                 procStartInfo.Arguments = arguments;
+                procStartInfo.RedirectStandardInput = true;
                 procStartInfo.RedirectStandardOutput = true;
                 procStartInfo.UseShellExecute = false;
                 procStartInfo.CreateNoWindow = true;
@@ -21,11 +22,15 @@ namespace Utils
                 {
                     process.StartInfo = procStartInfo;
                     process.Start();
-
+                    if (inputs != null)
+                    {
+                        foreach (var line in inputs)
+                            process.StandardInput.WriteLine(line);                        
+                    }
+                    
                     process.WaitForExit();
 
-                    string result = process.StandardOutput.ReadToEnd();
-                    Console.WriteLine(result);
+                    standardOut = process.StandardOutput.ReadToEnd();
                 }
 
                 return true;
@@ -36,6 +41,7 @@ namespace Utils
                 Console.WriteLine(command);
                 Console.WriteLine(arguments);
                 Console.WriteLine(ex.Message);
+                standardOut = null;
                 return false;
             }
         }

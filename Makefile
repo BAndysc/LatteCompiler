@@ -13,4 +13,5 @@ clean:
 
 test:
 	xbuild
-	mono packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe LatteTypeChecker.Tests/bin/Debug/LatteTypeChecker.Tests.dll QuadruplesGenerator.Tests/bin/Debug/QuadruplesGenerator.Tests.dll
+	cp -r lib Backend.Tests/bin/
+	mono packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe LatteTypeChecker.Tests/bin/Debug/LatteTypeChecker.Tests.dll QuadruplesGenerator.Tests/bin/Debug/QuadruplesGenerator.Tests.dll Backend.Tests/bin/Debug/Backend.Tests.dll

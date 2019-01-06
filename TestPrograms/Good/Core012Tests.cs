@@ -35,7 +35,7 @@ using LatteBase.AST.Impl;
 
 namespace TestPrograms.Good
 {
-    public class TestProgramProviderCore012
+    public class TestProgramProviderCore012 : ITestProgramProvider
     {
         public IProgram GetProgram()
         {
@@ -158,6 +158,24 @@ namespace TestPrograms.Good
                                     }))
                             }))
                 });
+        }
+
+        public string GetOutput()
+        {
+            return @"33
+79
+-1288
+22
+0
+true
+false
+string concatenation
+";
+        }
+
+        public string GetInput()
+        {
+            return null;
         }
     }
 }

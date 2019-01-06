@@ -84,6 +84,7 @@
     <Compile Include="Good\Core020Tests.cs" />
     <Compile Include="Good\Core021Tests.cs" />
     <Compile Include="Good\Core022Tests.cs" />
+    <Compile Include="IProgramProvider.cs" />
     <Compile Include="Optimization\OptimizeTest1.cs" />
     <Compile Include="Optimization\OptimizeTest3.cs" />
     <Compile Include="Optimization\OptimizeTest2.cs" />
