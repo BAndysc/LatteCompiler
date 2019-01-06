@@ -18,13 +18,14 @@ extern void printInt(int v)
 }
 extern void printString(char* v)
 {
-	printf(v);
-	printf("\n");
+	printf("%s\n", v);
 }
+
 extern void error()
 {
 	exit(-1);
 }
+
 extern int readInt()
 {
 	int a;

@@ -4,7 +4,7 @@ all:
 	cp -r CLI/bin/Release/* latc_data/
 	cp scripts/latc_x86 .
 	cp scripts/latc_x86 latc
-	gcc -m32 -c lib/runtime.c -o lib/runtime.o
+	gcc -m32 -fno-stack-protector -c lib/runtime.c -o lib/runtime.o
 
 clean:
 	rm -rf latc_x86

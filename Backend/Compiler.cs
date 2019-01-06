@@ -23,8 +23,12 @@ namespace Backend
         {
             this.tempFileCreator = tempFileCreator;
             this.runner = runner;
+
+            var libDir = AppDomain.CurrentDomain.BaseDirectory + "/../lib/";
+
+            var libs = new string[] {"runtime.o", "libc.a", "crt1.o", "crti.o", "crtn.o"};
             
-            runtimeObject = AppDomain.CurrentDomain.BaseDirectory + "/../lib/runtime.o";
+            runtimeObject = string.Join(" ", libs.Select(t => libDir + t));
         }
         
         
@@ -48,7 +52,7 @@ namespace Backend
 
             runner.Run("nasm", $"-f elf32 -g -F dwarf  {outputAsm} -o {outputObjectFile}");
 
-            runner.Run("gcc", $"-m32 {outputObjectFile} {runtimeObject} -o {outputBinary}");
+            runner.Run("ld", $"-o {outputBinary} -melf_i386 {outputObjectFile} {runtimeObject}");
         }
 
         public void SetIntermediateOutput(string intermediateOutput)
