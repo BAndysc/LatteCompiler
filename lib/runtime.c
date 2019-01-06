@@ -1,5 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
+#define NULL 0
+typedef unsigned int size_t;
+extern int printf(const char *format, ...);
+extern int scanf(const char *format, ...);
+extern int getchar(void);
+extern void exit(int status);
+extern void *memcpy(void *dest, const void *src, size_t n);
+extern size_t strlen(const char *s);
+extern void *malloc(size_t size);
+extern void free(void *ptr);
+extern void *calloc(size_t nmemb, size_t size);
+extern void *realloc(void *ptr, size_t size);
+
 
 extern void printInt(int v)
 {

@@ -24,14 +24,18 @@ namespace CLI
                 Parser parser = new Parser();
                 Compiler compiler = new Compiler(new TempFileCreator(), new Runner()); 
 
-                Console.WriteLine($"Compiling {arg}");
-                
                 var program = parser.Parse(Path.GetFileNameWithoutExtension(arg), text);
-                
-                var outputAsmFile = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg) + ".s";
-                var outputFile = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg);
 
-                var intermediate = Path.GetDirectoryName(arg) + "/" + Path.GetFileNameWithoutExtension(arg) + ".q";
+                var fileName = Path.GetFileNameWithoutExtension(arg);
+                
+                var baseDir = Path.GetDirectoryName(arg);
+
+                if (!string.IsNullOrEmpty(baseDir))
+                    baseDir = baseDir + "/";
+                
+                var outputAsmFile = baseDir + fileName + ".s";
+                var outputFile = baseDir + fileName;
+                var intermediate = baseDir + fileName + ".q";
                 
                 compiler.SetIntermediateOutput(intermediate);
                 compiler.SetAssemblyOutput(outputAsmFile);
