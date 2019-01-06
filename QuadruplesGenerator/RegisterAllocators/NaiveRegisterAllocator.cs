@@ -6,19 +6,19 @@ using QuadruplesCommon;
 
 namespace QuadruplesGenerator.RegisterAllocators
 {
-    public class NaiveRegisterAllocator : IRegisterAllocator
+    public class NaiveRegisterAllocator<T> : IRegisterAllocator<T>
     {
-        private List<INativeRegister> nativeRegisters = new List<INativeRegister>();
+        private List<T> nativeRegisters = new List<T>();
         
-        public void AddRegisterToPool(INativeRegister register)
+        public void AddRegisterToPool(T register)
         {
             nativeRegisters.Add(register);
         }
         
-        public IRegisterAllocation AllocateRegisters(IList<QuadrupleBase> instrs)
+        public IRegisterAllocation<T> AllocateRegisters(IList<QuadrupleBase> instrs)
         {
-            var x86Registers = new List<INativeRegister>(nativeRegisters);
-            var mapping = new RegisterAllocation();
+            var x86Registers = new List<T>(nativeRegisters);
+            var mapping = new RegisterAllocation<T>();
             
             
             var defining = new DefiningRegisterEvaluator();

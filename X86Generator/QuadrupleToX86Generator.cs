@@ -1,213 +1,238 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LatteBase.AST;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
+using X86Assembler;
+using X86Assembler.Instructions;
+using X86Assembler.Operands;
 
 namespace X86Generator
 {
-    public class QuadrupleToX86Generator : QuadrupleVisitor<object>
+    public class QuadrupleToX86Generator : QuadrupleVisitor<IEnumerable<IX86Instruction>>
     {
-        private readonly StringBuilder builder;
-        private readonly IRegisterAllocation mapping;
+        private readonly IRegisterAllocation<Memory32> mapping;
         private readonly int regsMaxUsedRegisters;
+        private readonly List<IX86Instruction> instructions = new List<IX86Instruction>();
 
-        public QuadrupleToX86Generator(StringBuilder builder, IRegisterAllocation mapping, int regsMaxUsedRegisters)
+        public QuadrupleToX86Generator(IRegisterAllocation<Memory32> mapping, int regsMaxUsedRegisters)
         {
-            this.builder = builder;
             this.mapping = mapping;
             this.regsMaxUsedRegisters = regsMaxUsedRegisters;
         }
 
-        private void Emit(string asm, QuadrupleBase quad)
+        private void Clear()
         {
-            EmitLabel("    " + asm, quad);
+            instructions.Clear();
         }
         
-        
-        private void EmitLabel(string asm, QuadrupleBase quad)
+        private void Emit(IX86Instruction instruction, QuadrupleBase quad)
         {
-            builder.Append($"{asm}");
-
-            for (int i = 0; i < 50 - asm.Length; ++i)
-                builder.Append(" ");
-            
-            builder.AppendLine($"; {quad.FilePlace.Text.Split('\n')[0]} ; {quad}");
+            instructions.Add(instruction);
         }
         
-        public override object Visit(AddQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(AddQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"add eax, {b}", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
+            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new AddInstruction(Register32.EAX, b), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(NegateQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(NegateQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.Value);
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"neg eax", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
+            if (dest == a)
+                Emit(new NegateInstruction(a), quadruple);
+            else
+            {
+                Emit(new MovInstruction(Register32.EAX, a), quadruple);
+                Emit(new NegateInstruction(Register32.EAX), quadruple);
+                Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            }
 
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(LogicalNegateQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LogicalNegateQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.Value);
-            Emit($"cmp dword {a}, 0", quadruple);
-            Emit($"sete al", quadruple);
-            Emit($"movzx eax, al", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
+            Emit(new CompareInstruction(a, new ImmediateValue32(0)), quadruple);
+            Emit(new SetEInstruction(Register8.AL), quadruple);
+            Emit(new MovzxInstruction(Register32.EAX, Register8.AL), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(SubQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(SubQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"sub eax, {b}", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
+            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new SubInstruction(Register32.EAX, b), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
 
-        public override object Visit(MulQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(MulQuadruple quadruple)
         {
+            Clear();
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.RegisterA);
+            var b = mapping.Get(quadruple.RegisterB);
+            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new MulInstruction(b), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+
+            return instructions.ToList();
+        }
+
+        public override IEnumerable<IX86Instruction> Visit(DivQuadruple quadruple)
+        {
+            Clear();
+            var dest = mapping.Get(quadruple.ResultRegister);
+            var a = mapping.Get(quadruple.RegisterA);
+            var b = mapping.Get(quadruple.RegisterB);
+
+            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new CdqInstruction(), quadruple);
+            Emit(new SignedDivInstruction(b), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            
+            return instructions.ToList();
+        }
+
+        public override IEnumerable<IX86Instruction> Visit(ModQuadruple quadruple)
+        {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
             
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"mul dword {b}", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
-
-            return null;
-        }
-
-        public override object Visit(DivQuadruple quadruple)
-        {
-            var dest = mapping.Get(quadruple.ResultRegister);
-            var a = mapping.Get(quadruple.RegisterA);
-            var b = mapping.Get(quadruple.RegisterB);
-
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"cdq", quadruple);
-            Emit($"idiv dword {b}", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
             
-            return null;
+            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new CdqInstruction(), quadruple);
+            Emit(new SignedDivInstruction(b), quadruple);
+            Emit(new MovInstruction(dest, Register32.EDX), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(ModQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(ConcatQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit($"mov dword eax, {a}", quadruple);
-            Emit($"cdq", quadruple);
-            Emit($"idiv dword {b}", quadruple);
-            Emit($"mov {dest}, edx", quadruple);
-            return null;
-        }
+            Emit(new PushInstruction(b), quadruple);
+            Emit(new PushInstruction(a), quadruple);
+            Emit(new CallInstruction(new X86Label("concat_string")), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(8)), quadruple);
 
-        public override object Visit(ConcatQuadruple quadruple)
-        {
-            var dest = mapping.Get(quadruple.ResultRegister);
-            var a = mapping.Get(quadruple.RegisterA);
-            var b = mapping.Get(quadruple.RegisterB);
-            Emit($"push dword {b}", quadruple);
-            Emit($"push dword {a}", quadruple);
-            Emit($"call concat_string", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
-            Emit($"add esp, 8", quadruple);
-
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(ImmediateValueQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(ImmediateValueQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit($"mov dword {dest}, {quadruple.Value}", quadruple);
+            Emit(new MovInstruction(dest, new ImmediateValue32(quadruple.Value.AsInt)), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
 
-        public override object Visit(LoadQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LoadQuadruple quadruple)
         {
+            Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit($"mov eax, [ebp - {4 * (quadruple.Local+1)}]", quadruple);
-            Emit($"mov {dest}, eax", quadruple);
+            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EBP, -4 * (quadruple.Local+1))), quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
 
-        public override object Visit(LocalQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LocalQuadruple quadruple)
         {
-            Emit($"sub esp, 4", quadruple);
-            return null;
+            Clear();
+            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4)), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(ReturnQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(ReturnQuadruple quadruple)
         { 
+            Clear();
             var value = mapping.Get(quadruple.ValueRegister);
-            Emit($"mov eax, {value}", quadruple);
-            Emit($"leave", quadruple);
-            Emit($"ret", quadruple);
+            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new LeaveInstruction(), quadruple);
+            Emit(new RetInstruction(), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(ReturnVoidQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(ReturnVoidQuadruple quadruple)
         { 
-            Emit($"leave", quadruple);
-            Emit($"ret", quadruple);
+            Clear();
+            Emit(new LeaveInstruction(), quadruple);
+            Emit(new RetInstruction(), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
 
-        public override object Visit(StoreQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(StoreQuadruple quadruple)
         {
+            Clear();
             var value = mapping.Get(quadruple.Value);
-            Emit($"mov dword eax, {value}", quadruple);
-            Emit($"mov [ebp - {4 * (quadruple.Local+1)}], eax", quadruple);
+            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new MovInstruction(new Memory32(Register32.EBP, -4 * (quadruple.Local + 1)), Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
         
-        public override object Visit(FunctionCallQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(FunctionCallQuadruple quadruple)
         {
+            Clear();
             foreach (var arg in quadruple.Arguments.Reverse())
-                Emit($"push dword {mapping.Get(arg)}", quadruple);
-            
-            Emit($"call {quadruple.FunctionName}", quadruple);
-            
-            if (mapping.IsAllocated(quadruple.ResultRegister) && mapping.Get(quadruple.ResultRegister)!= X86Register.EAX)
-                Emit($"mov {mapping.Get(quadruple.ResultRegister)}, eax", quadruple);
+            {
+                var value = mapping.Get(arg);
+                Emit(new PushInstruction(value), quadruple);
+            }
 
-            return null;
+            Emit(new CallInstruction(new X86Label(quadruple.FunctionName)), quadruple);
+            
+            if (mapping.IsAllocated(quadruple.ResultRegister))
+                Emit(new MovInstruction(mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
+
+            return instructions.ToList();
         }
 
-        public override object Visit(CompareQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(CompareQuadruple quadruple)
         {
-            Emit($"mov dword eax, {mapping.Get(quadruple.CompareTo)}", quadruple);
-            Emit($"cmp {mapping.Get(quadruple.RegValue)}, eax", quadruple);
-            return null;
+            Clear();
+            var a = mapping.Get(quadruple.RegValue);
+            var b = mapping.Get(quadruple.CompareTo);
+            Emit(new MovInstruction(Register32.EAX, b), quadruple);
+            Emit(new CompareInstruction(a, Register32.EAX), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(JumpQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(JumpQuadruple quadruple)
         {
+            Clear();
             switch (quadruple.Operator)
             {
                 case RelOperator.LessThan:
@@ -223,84 +248,93 @@ namespace X86Generator
                     throw new ArgumentOutOfRangeException();
                     break;
                 case RelOperator.Equals:
-                    Emit($"je {quadruple.Destination}", quadruple);
+                    Emit(new JeInstruction(new X86Label(quadruple.Destination.Text)), quadruple);
                     break;
                 case RelOperator.NotEquals:
-                    Emit($"jne {quadruple.Destination}", quadruple);
+                    Emit(new JneInstruction(new X86Label(quadruple.Destination.Text)), quadruple);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Emit($"jmp {quadruple.Else}", quadruple);
 
-            return null;
+            Emit(new JmpInstruction(new X86Label(quadruple.Else.Text)), quadruple);
+
+            return instructions.ToList();
         }
 
-        public override object Visit(SetIfQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(SetIfQuadruple quadruple)
         {
+            Clear();
             switch (quadruple.Operator)
             {
                 case RelOperator.LessThan:
-                    Emit($"setl cl", quadruple);
+                    Emit(new SetLInstruction(Register8.CL), quadruple);
                     break;
                 case RelOperator.LessEquals:
-                    Emit($"setle cl", quadruple);
+                    Emit(new SetLeInstruction(Register8.CL), quadruple);
                     break;
                 case RelOperator.GreaterThan:
-                    Emit($"setg cl", quadruple);
+                    Emit(new SetGInstruction(Register8.CL), quadruple);
                     break;
                 case RelOperator.GreaterEquals:
-                    Emit($"setge cl", quadruple);
+                    Emit(new SetGeInstruction(Register8.CL), quadruple);
                     break;
                 case RelOperator.Equals:
-                    Emit($"sete cl", quadruple);
+                    Emit(new SetEInstruction(Register8.CL), quadruple);
                     break;
                 case RelOperator.NotEquals:
-                    Emit($"setne cl", quadruple);
+                    Emit(new SetNeInstruction(Register8.CL), quadruple);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            Emit($"and ecx, 1", quadruple);
+            var dest = mapping.Get(quadruple.Destination);
             
-            Emit($"mov dword {mapping.Get(quadruple.Destination)}, ecx", quadruple);
-            return null;
+            Emit(new AndInstruction(Register32.ECX, new ImmediateValue32(1)), quadruple);
+            Emit(new MovInstruction(dest, Register32.ECX), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(LabelQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LabelQuadruple quadruple)
         {
-            EmitLabel($"{quadruple.Label}:", quadruple);
-            return null;
+            Clear();
+            Emit(new LabelInstruction(new X86Label(quadruple.Label.Text)), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(JumpAlwaysQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(JumpAlwaysQuadruple quadruple)
         {
-            Emit($"jmp {quadruple.Destination}", quadruple);
-            return null;
+            Clear();
+            Emit(new JmpInstruction(new X86Label(quadruple.Destination.Text)), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(LoadLabelPtrQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LoadLabelPtrQuadruple quadruple)
         {
-            Emit($"mov dword {mapping.Get(quadruple.ResultRegister)}, {quadruple.LabelToLoad}", quadruple);
-            return null;
+            Clear();
+            var dest = mapping.Get(quadruple.ResultRegister);
+            Emit(new MovInstruction(dest, new ImmediateValue32(new X86Label(quadruple.LabelToLoad.Text))), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(FuncDefQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(FuncDefQuadruple quadruple)
         {
-            EmitLabel($"{quadruple.FunctionName}: ", quadruple);
-            Emit($"push ebp", quadruple);
-            Emit($"mov ebp, esp", quadruple);
-            Emit($"sub esp, {regsMaxUsedRegisters * 4}", quadruple);
-            return null;
+            Clear();
+            Emit(new LabelInstruction(new X86Label(quadruple.FunctionName)), quadruple);
+            Emit(new PushInstruction(Register32.EBP), quadruple);
+            Emit(new MovInstruction(Register32.EBP, Register32.ESP), quadruple);
+            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(regsMaxUsedRegisters * 4)), quadruple);
+            return instructions.ToList();
         }
 
-        public override object Visit(LoadArgumentQuadruple quadruple)
+        public override IEnumerable<IX86Instruction> Visit(LoadArgumentQuadruple quadruple)
         {
-            Emit($"mov eax, [ebp + {4 * (quadruple.argumentIndex + 2)}]", quadruple);
-            Emit($"mov [ebp - {4 * (quadruple.localIndex + 1)}], eax", quadruple);
+            Clear();
+            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EBP, 4 * (quadruple.argumentIndex + 2))), quadruple);
+            Emit(new MovInstruction(new Memory32(Register32.EBP, -4 * (quadruple.localIndex + 1)), Register32.EAX), quadruple);
 
-            return null;
+            return instructions.ToList();
         }
     }
 }

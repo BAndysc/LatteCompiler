@@ -3,8 +3,8 @@ using QuadruplesCommon;
 
 namespace QuadruplesCommon
 {
-    public interface IRegisterAllocator
+    public interface IRegisterAllocator<T>
     {
-        IRegisterAllocation AllocateRegisters(IList<QuadrupleBase> instrs);
+        IRegisterAllocation<T> AllocateRegisters(IList<QuadrupleBase> instrs);
     }
 }

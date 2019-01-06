@@ -2,10 +2,10 @@ using QuadruplesCommon;
 
 namespace QuadruplesCommon
 {
-    public interface IRegisterAllocation
+    public interface IRegisterAllocation<T>
     {
-        INativeRegister Get(IRegister register);
-        void AllocRegister(IRegister register, INativeRegister nativeRegister);
+        T Get(IRegister register);
+        void AllocRegister(IRegister register, T nativeRegister);
         bool IsAllocated(IRegister required);
         int MaxUsedRegisters { get; set; }
     }

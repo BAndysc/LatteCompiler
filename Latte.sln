@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X86Generator", "X86Generato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{3109DBB3-92F9-470C-A9E5-44BE409C7687}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X86Assembler", "X86Assembler\X86Assembler.csproj", "{E8D451E6-C26D-4940-92C8-A80468E69D55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X86IntelAsm", "X86IntelAsm\X86IntelAsm.csproj", "{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +88,13 @@ Global
 		{3109DBB3-92F9-470C-A9E5-44BE409C7687}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3109DBB3-92F9-470C-A9E5-44BE409C7687}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3109DBB3-92F9-470C-A9E5-44BE409C7687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8D451E6-C26D-4940-92C8-A80468E69D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8D451E6-C26D-4940-92C8-A80468E69D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8D451E6-C26D-4940-92C8-A80468E69D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8D451E6-C26D-4940-92C8-A80468E69D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

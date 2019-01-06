@@ -2,21 +2,21 @@ namespace QuadruplesCommon
 {
     public class Label
     {
-        private readonly string label;
+        public readonly string Text;
 
         public Label(int l)
         {
-            label = $"l{l}";
+            Text = $"l{l}";
         }
 
         public Label(string l)
         {
-            label = l;
+            Text = l;
         }
 
         public override string ToString()
         {
-            return label;
+            return Text;
         }
     }
 }

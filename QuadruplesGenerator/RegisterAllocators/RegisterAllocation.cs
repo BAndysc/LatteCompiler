@@ -3,21 +3,21 @@ using QuadruplesCommon;
 
 namespace QuadruplesGenerator.RegisterAllocators
 {
-    public class RegisterAllocation : IRegisterAllocation
+    public class RegisterAllocation<T> : IRegisterAllocation<T>
     {
-        private Dictionary<IRegister, INativeRegister> mapping;
+        private Dictionary<IRegister, T> mapping;
 
         public RegisterAllocation()
         {
-            mapping = new Dictionary<IRegister, INativeRegister>();
+            mapping = new Dictionary<IRegister, T>();
         }
 
-        public INativeRegister Get(IRegister register)
+        public T Get(IRegister register)
         {
             return mapping[register];
         }
 
-        public void AllocRegister(IRegister register, INativeRegister native)
+        public void AllocRegister(IRegister register, T native)
         {
             mapping[register] = native;
         }

@@ -1,7 +1,10 @@
+using System.Linq;
 using System.Text;
 using LatteBase.AST;
 using QuadruplesCommon;
 using QuadruplesGenerator.RegisterAllocators;
+using X86Assembler.Operands;
+using X86IntelAsm;
 
 namespace X86Generator
 {
@@ -32,18 +35,25 @@ namespace X86Generator
             builder.AppendLine("    extern readString");
             builder.AppendLine("    extern concat_string");
 
+            var translator = new IntelAsmTranslator(withIndent: true);
+            
             foreach (var func in program.Functions)
             {
-                var allocator = new NaiveRegisterAllocator();
+                var allocator = new NaiveRegisterAllocator<Memory32>();
                 for (int i = 10; i >= 0; --i)
-                    allocator.AddRegisterToPool(new X86Register($"[EBP - {4 * (1 + func.Locals + i)}]"));
+                    allocator.AddRegisterToPool(new Memory32(Register32.EBP, - 4 * (1 + func.Locals + i)));
                 
                 var regs = allocator.AllocateRegisters(func.Instructions);
-                var generator = new QuadrupleToX86Generator(builder, regs, regs.MaxUsedRegisters);
-                
+                var generator = new QuadrupleToX86Generator(regs, regs.MaxUsedRegisters);
+
                 foreach (var quad in func.Instructions)
                 {
-                    generator.Visit(quad);
+                    var instrs = generator.Visit(quad).Select(translator.Visit);
+
+                    foreach (var instr in instrs)
+                    {
+                        builder.AppendLine(instr);
+                    }
                 }
             }
 

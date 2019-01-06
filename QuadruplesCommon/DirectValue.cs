@@ -2,7 +2,7 @@ namespace QuadruplesCommon
 {
     public interface DirectValue
     {
-        
+        int AsInt { get; }
     }
 
     public class DirectIntValue : DirectValue
@@ -18,6 +18,8 @@ namespace QuadruplesCommon
         {
             return $"{Value}";
         }
+
+        public int AsInt => Value;
     }
 
     public class DirectBoolValue : DirectValue
@@ -35,5 +37,7 @@ namespace QuadruplesCommon
                 return "1";
             return "0";
         }
+
+        public int AsInt => Value ? 1 : 0;
     }
 }
