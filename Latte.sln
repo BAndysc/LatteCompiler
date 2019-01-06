@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X86Assembler", "X86Assemble
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X86IntelAsm", "X86IntelAsm\X86IntelAsm.csproj", "{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPrograms", "TestPrograms\TestPrograms.csproj", "{37AB0326-2B41-4459-AB37-C491C81C1CAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,5 +98,9 @@ Global
 		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9D31555-C264-4BFA-8CE5-73A00FA1EA7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AB0326-2B41-4459-AB37-C491C81C1CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AB0326-2B41-4459-AB37-C491C81C1CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AB0326-2B41-4459-AB37-C491C81C1CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AB0326-2B41-4459-AB37-C491C81C1CAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

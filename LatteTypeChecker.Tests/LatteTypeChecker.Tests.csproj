@@ -65,7 +65,6 @@
     <Compile Include="Bad\Bad025Tests.cs" />
     <Compile Include="Bad\Bad026Tests.cs" />
     <Compile Include="Bad\Bad027Tests.cs" />
-    <Compile Include="DummyFilePlace.cs" />
     <Compile Include="Good\AddTests.cs" />
     <Compile Include="Good\Core001Tests.cs" />
     <Compile Include="Good\Core002Tests.cs" />
@@ -107,6 +106,10 @@
     <ProjectReference Include="..\LatteTypeChecker\LatteTypeChecker.csproj">
       <Project>{bef6d4e6-4745-4140-b4aa-919b7a05ddce}</Project>
       <Name>LatteTypeChecker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestPrograms\TestPrograms.csproj">
+      <Project>{37ab0326-2b41-4459-ab37-c491c81c1caf}</Project>
+      <Name>TestPrograms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

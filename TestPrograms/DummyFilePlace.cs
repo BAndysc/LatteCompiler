@@ -1,6 +1,6 @@
 using LatteBase.AST;
 
-namespace LatteTypeChecker.Tests
+namespace TestPrograms
 {
     internal class DummyFilePlace : IFilePlace
     {

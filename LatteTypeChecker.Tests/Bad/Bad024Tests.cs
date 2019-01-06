@@ -5,15 +5,7 @@ using LatteBase.AST.Impl;
 using LatteTreeOptimizer;
 using LatteTypeChecker.Exceptions;
 using NUnit.Framework;
-
-// Author: p. Marcin Benke
-// Source: https://www.mimuw.edu.pl/~ben/Zajecia/Mrj2018/Latte/lattests121017.tgz
-
-// int main() {
-//     if (false) 
-//        return 0;
-// }
-// 
+using TestPrograms.Bad;
 
 namespace LatteTypeChecker.Tests.Bad
 {
@@ -22,16 +14,7 @@ namespace LatteTypeChecker.Tests.Bad
         [Test]
         public void Bad024Test()
         {
-            var program =
-                new ProgramNode(new List<ITopFunctionNode>()
-                {
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
-                        new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                        {
-                            new IfNode(new DummyFilePlace(), new FalseNode(new DummyFilePlace()),
-                                new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))
-                        }))
-                });
+            var program = new TestProgramProviderBad024().GetProgram();
             Assert.Catch<ExpectedReturnInFunctionException>(() =>
                 new StaticAnalysisChecker().Visit(program)
             );
