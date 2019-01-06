@@ -196,7 +196,7 @@ namespace LatteTypeChecker.Tests.Good
                             new DummyFilePlace(), new List<IStatement>()
                             {
                                 new IfElseNode(new DummyFilePlace(),
-                                    new NegateNode(new VariableNode("b", new DummyFilePlace()), new DummyFilePlace()),
+                                    new LogicalNegateNode(new VariableNode("b", new DummyFilePlace()), new DummyFilePlace()),
                                     new BlockNode(new DummyFilePlace(), new List<IStatement>()
                                     {
                                         new ExpressionStatementNode(new DummyFilePlace(),

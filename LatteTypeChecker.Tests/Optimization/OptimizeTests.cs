@@ -38,7 +38,7 @@ namespace LatteTypeChecker.Tests.Optimization
             var d = new DummyFilePlace();
             var zero = new IntNode(0, d);
             var program = new ProgramNode(new TopFunctionNode(d, LatteType.Int, "main",
-                new IfNode(d, new NegateNode(new CompareNode(RelOperator.Equals, new TrueNode(d), new FalseNode(d), d), d), new ReturnNode(d, zero))));
+                new IfNode(d, new LogicalNegateNode(new CompareNode(RelOperator.Equals, new TrueNode(d), new FalseNode(d), d), d), new ReturnNode(d, zero))));
             
             Assert.AreEqual(true, new StaticAnalysisChecker().Visit(program));
         }

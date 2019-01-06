@@ -128,7 +128,7 @@ namespace LatteTypeChecker.Tests.Good
                                         new AndNode(
                                             new CompareNode(RelOperator.Equals,
                                                 new TrueNode(new DummyFilePlace()),
-                                                new NegateNode(new FalseNode(new DummyFilePlace()),
+                                                new LogicalNegateNode(new FalseNode(new DummyFilePlace()),
                                                     new DummyFilePlace()),
                                                 new DummyFilePlace()),
                                             new TrueNode(new DummyFilePlace()),
@@ -215,7 +215,7 @@ namespace LatteTypeChecker.Tests.Good
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()
                         {
                             new ReturnNode(new DummyFilePlace(), new OrNode(
-                                new NegateNode(new VariableNode("x", new DummyFilePlace()), new DummyFilePlace()),
+                                new LogicalNegateNode(new VariableNode("x", new DummyFilePlace()), new DummyFilePlace()),
                                 new CompareNode(RelOperator.Equals,
                                     new VariableNode("x", new DummyFilePlace()),
                                     new VariableNode("y", new DummyFilePlace()),
