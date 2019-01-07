@@ -87,6 +87,7 @@
     <Compile Include="Good\Core020Test.cs" />
     <Compile Include="Good\Core021Test.cs" />
     <Compile Include="Good\Core022Test.cs" />
+    <Compile Include="Good\ExitAsReturnTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

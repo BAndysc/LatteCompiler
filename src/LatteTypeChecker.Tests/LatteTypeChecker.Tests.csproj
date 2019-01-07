@@ -65,6 +65,7 @@
     <Compile Include="Bad\Bad025Tests.cs" />
     <Compile Include="Bad\Bad026Tests.cs" />
     <Compile Include="Bad\Bad027Tests.cs" />
+    <Compile Include="Bad\FunctionCallAsReturnTests.cs" />
     <Compile Include="Good\AddTests.cs" />
     <Compile Include="Good\Core001Tests.cs" />
     <Compile Include="Good\Core002Tests.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Good\Core020Tests.cs" />
     <Compile Include="Good\Core021Tests.cs" />
     <Compile Include="Good\Core022Tests.cs" />
+    <Compile Include="Good\ExitAsReturnTests.cs" />
     <Compile Include="Optimization\OptimizeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

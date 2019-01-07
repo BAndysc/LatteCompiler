@@ -3,6 +3,7 @@ using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
 using LatteTypeChecker.Exceptions;
+using LatteTypeChecker.Visitors;
 
 namespace LatteTypeChecker
 {
@@ -84,9 +85,9 @@ namespace LatteTypeChecker
             return false;
         }
 
-        public override bool Visit(IExpressionStatementNode nodeNode)
+        public override bool Visit(IExpressionStatementNode node)
         {
-            return false;
+            return new IsExpressionExitCall().Visit(node.Expression);
         }
     }
 }

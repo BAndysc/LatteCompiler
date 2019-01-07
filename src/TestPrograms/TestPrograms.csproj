@@ -60,6 +60,7 @@
     <Compile Include="Bad\Bad025Tests.cs" />
     <Compile Include="Bad\Bad026Tests.cs" />
     <Compile Include="Bad\Bad027Tests.cs" />
+    <Compile Include="Bad\TestProgramProviderFunctionCallAsReturn.cs" />
     <Compile Include="DummyFilePlace.cs" />
     <Compile Include="Good\AddTests.cs" />
     <Compile Include="Good\Basic\add.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Good\Core020Tests.cs" />
     <Compile Include="Good\Core021Tests.cs" />
     <Compile Include="Good\Core022Tests.cs" />
+    <Compile Include="Good\ExitAsReturnTest.cs" />
     <Compile Include="IProgramProvider.cs" />
     <Compile Include="Optimization\OptimizeTest1.cs" />
     <Compile Include="Optimization\OptimizeTest3.cs" />
