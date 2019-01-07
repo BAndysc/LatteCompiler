@@ -19,7 +19,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Variable {previousDeclaration.Name} declared as {previousDeclaration.Type}, but expected {expectedDeclaration.Type}. {base.ToString()}";
+            return $"Variable {previousDeclaration.Name} declared as {previousDeclaration.Type}, but expected {expectedDeclaration.Type}.\n{base.ToString()}";
         }
     }
 }

@@ -237,16 +237,12 @@ namespace X86Generator
             {
                 case RelOperator.LessThan:
                     throw new ArgumentOutOfRangeException();
-                    break;
                 case RelOperator.LessEquals:
                     throw new ArgumentOutOfRangeException();
-                    break;
                 case RelOperator.GreaterThan:
                     throw new ArgumentOutOfRangeException();
-                    break;
                 case RelOperator.GreaterEquals:
                     throw new ArgumentOutOfRangeException();
-                    break;
                 case RelOperator.Equals:
                     Emit(new JeInstruction(new X86Label(quadruple.Destination.Text)), quadruple);
                     break;

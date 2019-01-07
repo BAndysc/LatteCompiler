@@ -18,7 +18,7 @@ namespace LatteTypeChecker.Exceptions
         public override string ToString()
         {
             return
-                $"STarting function: {functionDefinition.Name} returns {functionDefinition.ReturnType}, expected {expectedType}";
+                $"Starting function: {functionDefinition.Name} returns {functionDefinition.ReturnType}, expected {expectedType}";
         }
     }
 }

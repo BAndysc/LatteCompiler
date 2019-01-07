@@ -18,7 +18,7 @@ namespace LatteTypeChecker.Exceptions
         public override string ToString()
         {
             return
-                $"Function {function.Name} takes {function.ArgumentTypes.Count} arguments, but {givenCount} given. {base.ToString()}";
+                $"Function {function.Name} takes {function.ArgumentTypes.Count} arguments, but {givenCount} given.\n{base.ToString()}";
         }
     }
 }

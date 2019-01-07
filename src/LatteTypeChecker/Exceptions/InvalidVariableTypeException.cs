@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Cannot declare variables of type {declarationType}. {base.ToString()}";
+            return $"Cannot declare variables of type {declarationType}.\n{base.ToString()}";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Invalid redeclaration of variable {prev.Name} as {curr.Type} (previously: {prev.Type}). {base.ToString()}";
+            return $"Invalid redeclaration of variable {prev.Name} as {curr.Type} (previously: {prev.Type}).\n{base.ToString()}";
         }
     }
 }

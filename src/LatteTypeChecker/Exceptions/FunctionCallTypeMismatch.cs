@@ -20,7 +20,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"While calling function {function.Name}, for argument no. {argumentIndex} ({function.ArgumentTypes[argumentIndex]} {function.ArgumentNames[argumentIndex]}) given type {givenArgumentType}. {base.ToString()}";
+            return $"While calling function {function.Name}, for argument no. {argumentIndex} ({function.ArgumentTypes[argumentIndex]} {function.ArgumentNames[argumentIndex]}) given type {givenArgumentType}.\n{base.ToString()}";
         }
     }
 }

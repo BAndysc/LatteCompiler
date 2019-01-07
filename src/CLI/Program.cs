@@ -19,6 +19,13 @@ namespace CLI
 
             foreach (var arg in args)
             {
+                if (!File.Exists(arg))
+                {
+                    Console.WriteLine("ERROR");
+                    Console.WriteLine("File doesn't exist");
+                    continue;
+                }
+                
                 var text = File.ReadAllText(arg);
 
                 Parser parser = new Parser();
@@ -35,7 +42,7 @@ namespace CLI
                 
                 var outputAsmFile = baseDir + fileName + ".s";
                 var outputFile = baseDir + fileName;
-                var intermediate = baseDir + fileName + ".q";
+                //var intermediate = baseDir + fileName + ".q";
                 
                 //compiler.SetIntermediateOutput(intermediate);
                 compiler.SetAssemblyOutput(outputAsmFile);

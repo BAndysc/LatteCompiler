@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Function {function.Name} has not distinct parameter names: {string.Join(", ", function.ArgumentNames)} {base.ToString()}";
+            return $"Function {function.Name} has not distinct parameter names: {string.Join(", ", function.ArgumentNames)}\n{base.ToString()}";
         }
     }
 }

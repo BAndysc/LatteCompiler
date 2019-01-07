@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Expected declaration of variable {expectedVariable.Type} {expectedVariable.Name}, but it is undeclared. {base.ToString()}";
+            return $"Expected declaration of variable {expectedVariable.Type} {expectedVariable.Name}, but it is undeclared.\n{base.ToString()}";
         }
     }
     
@@ -31,7 +31,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Expected declaration of variable {expectedVariable}, but it is undeclared. {base.ToString()}";
+            return $"Expected declaration of variable {expectedVariable}, but it is undeclared.\n{base.ToString()}";
         }
     }
 }

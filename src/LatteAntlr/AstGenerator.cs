@@ -29,7 +29,7 @@ namespace LatteAntlr
             
             parser.BuildParseTree = true;
             parser.RemoveErrorListeners();
-            parser.AddErrorListener(new CustomErrorListener());
+            parser.AddErrorListener(new CustomErrorListener(sourceCode));
             //parser.ErrorHandler = new BailErrorStrategy();
 
             IProgram program;
@@ -52,10 +52,17 @@ namespace LatteAntlr
 
     public class CustomErrorListener : IAntlrErrorListener<IToken>
     {
+        private readonly string sourceCode;
+
+        public CustomErrorListener(string sourceCode)
+        {
+            this.sourceCode = sourceCode;
+        }
+
         public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine,
             string msg, RecognitionException e)
         {
-            throw new ParserException(new Exception(msg), null);
+            throw new ParserException(new Exception(msg), new FilePlace(line, sourceCode.Split('\n')[line - 1]));
         }
     }
 }

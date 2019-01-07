@@ -5,16 +5,16 @@ namespace LatteAntlr.Exceptions
 {
     public class SyntaxException : Exception
     {
-        private readonly IFilePlace filePlace;
+        public readonly IFilePlace FilePlace;
 
         protected SyntaxException(IFilePlace filePlace)
         {
-            this.filePlace = filePlace;
+            this.FilePlace = filePlace;
         }
 
         public override string ToString()
         {
-            return $"Here: (line: {filePlace.LineNumber}): {filePlace.Text}";
+            return $"Here: (line: {FilePlace.LineNumber}): {FilePlace.Text}\n";
         }
     }
 }

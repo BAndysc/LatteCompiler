@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"here (line {_place.LineNumber}): {_place.Text}";
+            return $"Here (line {_place.LineNumber}): {_place.Text}\n";
         }
     }
 }

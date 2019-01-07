@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"No return in function {function}. {base.ToString()}";
+            return $"No return in function {function}.\n{base.ToString()}";
         }
     }
 }

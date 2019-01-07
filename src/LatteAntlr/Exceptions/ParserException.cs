@@ -14,7 +14,7 @@ namespace LatteAntlr.Exceptions
 
         public override string ToString()
         {
-            return innerException.Message;
+            return base.ToString() + "\n" + innerException.Message;
         }
     }
 }

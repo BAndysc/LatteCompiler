@@ -20,7 +20,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Given operator is valid only for types {string.Join(", ", expectedType)}, but given {givenType}. {base.ToString()}";
+            return $"Given operator is valid only for types {string.Join(", ", expectedType)}, but given {givenType}.\n{base.ToString()}";
         }
     }
 }

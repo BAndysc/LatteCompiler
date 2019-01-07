@@ -17,7 +17,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Expected return type: {expectedReturnType}, but given: {givenReturnType}. {base.ToString()}";
+            return $"Expected return type: {expectedReturnType}, but given: {givenReturnType}.\n{base.ToString()}";
         }
     }
 }

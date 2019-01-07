@@ -17,7 +17,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Invalid argument type in function {function.Name}: {argument.Name} has invalid type {argument.Type}. {base.ToString()}";
+            return $"Invalid argument type in function {function.Name}: {argument.Name} has invalid type {argument.Type}.\n{base.ToString()}";
         }
     }
 }

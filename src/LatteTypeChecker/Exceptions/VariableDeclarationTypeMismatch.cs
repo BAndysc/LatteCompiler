@@ -19,7 +19,7 @@ namespace LatteTypeChecker.Exceptions
         public override string ToString()
         {
             return
-                $"Variable {variable.Name} declared as {variable.Type}, but trying to assign {itemValueType} into it. {base.ToString()}";
+                $"Variable {variable.Name} declared as {variable.Type}, but trying to assign {itemValueType} into it.\n{base.ToString()}";
         }
     }
 }

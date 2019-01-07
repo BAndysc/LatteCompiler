@@ -20,7 +20,7 @@ namespace LatteTypeChecker.Exceptions
         public override string ToString()
         {
             return
-                $"Function redeclaration. Previously: {prevDecl.ReturnType} {prevDecl.Name}. Now: {currDecl.ReturnType} {currDecl.Name}. {base.ToString()}";
+                $"Function redeclaration. Previously: {prevDecl.ReturnType} {prevDecl.Name}. Now: {currDecl.ReturnType} {currDecl.Name}.\n{base.ToString()}";
         }
     }
 }
