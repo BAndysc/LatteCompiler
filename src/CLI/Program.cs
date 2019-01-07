@@ -37,7 +37,7 @@ namespace CLI
                 var outputFile = baseDir + fileName;
                 var intermediate = baseDir + fileName + ".q";
                 
-                compiler.SetIntermediateOutput(intermediate);
+                //compiler.SetIntermediateOutput(intermediate);
                 compiler.SetAssemblyOutput(outputAsmFile);
                 compiler.SetOutput(outputFile);
                 compiler.Compile(program);
