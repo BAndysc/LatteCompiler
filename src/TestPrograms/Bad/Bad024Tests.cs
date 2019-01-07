@@ -24,7 +24,7 @@ namespace TestPrograms.Bad
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()
                         {
                             new IfNode(new DummyFilePlace(), new FalseNode(new DummyFilePlace()),
-                                new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))
+                                new BlockNode(new DummyFilePlace(), new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))))
                         }))
                 });
         }

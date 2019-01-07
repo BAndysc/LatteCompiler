@@ -130,6 +130,9 @@ namespace LatteTypeChecker.Visitors
             if (conditionType != LatteType.Bool)
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
             
+            if (!new IsStatementBlockNode().Visit(node.Statement))
+                throw new StatementMustBeBlockException(node.Statement.FilePlace);
+            
             GetBlockTypeChecker().Visit(node.Statement);
         }
 
@@ -139,6 +142,12 @@ namespace LatteTypeChecker.Visitors
 
             if (conditionType != LatteType.Bool)
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            if (!new IsStatementBlockNode().Visit(node.Statement))
+                throw new StatementMustBeBlockException(node.Statement.FilePlace);
+            
+            if (!new IsStatementBlockNode().Visit(node.ElseStatement))
+                throw new StatementMustBeBlockException(node.ElseStatement.FilePlace);
             
             GetBlockTypeChecker().Visit(node.Statement);
             GetBlockTypeChecker().Visit(node.ElseStatement);
@@ -150,6 +159,9 @@ namespace LatteTypeChecker.Visitors
 
             if (conditionType != LatteType.Bool)
                 throw new InvalidConditionTypeException(LatteType.Bool, conditionType, node.FilePlace);
+            
+            if (!new IsStatementBlockNode().Visit(node.Statement))
+                throw new StatementMustBeBlockException(node.Statement.FilePlace);
             
             GetBlockTypeChecker().Visit(node.Statement);
         }

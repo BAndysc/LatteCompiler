@@ -91,12 +91,12 @@ namespace TestPrograms.Good.Basic
                 new TopFunctionNode(new DummyFilePlace(), LatteType.Void, "b",
                     new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new VariableNode("a", new DummyFilePlace()),
-                            new ExpressionStatementNode(new DummyFilePlace(),
+                            new BlockNode(new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(),
                                 new FunctionCallNode(new DummyFilePlace(), "printString",
-                                    new StringNode("true", new DummyFilePlace()))),
-                            new ExpressionStatementNode(new DummyFilePlace(),
+                                    new StringNode("true", new DummyFilePlace())))), 
+                            new BlockNode(new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(),
                                 new FunctionCallNode(new DummyFilePlace(), "printString",
-                                    new StringNode("false", new DummyFilePlace()))))),
+                                    new StringNode("false", new DummyFilePlace())))))),
                     new FunctionArgument(LatteType.Bool, "a")));
         }
 

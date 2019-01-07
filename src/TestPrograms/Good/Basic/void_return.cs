@@ -33,7 +33,7 @@ namespace TestPrograms.Good.Basic
                     new ExpressionStatementNode(new DummyFilePlace(),
                         new FunctionCallNode(new DummyFilePlace(), "printInt", new IntNode(0, new DummyFilePlace()))),
                     new IfNode(new DummyFilePlace(), new TrueNode(new DummyFilePlace()),
-                        new VoidReturnNode(new DummyFilePlace())),
+                        new BlockNode(new DummyFilePlace(), new VoidReturnNode(new DummyFilePlace()))),
                     new ExpressionStatementNode(new DummyFilePlace(),
                         new FunctionCallNode(new DummyFilePlace(), "printInt",
                             new IntNode(1, new DummyFilePlace()))))));

@@ -30,7 +30,7 @@ namespace Frontend
                 var typeChecker = new StaticAnalysisChecker();
 
                 typeChecker.Visit(programTree);
-                
+
                 Console.WriteLine("OK");
 
                 return programTree;
@@ -45,6 +45,12 @@ namespace Frontend
             {
                 Console.WriteLine("ERROR");
                 Console.WriteLine($"Syntax error: {e}");
+                Environment.Exit(-1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR");
+                Console.WriteLine($"Error: {e}");
                 Environment.Exit(-1);
             }
 

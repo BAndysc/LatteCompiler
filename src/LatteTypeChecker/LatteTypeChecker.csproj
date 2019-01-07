@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\RepeatedArgumentNameInFunctionDefinitionException.cs" />
     <Compile Include="Exceptions\StartingFunctionInvalidArgumentsCountException.cs" />
     <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />
+    <Compile Include="Exceptions\StatementMustBeBlockException.cs" />
     <Compile Include="Exceptions\TypeCheckerException.cs" />
     <Compile Include="Exceptions\TypeMismatchException.cs" />
     <Compile Include="Exceptions\UndeclaredFunctionException.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="TypeChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visitors\IsExpressionExitCall.cs" />
+    <Compile Include="Visitors\IsStatementBlockNode.cs" />
     <Compile Include="Visitors\LatteExpressionTypeEvaluator.cs" />
     <Compile Include="Visitors\StatementTypeChecker.cs" />
   </ItemGroup>

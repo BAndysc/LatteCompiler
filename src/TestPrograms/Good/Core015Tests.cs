@@ -4,8 +4,8 @@ using LatteBase.AST;
 using LatteBase.AST.Impl;
 
 
-// Author: p. Marcin Benke
-// Source: https://www.mimuw.edu.pl/~ben/Zajecia/Mrj2018/Latte/lattests121017.tgz
+// Author: ...
+// Source: ...
 
 // /* parity of positive integers by recursion */
 // 
@@ -30,49 +30,42 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new List<ITopFunctionNode>()
-                {
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
-                        new BlockNode(new DummyFilePlace(), new List<IStatement>()
-                        {
-                            new ExpressionStatementNode(new DummyFilePlace(),
-                                new FunctionCallNode("printInt",
-                                    new List<IExpressionNode>()
-                                    {
-                                        new FunctionCallNode("ev",
-                                            new List<IExpressionNode>() {new IntNode(17, new DummyFilePlace())},
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())),
-                            new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
-                        })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "ev",
-                        new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "y")}, new BlockNode(
-                            new DummyFilePlace(), new List<IStatement>()
-                            {
-                                new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
+            return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+                    new DummyFilePlace(),
+                    new ExpressionStatementNode(new DummyFilePlace(),
+                        new FunctionCallNode(new DummyFilePlace(), "printInt",
+                            new FunctionCallNode(new DummyFilePlace(), "ev", new IntNode(17, new DummyFilePlace())))),
+                    new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
+                new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "ev", new BlockNode(new DummyFilePlace(),
+                        new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
+                            new VariableNode("y", new DummyFilePlace()),
+                            new IntNode(0, new DummyFilePlace()),
+                            new DummyFilePlace()), new BlockNode(new DummyFilePlace(), new BlockNode(
+                            new DummyFilePlace(),
+                            new ReturnNode(new DummyFilePlace(), new FunctionCallNode(new DummyFilePlace(), "ev",
+                                new BinaryNode(BinaryOperator.Sub,
+                                    new VariableNode("y", new DummyFilePlace()),
+                                    new IntNode(2, new DummyFilePlace()),
+                                    new DummyFilePlace()))))), new BlockNode(new DummyFilePlace(), new BlockNode(
+                            new DummyFilePlace(), new IfElseNode(new DummyFilePlace(), new CompareNode(
+                                    RelOperator.LessThan,
                                     new VariableNode("y", new DummyFilePlace()),
                                     new IntNode(0, new DummyFilePlace()),
-                                    new DummyFilePlace()), new ReturnNode(new DummyFilePlace(), new FunctionCallNode(
-                                    "ev", new List<IExpressionNode>()
-                                    {
-                                        new BinaryNode(BinaryOperator.Sub,
-                                            new VariableNode("y", new DummyFilePlace()),
-                                            new IntNode(2, new DummyFilePlace()),
-                                            new DummyFilePlace())
-                                    }, new DummyFilePlace())), new IfElseNode(new DummyFilePlace(), new CompareNode(
-                                        RelOperator.LessThan,
-                                        new VariableNode("y", new DummyFilePlace()),
-                                        new IntNode(0, new DummyFilePlace()),
-                                        new DummyFilePlace()),
-                                    new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())),
-                                    new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace()))))
-                            }))
-                });
+                                    new DummyFilePlace()),
+                                new BlockNode(new DummyFilePlace(),
+                                    new BlockNode(new DummyFilePlace(),
+                                        new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
+                                new BlockNode(new DummyFilePlace(),
+                                    new BlockNode(new DummyFilePlace(),
+                                        new ReturnNode(new DummyFilePlace(),
+                                            new IntNode(1, new DummyFilePlace()))))))))),
+                    new FunctionArgument(LatteType.Int, "y")));
         }
 
         public string GetOutput()
         {
-            return "0\n";
+            return @"0
+";
         }
 
         public string GetInput()

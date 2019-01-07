@@ -59,7 +59,7 @@ using LatteBase.AST.Impl;
 
 " + comentedSource + @"
 
-namespace TestPrograms.Good.Basic
+namespace TestPrograms.Good
 {
     public class TestProgramProvider" + fileName + @" : ITestProgramProvider
     {

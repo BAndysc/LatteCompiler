@@ -65,7 +65,7 @@ namespace LatteAntlr.AST.Generators
             var visitor = new ExpressionGenerator();
             var condition = visitor.Visit(context.expr());
             
-            return new IfNode(new FilePlace(context), condition, Visit(context.stmt()));
+            return new IfNode(new FilePlace(context), condition, new BlockNode(new FilePlace(context), Visit(context.stmt())));
         }
 
         public override IStatement VisitCondElse(LatteParser.CondElseContext context)
@@ -73,7 +73,9 @@ namespace LatteAntlr.AST.Generators
             var visitor = new ExpressionGenerator();
             var condition = visitor.Visit(context.expr());
             
-            return new IfElseNode(new FilePlace(context), condition, Visit(context.stmt()[0]), Visit(context.stmt()[1]));
+            return new IfElseNode(new FilePlace(context), condition,
+                new BlockNode(new FilePlace(context), Visit(context.stmt()[0])),
+                new BlockNode(new FilePlace(context), Visit(context.stmt()[1])));
         }
 
         public override IStatement VisitWhile(LatteParser.WhileContext context)
@@ -81,7 +83,7 @@ namespace LatteAntlr.AST.Generators
             var visitor = new ExpressionGenerator();
             var condition = visitor.Visit(context.expr());
             
-            return new WhileNode(new FilePlace(context), condition, Visit(context.stmt()));
+            return new WhileNode(new FilePlace(context), condition, new BlockNode(new FilePlace(context), Visit(context.stmt())));
         }
 
         public override IStatement VisitSExp(LatteParser.SExpContext context)

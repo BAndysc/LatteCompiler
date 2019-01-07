@@ -40,7 +40,7 @@ namespace TestPrograms.Bad
                                         new VariableNode("x", new DummyFilePlace()),
                                         new IntNode(0, new DummyFilePlace()),
                                         new DummyFilePlace()),
-                                    new ReturnNode(new DummyFilePlace(), new VariableNode("x", new DummyFilePlace())))
+                                    new BlockNode(new DummyFilePlace(), new ReturnNode(new DummyFilePlace(), new VariableNode("x", new DummyFilePlace()))))
                             }))
                 });
         }

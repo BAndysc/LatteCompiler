@@ -17,10 +17,11 @@ namespace TestPrograms.Optimization
             var d = new DummyFilePlace();
             var zero = new IntNode(0, d);
             return new ProgramNode(new TopFunctionNode(d, LatteType.Int, "main",
-                new IfNode(d, new CompareNode(RelOperator.LessThan, new IntNode(3, d), new IntNode(4, d), d), new ReturnNode(d, zero))));
+                new IfNode(d, new CompareNode(RelOperator.LessThan, new IntNode(3, d), new IntNode(4, d), d),
+                    new BlockNode(new DummyFilePlace(), new ReturnNode(d, zero)))));
         }
 
-       public string GetOutput()
+        public string GetOutput()
         {
             return "";
         }

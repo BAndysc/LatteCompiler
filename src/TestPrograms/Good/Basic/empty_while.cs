@@ -23,7 +23,7 @@ namespace TestPrograms.Good.Basic
             return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                 new DummyFilePlace(),
                 new WhileNode(new DummyFilePlace(), new FalseNode(new DummyFilePlace()),
-                    new EmptyNode(new DummyFilePlace())),
+                    new BlockNode(new DummyFilePlace(), new EmptyNode(new DummyFilePlace()))),
                 new ExpressionStatementNode(new DummyFilePlace(),
                     new FunctionCallNode(new DummyFilePlace(), "printInt", new IntNode(1, new DummyFilePlace()))),
                 new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))));

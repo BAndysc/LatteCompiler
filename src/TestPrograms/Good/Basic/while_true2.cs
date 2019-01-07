@@ -35,10 +35,10 @@ namespace TestPrograms.Good.Basic
                                 new VariableNode("x", new DummyFilePlace()),
                                 new IntNode(1, new DummyFilePlace()),
                                 new DummyFilePlace()),
-                            new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())),
-                            new ExpressionStatementNode(new DummyFilePlace(),
+                            new BlockNode(new DummyFilePlace(), new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))), 
+                            new BlockNode(new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(),
                                 new FunctionCallNode(new DummyFilePlace(), "printString",
-                                    new StringNode("jeszcze raz", new DummyFilePlace())))))),
+                                    new StringNode("jeszcze raz", new DummyFilePlace()))))))),
                 new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))));
         }
 

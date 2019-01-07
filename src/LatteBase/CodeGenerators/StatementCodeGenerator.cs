@@ -56,17 +56,17 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IIfNode node)
         {
-            return $"new IfNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, {Visit(node.Statement)})";
+            return $"new IfNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, new BlockNode(new DummyFilePlace(), {Visit(node.Statement)}))";
         }
 
         public override string Visit(IIfElseNode node)
         {
-            return $"new IfElseNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, {Visit(node.Statement)}, {Visit(node.ElseStatement)})";
+            return $"new IfElseNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, new BlockNode(new DummyFilePlace(), {Visit(node.Statement)}), new BlockNode(new DummyFilePlace(), {Visit(node.ElseStatement)}))";
         }
 
         public override string Visit(IWhileNode node)
         {
-            return $"new WhileNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, {Visit(node.Statement)})";
+            return $"new WhileNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Condition)}, new BlockNode(new DummyFilePlace(), {Visit(node.Statement)}))";
         }
 
         public override string Visit(IExpressionStatementNode node)
