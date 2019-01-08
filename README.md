@@ -4,7 +4,7 @@ Kompilator języka Latte na przedmiot Metody Realizacji Języków Programowania 
 
 # Kompilacja
 
-Do budowania używa standardowej metody kompilacji programów w dot net na mono - xbuild. Polecenie `make` wywołuje program xbuild, który buduje program, potem kopiuje zbdowany program do katalogu lib/ a następnie kopiuje skrypt scripts/latc_x86 do głównego katalogu. Ten skrypt po prostu uruchamia kompilator z folderu lib.
+Do budowania używa standardowej metody kompilacji programów w dot net na mono - xbuild. Polecenie `make` wywołuje program xbuild, który buduje program, potem kopiuje zbdowany program do katalogu latc_data/ a następnie kopiuje skrypt scripts/latc_x86 do głównego katalogu. Ten skrypt po prostu uruchamia kompilator z folderu lib.
 
 # Testy
 
@@ -33,6 +33,13 @@ zostanie wyoptymalizowany do postaci
 Z tego też powodu program zostanie zaakceptowany, mimo że return znajduje się w ifie bez else, czyli teoretycznie nie wiadomo czy w funkcji main zawsze zostanie zwrócowna wartość. Po wyoptymalizowaniu stałych jest to już oczywiste.
 
 ## Backend
+
+Backend składa się z dwóch części:
+
+ * generator kodu pośredniego (quadruples) z drzewa AST
+ * translator kodu pośredniego na ASM x86
+
+Kod pośredni oparty jest na wirtualnych rejestrach, które są następnie przypisywane do sprzętowych rejestrów. Dzięki temu bardzo łatwo dodać inne backendy, np. x86_64 czy asm.
 
 # Projekty
 
