@@ -1,10 +1,13 @@
-all:
+all: libs
 	xbuild src/Latte.sln /p:Configuration=Release
 	mkdir -p latc_data
 	cp -r src/CLI/bin/Release/* latc_data/
 	cp scripts/latc_x86 .
 	cp scripts/latc_x86 latc
-	gcc -m32 -fno-stack-protector -c lib/runtime.c -o lib/runtime.o
+
+libs:
+	gcc -m32 -fno-stack-protector -c -nostdlib lib/runtime.c -o lib/runtime.o
+	nasm -f macho lib/osx_layer.s -o lib/osx_layer.o
 
 clean:
 	xbuild /t:clean src/Latte.sln /p:Configuration=Release
@@ -13,6 +16,7 @@ clean:
 	rm -rf latc
 	rm -rf latc_data
 
+.PHONY: test
 test:
 	xbuild src/Latte.sln /p:Configuration=Debug
 	cp -r lib src/Backend.Tests/bin/

@@ -13,7 +13,7 @@ namespace Backend.Tests
         {
             var tempFileCreator = new TempFileCreator();
             var runner = new Runner();
-            Compiler compiler = new Compiler(tempFileCreator, runner);
+            Compiler compiler = new Compiler(tempFileCreator, runner, new OS(runner));
 
             var outputProgramFile = tempFileCreator.GetTempFile();
             string asmOut = tempFileCreator.GetTempFile();

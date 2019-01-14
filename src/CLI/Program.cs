@@ -29,7 +29,8 @@ namespace CLI
                 var text = File.ReadAllText(arg);
 
                 Parser parser = new Parser();
-                Compiler compiler = new Compiler(new TempFileCreator(), new Runner()); 
+                var runner = new Runner();
+                Compiler compiler = new Compiler(new TempFileCreator(), runner, new OS(runner)); 
 
                 var program = parser.Parse(Path.GetFileNameWithoutExtension(arg), text);
 

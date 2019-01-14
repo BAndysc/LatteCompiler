@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
-      <Project>{a4a1d9fa-6689-4869-b68c-729c3081aae7}</Project>
+      <Project>{72B0740B-4914-45F7-9A77-058CEDE43ACC}</Project>
       <Name>LatteBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\LatteTreeOptimizer\LatteTreeOptimizer.csproj">

@@ -8,6 +8,8 @@ latc
 latc_x86
 latc_data
 lib/runtime.o
+lib/osx_layer.o
+src/packages/*
 # User-specific files
 *.rsuser
 *.suo

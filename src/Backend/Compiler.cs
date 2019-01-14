@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Backend.Assembler;
+using Backend.Linker;
 using LatteBase.AST;
 using LatteTreeOptimizer;
 using QuadruplesGenerator;
@@ -14,21 +16,23 @@ namespace Backend
     {
         private readonly ITempFileCreator tempFileCreator;
         private readonly IRunner runner;
+        private readonly IOS os;
         private string intermediateOutputFile;
         private string outputAsm;
-        private string outputBinary;
-        private string runtimeObject;
 
-        public Compiler(ITempFileCreator tempFileCreator, IRunner runner)
+        private IAssembler assembler;
+        private ILinker linker;
+
+        public Compiler(ITempFileCreator tempFileCreator, IRunner runner, IOS os)
         {
             this.tempFileCreator = tempFileCreator;
             this.runner = runner;
+            this.os = os;
 
-            var libDir = AppDomain.CurrentDomain.BaseDirectory + "/../lib/";
+            assembler = new AssemblerFactory(runner, os).CreateAssembler();
+            linker = new LinkerFactory(runner, os).CreateLinker();
 
-            var libs = new string[] {"runtime.o", "libc.a", "crt1.o", "crti.o", "crtn.o"};
-            
-            runtimeObject = string.Join(" ", libs.Select(t => libDir + t));
+            linker.SetLibraryFolder(AppDomain.CurrentDomain.BaseDirectory + "/../lib/");
         }
         
         
@@ -50,11 +54,9 @@ namespace Backend
             
             File.WriteAllText(outputAsm, asm);
 
-            string res;
-            
-            runner.Run("nasm", $"-f elf32 -g -F dwarf  {outputAsm} -o {outputObjectFile}", out res);
+            assembler.WithDebugSymbols().SetOutput(outputObjectFile).Assembly(outputAsm);
 
-            runner.Run("ld", $"-o {outputBinary} -melf_i386 {outputObjectFile} {runtimeObject}", out res);
+            linker.WithStandardLibrary().AddObjectFile(outputObjectFile).Link();
         }
 
         public void SetIntermediateOutput(string intermediateOutput)
@@ -69,7 +71,7 @@ namespace Backend
 
         public void SetOutput(string outputFile)
         {
-            outputBinary = outputFile;
+            linker.SetOutput(outputFile);
         }
     }
 }
