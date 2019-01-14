@@ -1,5 +1,5 @@
 UNAME_S := $(shell uname -s)
-RUNTIME_FLAGS := ""
+RUNTIME_FLAGS := 
 ifeq ($(UNAME_S),Darwin)
 	RUNTIME_FLAGS += -isysroot ~/Downloads/MacOSX10.13.sdk
 endif
