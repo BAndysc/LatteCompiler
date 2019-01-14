@@ -4,7 +4,7 @@ global printString
 global error
 global readInt
 global readString
-global concatString
+global concat_string
 global _main
 extern _printInt
 extern _printString
@@ -17,7 +17,7 @@ section .text
 printInt:
     jmp _printInt
 printString:
-    jmp printString
+    jmp _printString
 error: 
     jmp _error
 readInt:

@@ -37,7 +37,7 @@ namespace X86Generator
                 var registerProvider = new EndlessStackRegisterProvider(-4 * (1 + func.Locals));
                 var allocator = new NaiveRegisterAllocator<Memory32>(registerProvider);
                 var regs = allocator.AllocateRegisters(func.Instructions);
-                var generator = new QuadrupleToX86Generator(regs, registerProvider.MaxUsedRegisters);
+                var generator = new QuadrupleToX86Generator(regs, registerProvider.MaxUsedRegisters + func.Locals);
 
                 foreach (var quad in func.Instructions)
                 {

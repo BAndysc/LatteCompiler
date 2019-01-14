@@ -44,7 +44,7 @@ namespace Backend.Linker
 
         public void Link()
         {
-            string args = "-m32";
+            string args = "-m32 -Wl,-no_pie";
 
             if (withStdLib)
             {

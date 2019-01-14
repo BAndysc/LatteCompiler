@@ -1,3 +1,9 @@
+UNAME_S := $(shell uname -s)
+RUNTIME_FLAGS := ""
+ifeq ($(UNAME_S),Darwin)
+	RUNTIME_FLAGS += -isysroot ~/Downloads/MacOSX10.13.sdk
+endif
+
 all: libs
 	xbuild src/Latte.sln /p:Configuration=Release
 	mkdir -p latc_data
@@ -6,7 +12,7 @@ all: libs
 	cp scripts/latc_x86 latc
 
 libs:
-	gcc -m32 -fno-stack-protector -c -nostdlib lib/runtime.c -o lib/runtime.o
+	gcc -m32 -fno-stack-protector -c lib/runtime.c -nostdlib -o lib/runtime.o $(RUNTIME_FLAGS)
 	nasm -f macho lib/osx_layer.s -o lib/osx_layer.o
 
 clean:

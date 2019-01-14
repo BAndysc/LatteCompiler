@@ -138,11 +138,13 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
+            //alignment
+            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4 * 2)), quadruple);
             Emit(new PushInstruction(b), quadruple);
             Emit(new PushInstruction(a), quadruple);
             Emit(new CallInstruction(new X86Label("concat_string")), quadruple);
             Emit(new MovInstruction(dest, Register32.EAX), quadruple);
-            Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(8)), quadruple);
+            Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * 4)), quadruple);
 
             return instructions.ToList();
         }
@@ -169,7 +171,7 @@ namespace X86Generator
         public override IEnumerable<IX86Instruction> Visit(LocalQuadruple quadruple)
         {
             Clear();
-            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4)), quadruple);
+            //Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4)), quadruple);
             return instructions.ToList();
         }
 
@@ -206,6 +208,10 @@ namespace X86Generator
         public override IEnumerable<IX86Instruction> Visit(FunctionCallQuadruple quadruple)
         {
             Clear();
+            int argsCount = quadruple.Arguments.Count();
+            int alignment = (4 - (argsCount % 4)) % 4;
+            if (alignment > 0)  
+               Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4 * alignment)), quadruple);
             foreach (var arg in quadruple.Arguments.Reverse())
             {
                 var value = mapping.Get(arg);
@@ -213,7 +219,9 @@ namespace X86Generator
             }
 
             Emit(new CallInstruction(new X86Label(quadruple.FunctionName)), quadruple);
-            
+
+            Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * (alignment + argsCount))), quadruple);
+                        
             if (mapping.IsAllocated(quadruple.ResultRegister))
                 Emit(new MovInstruction(mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
 
@@ -320,10 +328,11 @@ namespace X86Generator
             Emit(new LabelInstruction(new X86Label(quadruple.FunctionName)), quadruple);
             Emit(new PushInstruction(Register32.EBP), quadruple);
             Emit(new MovInstruction(Register32.EBP, Register32.ESP), quadruple);
-            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(regsMaxUsedRegisters * 4)), quadruple);
+            // alignment to 16 bytes
+            int locals = regsMaxUsedRegisters + (4 - (regsMaxUsedRegisters + 2) % 4) % 4;
+            Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(locals * 4)), quadruple);
             return instructions.ToList();
         }
-
         public override IEnumerable<IX86Instruction> Visit(LoadArgumentQuadruple quadruple)
         {
             Clear();
