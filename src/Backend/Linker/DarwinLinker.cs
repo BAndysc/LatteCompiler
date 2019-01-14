@@ -64,7 +64,8 @@ namespace Backend.Linker
 
             args += " " + string.Join(" ", objectFiles);
 
-            runner.Run("gcc", args, out var @o);
+            string res;
+            runner.Run("gcc", args, out res);
 
             objectFiles.Clear();
         }

@@ -26,7 +26,9 @@ namespace Backend.Assembler
 
             if (output != null)
                 args += $" -o {output}";
-            runner.Run("nasm", args, out var @o);
+
+            string res;
+            runner.Run("nasm", args, out res);
         }
 
         public IAssembler SetOutput(string file)

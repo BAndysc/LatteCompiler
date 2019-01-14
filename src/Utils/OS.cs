@@ -23,7 +23,8 @@ namespace Utils
             else if (p == 4)
             {
                 isUnix = true;
-                runner.Run("uname", "", out var uname);
+                string uname;
+                runner.Run("uname", "", out uname);
                 isOSX = uname.Trim().ToLower() == "darwin";
                 isLinux = !isOSX;
             }

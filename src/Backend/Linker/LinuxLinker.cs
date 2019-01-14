@@ -52,7 +52,8 @@ namespace Backend.Linker
 
             args += " " + string.Join(" ", objectFiles);
 
-            runner.Run("ld", args, out var @o);
+            string res;
+            runner.Run("ld", args, out res);
 
             objectFiles.Clear();
         }
