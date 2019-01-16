@@ -27,7 +27,7 @@ namespace LatteTypeChecker.Tests.Bad
         
         
         [Test]
-        public void InvlidFieldTypeTestCase()
+        public void InvalidFieldTypeTestCase()
         {
             var test = new BadClassesTests().GetInvalidFieldTypeTestCase();
 
