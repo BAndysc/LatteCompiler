@@ -52,7 +52,7 @@ namespace TestPrograms.Good.Basic
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "fibonacci", new BlockNode(
+            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "fibonacci", new BlockNode(
                         new DummyFilePlace(), new IfNode(new DummyFilePlace(), new CompareNode(RelOperator.LessEquals,
                                 new VariableNode("n", new DummyFilePlace()),
                                 new IntNode(1, new DummyFilePlace()),
@@ -81,7 +81,7 @@ namespace TestPrograms.Good.Basic
                             new IncrementNode(new DummyFilePlace(), "i"))),
                         new ReturnNode(new DummyFilePlace(), new VariableNode("fib_b", new DummyFilePlace()))),
                     new FunctionArgument(LatteType.Int, "n")),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
                     new DeclarationNode(new DummyFilePlace(), LatteType.Int,
                         new SingleDeclaration("i", new FunctionCallNode(new DummyFilePlace(), "readInt"))),
                     new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterEquals,

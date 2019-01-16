@@ -4,16 +4,16 @@ using LatteBase.Visitors;
 
 namespace LatteTreeOptimizer
 {
-    internal class FunctionOptimizer : TopDefinitionVisitor<ITopFunctionNode>
+    internal class FunctionOptimizer : TopDefinitionVisitor<IFunctionDefinition>
     {
-        public override ITopFunctionNode Visit(ITopFunctionNode topFunction)
+        public override IFunctionDefinition Visit(IFunctionDefinition function)
         {
             var statementOptimizer = new StatementOptimizer();
-            return new TopFunctionNode(topFunction.FilePlace, 
-                topFunction.ReturnType, 
-                topFunction.Name, 
-                topFunction.Arguments, 
-                statementOptimizer.Visit(topFunction.Body));
+            return new FunctionDefinition(function.FilePlace, 
+                function.ReturnType, 
+                function.Name, 
+                function.Arguments, 
+                statementOptimizer.Visit(function.Body));
         }
     }
 }

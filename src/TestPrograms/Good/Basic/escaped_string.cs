@@ -25,7 +25,7 @@ namespace TestPrograms.Good.Basic
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "f", new BlockNode(
+            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "f", new BlockNode(
                         new DummyFilePlace(), new DeclarationNode(new DummyFilePlace(), LatteType.Int,
                             new SingleDeclaration("c", new BinaryNode(BinaryOperator.Add,
                                 new VariableNode("p", new DummyFilePlace()),
@@ -41,7 +41,7 @@ namespace TestPrograms.Good.Basic
                                     new DummyFilePlace()))),
                         new ReturnNode(new DummyFilePlace(), new VariableNode("c", new DummyFilePlace()))),
                     new FunctionArgument(LatteType.Int, "p")),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
                     new ReturnNode(new DummyFilePlace(), new BinaryNode(BinaryOperator.Sub,
                         new FunctionCallNode(new DummyFilePlace(), "f", new IntNode(1, new DummyFilePlace())),
                         new IntNode(3, new DummyFilePlace()),

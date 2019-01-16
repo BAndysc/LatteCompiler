@@ -34,9 +34,9 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new List<ITopFunctionNode>()
+            return new ProgramNode(new List<IFunctionDefinition>()
                 {
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
+                    new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()
                         {
                             new ExpressionStatementNode(new DummyFilePlace(),
@@ -49,7 +49,7 @@ namespace TestPrograms.Good
                                     }, new DummyFilePlace())),
                             new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
                         })),
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "fac",
+                    new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "fac",
                         new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "a")}, new BlockNode(
                             new DummyFilePlace(), new List<IStatement>()
                             {

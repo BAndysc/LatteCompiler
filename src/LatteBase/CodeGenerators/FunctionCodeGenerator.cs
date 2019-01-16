@@ -6,11 +6,11 @@ namespace LatteBase.CodeGenerators
 {
     public class FunctionCodeGenerator : TopDefinitionVisitor<string>
     {
-        public override string Visit(ITopFunctionNode topFunction)
+        public override string Visit(IFunctionDefinition function)
         {
             var statementGenerator = new StatementCodeGenerator();
-            var args = topFunction.Arguments.Select(t => $"new FunctionArgument(LatteType.{t.Type}, \"{t.Name}\")");
-            return $"new TopFunctionNode(new DummyFilePlace(), LatteType.{topFunction.ReturnType}, \"{topFunction.Name}\", {statementGenerator.Visit(topFunction.Body)}{string.Join("", args.Select(t => ", " + t))})";
+            var args = function.Arguments.Select(t => $"new FunctionArgument(LatteType.{t.Type}, \"{t.Name}\")");
+            return $"new TopFunctionNode(new DummyFilePlace(), LatteType.{function.ReturnType}, \"{function.Name}\", {statementGenerator.Visit(function.Body)}{string.Join("", args.Select(t => ", " + t))})";
         }
     }
 }

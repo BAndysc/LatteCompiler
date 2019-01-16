@@ -6,9 +6,9 @@ using LatteBase.AST.Impl;
 
 namespace LatteAntlr.AST.Generators
 {
-    internal class TopFunctionGenerator : LatteBaseTopDefVisitor<ITopFunctionNode>
+    internal class TopFunctionGenerator : LatteBaseFunctionDefVisitor<IFunctionDefinition>
     {
-        public override ITopFunctionNode VisitTopDef(LatteParser.TopDefContext context)
+        public override IFunctionDefinition VisitFunctionDef(LatteParser.FunctionDefContext context)
         {
             var typeGenerator = new LatteTypeGenerator();
             
@@ -25,7 +25,12 @@ namespace LatteAntlr.AST.Generators
             }
             
             var statement = new BlockGenerator().Visit(context.block());
-            return new TopFunctionNode(new FilePlace(context), type, name, arguments, statement);
+            return new FunctionDefinition(new FilePlace(context), type, name, arguments, statement);
+        }
+
+        public override IFunctionDefinition VisitClassDef(LatteParser.ClassDefContext context)
+        {
+            return null;
         }
     }
 }

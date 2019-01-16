@@ -262,7 +262,20 @@ namespace LatteAntlr.Visitors
         {
             return ReportError(context);
         }
-        
-        
+
+        public virtual T VisitFunctionDef(LatteParser.FunctionDefContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitClassDef(LatteParser.ClassDefContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitFieldDef(LatteParser.FieldDefContext context)
+        {
+            return ReportError(context);
+        }
     }
 }

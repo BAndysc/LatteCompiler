@@ -5,7 +5,12 @@ program
     ;
 
 topDef
-    : type_ ID '(' arg? ')' block
+    : type_ ID '(' arg? ')' block       # functionDef
+    | 'class' ID '{' fieldDef* '}'      # classDef
+    ;
+
+fieldDef
+    : type_ ID ';'
     ;
 
 arg

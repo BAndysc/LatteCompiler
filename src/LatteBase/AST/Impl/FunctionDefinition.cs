@@ -17,9 +17,9 @@ namespace LatteBase.AST.Impl
         public string Name { get; }
     }
     
-    public class TopFunctionNode : Node, ITopFunctionNode
+    public class FunctionDefinition : Node, IFunctionDefinition
     {
-        public TopFunctionNode(IFilePlace place, LatteType type, string name, IEnumerable<IFunctionArgument> arguments, IStatement body) : base(place)
+        public FunctionDefinition(IFilePlace place, LatteType type, string name, IEnumerable<IFunctionArgument> arguments, IStatement body) : base(place)
         {
             ReturnType = type;
             Name = name;
@@ -27,7 +27,7 @@ namespace LatteBase.AST.Impl
             Body = body;
         }
 
-        public TopFunctionNode(IFilePlace place, LatteType type, string name, IStatement body,
+        public FunctionDefinition(IFilePlace place, LatteType type, string name, IStatement body,
             params IFunctionArgument[] arguments) : this(place, type, name, arguments.ToList(), body)
         {
             

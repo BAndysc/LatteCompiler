@@ -20,9 +20,9 @@ namespace TestPrograms.Bad
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new List<ITopFunctionNode>()
+            return new ProgramNode(new List<IFunctionDefinition>()
                 {
-                    new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
+                    new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()
                         {
                             new ExpressionStatementNode(new DummyFilePlace(),

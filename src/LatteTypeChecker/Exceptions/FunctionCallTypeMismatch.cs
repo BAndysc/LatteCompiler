@@ -2,6 +2,7 @@ using System;
 using LatteBase;
 using LatteBase.AST;
 using LatteTypeChecker.Models;
+using IFunctionDefinition = LatteTypeChecker.Models.IFunctionDefinition;
 
 namespace LatteTypeChecker.Exceptions
 {

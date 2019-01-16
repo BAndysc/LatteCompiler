@@ -22,13 +22,13 @@ namespace TestPrograms.Good.Basic
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                     new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(), new AndNode(
                         new FunctionCallNode(new DummyFilePlace(), "print"),
                         new FalseNode(new DummyFilePlace()),
                         new DummyFilePlace())),
                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Bool, "print", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Bool, "print", new BlockNode(new DummyFilePlace(),
                     new ExpressionStatementNode(new DummyFilePlace(),
                         new FunctionCallNode(new DummyFilePlace(), "printString",
                             new StringNode("ahoj", new DummyFilePlace()))),

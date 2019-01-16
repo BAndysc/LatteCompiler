@@ -10,10 +10,12 @@ namespace LatteAntlr.AST.Generators
         public override IProgram VisitProgram(LatteParser.ProgramContext context)
         {
             var functionGenerator = new TopFunctionGenerator();
+            var classGenerator = new ClassDefinitionGenerator();
 
-            var functions = context.topDef().Select(functionGenerator.Visit).ToList();
+            var functions = context.topDef().Select(functionGenerator.Visit).Where(t => t != null).ToList();
+            var classes = context.topDef().Select(classGenerator.Visit).Where(t => t != null).ToList();
             
-            return new ProgramNode(functions);
+            return new ProgramNode(functions, classes);
         }
     }
 }

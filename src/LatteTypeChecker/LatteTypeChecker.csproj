@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ArgumentsCountMismatchException.cs" />
+    <Compile Include="Exceptions\DuplicateClassDefinitionException.cs" />
+    <Compile Include="Exceptions\DuplicateClassFieldException.cs" />
     <Compile Include="Exceptions\ExpectedReturnInFunctionException.cs" />
     <Compile Include="Exceptions\FunctionCallTypeMismatch.cs" />
     <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
@@ -59,8 +61,12 @@
     <Compile Include="Exceptions\UndeclaredVariableException.cs" />
     <Compile Include="Exceptions\VariableDeclarationTypeMismatch.cs" />
     <Compile Include="Exceptions\VariableRedefinitionException.cs" />
+    <Compile Include="Models\ClassDefinition.cs" />
+    <Compile Include="Models\ClassField.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\FunctionDefinition.cs" />
+    <Compile Include="Models\IClassDefinition.cs" />
+    <Compile Include="Models\IClassField.cs" />
     <Compile Include="Models\IEnvironment.cs" />
     <Compile Include="Models\IFunctionDefinition.cs" />
     <Compile Include="Models\IVariableDefinition.cs" />

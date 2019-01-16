@@ -4,6 +4,6 @@ namespace LatteBase.Visitors
 {
     public abstract class TopDefinitionVisitor<T>
     {
-        public abstract T Visit(ITopFunctionNode topFunction);
+        public abstract T Visit(IFunctionDefinition function);
     }
 }

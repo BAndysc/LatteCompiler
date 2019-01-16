@@ -39,11 +39,25 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitProgram([NotNull] LatteParser.ProgramContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="LatteParser.topDef"/>.
+	/// Visit a parse tree produced by the <c>functionDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitTopDef([NotNull] LatteParser.TopDefContext context);
+	Result VisitFunctionDef([NotNull] LatteParser.FunctionDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>classDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitClassDef([NotNull] LatteParser.ClassDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="LatteParser.fieldDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFieldDef([NotNull] LatteParser.FieldDefContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.arg"/>.
 	/// </summary>

@@ -10,7 +10,7 @@ namespace LatteTreeOptimizer
         public override IProgram Visit(IProgram program)
         {
             var functionOptimizer = new FunctionOptimizer();
-            return new ProgramNode(program.Functions.Select(functionOptimizer.Visit));
+            return new ProgramNode(program.Functions.Select(functionOptimizer.Visit), program.Classes);
         }
     }
 }

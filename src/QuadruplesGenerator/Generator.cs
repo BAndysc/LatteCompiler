@@ -26,39 +26,39 @@ namespace QuadruplesGenerator
             return prog;
         }
 
-        public override QuadruplesProgram Visit(ITopFunctionNode topFunction)
+        public override QuadruplesProgram Visit(IFunctionDefinition function)
         {
             
             var counter = new ValueMaxCounter();
-            new LocalValuesCounter(counter).Visit(topFunction.Body);
+            new LocalValuesCounter(counter).Visit(function.Body);
 
-            var locals = counter.Max + topFunction.Arguments.Count();
+            var locals = counter.Max + function.Arguments.Count();
             IStore store = new Store(locals);
 
             
-            prog.EmitFunction(topFunction.Name, locals);
-            prog.Emit(new FuncDefQuadruple(topFunction.FilePlace, topFunction.Name));
+            prog.EmitFunction(function.Name, locals);
+            prog.Emit(new FuncDefQuadruple(function.FilePlace, function.Name));
             
             for (int i = 0; i < locals; ++i)
             {
-                prog.Emit(new LocalQuadruple(topFunction.FilePlace, i));
+                prog.Emit(new LocalQuadruple(function.FilePlace, i));
             }
 
             int j = 0;
-            foreach (var arg in topFunction.Arguments)
+            foreach (var arg in function.Arguments)
             {
                 var argIndex = store.Alloc(arg.Name);
-                prog.Emit(new LoadArgumentQuadruple(topFunction.FilePlace, j++, argIndex));
+                prog.Emit(new LoadArgumentQuadruple(function.FilePlace, j++, argIndex));
             }
 
             var startLabel = prog.GetNextLabel();
             
-            prog.Emit(new LabelQuadruple(topFunction.FilePlace, startLabel));
+            prog.Emit(new LabelQuadruple(function.FilePlace, startLabel));
             
-            new StatementGenerator(prog, store, topFunction, startLabel).Visit(topFunction.Body);
+            new StatementGenerator(prog, store, function, startLabel).Visit(function.Body);
 
-            if (topFunction.ReturnType == LatteType.Void)
-                prog.Emit(new ReturnVoidQuadruple(topFunction.FilePlace));
+            if (function.ReturnType == LatteType.Void)
+                prog.Emit(new ReturnVoidQuadruple(function.FilePlace));
             
             return prog;
         }

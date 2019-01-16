@@ -19,7 +19,7 @@ namespace TestPrograms.Optimization
         {
             var d = new DummyFilePlace();
             var zero = new IntNode(0, d);
-            return new ProgramNode(new TopFunctionNode(d, LatteType.Int, "main",
+            return new ProgramNode(new FunctionDefinition(d, LatteType.Int, "main",
                 new IfNode(d,
                     new LogicalNegateNode(new CompareNode(RelOperator.Equals, new TrueNode(d), new FalseNode(d), d), d),
                     new BlockNode(new DummyFilePlace(), new ReturnNode(d, zero)))));

@@ -13,11 +13,11 @@ namespace QuadruplesGenerator.Generators
     {
         private readonly QuadruplesProgram program;
         private readonly IStore store;
-        private readonly ITopFunctionNode currentFunction;
+        private readonly IFunctionDefinition currentFunction;
         private readonly Label startLabel;
         private readonly ExpressionGenerator exprGen;
 
-        public StatementGenerator(QuadruplesProgram program, IStore store, ITopFunctionNode currentFunction, Label startLabel)
+        public StatementGenerator(QuadruplesProgram program, IStore store, IFunctionDefinition currentFunction, Label startLabel)
         {
             this.program = program;
             this.store = store;

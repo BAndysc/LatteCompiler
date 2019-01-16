@@ -48,17 +48,45 @@ public partial class LatteBaseListener : ILatteListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProgram([NotNull] LatteParser.ProgramContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="LatteParser.topDef"/>.
+	/// Enter a parse tree produced by the <c>functionDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTopDef([NotNull] LatteParser.TopDefContext context) { }
+	public virtual void EnterFunctionDef([NotNull] LatteParser.FunctionDefContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="LatteParser.topDef"/>.
+	/// Exit a parse tree produced by the <c>functionDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTopDef([NotNull] LatteParser.TopDefContext context) { }
+	public virtual void ExitFunctionDef([NotNull] LatteParser.FunctionDefContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>classDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterClassDef([NotNull] LatteParser.ClassDefContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>classDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitClassDef([NotNull] LatteParser.ClassDefContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="LatteParser.fieldDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFieldDef([NotNull] LatteParser.FieldDefContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="LatteParser.fieldDef"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFieldDef([NotNull] LatteParser.FieldDefContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.arg"/>.
 	/// <para>The default implementation does nothing.</para>

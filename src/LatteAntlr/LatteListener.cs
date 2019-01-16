@@ -42,15 +42,39 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProgram([NotNull] LatteParser.ProgramContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="LatteParser.topDef"/>.
+	/// Enter a parse tree produced by the <c>functionDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterTopDef([NotNull] LatteParser.TopDefContext context);
+	void EnterFunctionDef([NotNull] LatteParser.FunctionDefContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="LatteParser.topDef"/>.
+	/// Exit a parse tree produced by the <c>functionDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitTopDef([NotNull] LatteParser.TopDefContext context);
+	void ExitFunctionDef([NotNull] LatteParser.FunctionDefContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>classDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterClassDef([NotNull] LatteParser.ClassDefContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>classDef</c>
+	/// labeled alternative in <see cref="LatteParser.topDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitClassDef([NotNull] LatteParser.ClassDefContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="LatteParser.fieldDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFieldDef([NotNull] LatteParser.FieldDefContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="LatteParser.fieldDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFieldDef([NotNull] LatteParser.FieldDefContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.arg"/>.
 	/// </summary>

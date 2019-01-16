@@ -155,7 +155,7 @@ namespace LatteTypeChecker.Visitors
         
         public override LatteType Visit(IFunctionCallNode node)
         { 
-            if (!functions.IsDefined(node.FunctionName))
+            if (!functions.IsFunctionDefined(node.FunctionName))
                 throw new UndeclaredFunctionException(node.FunctionName, node.FilePlace);
             
             var function = functions[node.FunctionName];

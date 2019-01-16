@@ -37,7 +37,7 @@ namespace TestPrograms.Good.Basic
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new TopFunctionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                     new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(), new FunctionCallNode(
                         new DummyFilePlace(), "b", new AndNode(
                             new FunctionCallNode(new DummyFilePlace(), "t", new IntNode(1, new DummyFilePlace())),
@@ -75,20 +75,20 @@ namespace TestPrograms.Good.Basic
                                 new DummyFilePlace()),
                             new DummyFilePlace()))),
                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Bool, "f", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Bool, "f", new BlockNode(new DummyFilePlace(),
                         new ExpressionStatementNode(new DummyFilePlace(),
                             new FunctionCallNode(new DummyFilePlace(), "printInt",
                                 new VariableNode("a", new DummyFilePlace()))),
                         new ReturnNode(new DummyFilePlace(), new FalseNode(new DummyFilePlace()))),
                     new FunctionArgument(LatteType.Int, "a")),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Bool, "t",
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Bool, "t",
                     new BlockNode(new DummyFilePlace(),
                         new ReturnNode(new DummyFilePlace(),
                             new LogicalNegateNode(
                                 new FunctionCallNode(new DummyFilePlace(), "f",
                                     new VariableNode("a", new DummyFilePlace())), new DummyFilePlace()))),
                     new FunctionArgument(LatteType.Int, "a")),
-                new TopFunctionNode(new DummyFilePlace(), LatteType.Void, "b",
+                new FunctionDefinition(new DummyFilePlace(), LatteType.Void, "b",
                     new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new VariableNode("a", new DummyFilePlace()),
                             new BlockNode(new DummyFilePlace(), new ExpressionStatementNode(new DummyFilePlace(),

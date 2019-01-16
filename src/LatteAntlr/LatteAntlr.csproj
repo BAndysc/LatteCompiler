@@ -46,6 +46,7 @@
     <Compile Include="AST\BinaryOperatorVisitor.cs" />
     <Compile Include="AST\FilePlace.cs" />
     <Compile Include="AST\Generators\BlockGenerator.cs" />
+    <Compile Include="AST\Generators\ClassDefinitionGenerator.cs" />
     <Compile Include="AST\Generators\ExpressionGenerator.cs" />
     <Compile Include="AST\Generators\LatteTypeGenerator.cs" />
     <Compile Include="AST\Generators\ProgramGenerator.cs" />
@@ -67,8 +68,10 @@
     <Compile Include="Visitors\LatteBaseBinaryOperatorVisitor.cs" />
     <Compile Include="Visitors\LatteBaseArgsVisitor.cs" />
     <Compile Include="Visitors\LatteBaseBlockVisitor.cs" />
+    <Compile Include="Visitors\LatteBaseClassDefVisitor.cs" />
     <Compile Include="Visitors\LatteBaseEmptyVisitor.cs" />
     <Compile Include="Visitors\LatteBaseExpressionVisitor.cs" />
+    <Compile Include="Visitors\LatteBaseFunctionDefVisitor.cs" />
     <Compile Include="Visitors\LatteBaseProgramVisitor.cs" />
     <Compile Include="Visitors\LatteBaseRelOperatorVisitor.cs" />
     <Compile Include="Visitors\LatteBaseStatementVisitor.cs" />

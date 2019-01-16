@@ -17,11 +17,11 @@ namespace LatteTypeChecker
         public TypeChecker()
         {
             this.environment = new Environment();
-            environment.Define(new FunctionDefinition(LatteType.Void, "printInt", new List<LatteType>(){LatteType.Int}, new List<string>(){"number"}));
-            environment.Define(new FunctionDefinition(LatteType.Void, "printString", new List<LatteType>(){LatteType.String}, new List<string>(){"text"}));
-            environment.Define(new FunctionDefinition(LatteType.Void, "error", null, null));
-            environment.Define(new FunctionDefinition(LatteType.Int, "readInt", null, null));
-            environment.Define(new FunctionDefinition(LatteType.String, "readString", null, null));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printInt", new List<LatteType>(){LatteType.Int}, new List<string>(){"number"}));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printString", new List<LatteType>(){LatteType.String}, new List<string>(){"text"}));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "error", null, null));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Int, "readInt", null, null));
+            environment.DefineFunction(new FunctionDefinition(LatteType.String, "readString", null, null));
         }
         
         public TypeChecker(IEnvironment environment)
@@ -31,6 +31,36 @@ namespace LatteTypeChecker
         
         public override bool Visit(IProgram program)
         {
+            HashSet<string> classNames = new HashSet<string>();
+            classNames.Add("int");
+            classNames.Add("bool");
+            classNames.Add("string");
+
+            foreach (var @class in program.Classes)
+            {
+                if (classNames.Contains(@class.ClassName) || @class.ClassName == "void")
+                    throw new DuplicateClassDefinitionException(@class, @class.FilePlace);
+
+                classNames.Add(@class.ClassName);
+            }
+
+            foreach (var @class in program.Classes)
+            {
+                List<IClassField> classFields = new List<IClassField>();
+                foreach (var field in @class.Fields)
+                {
+                    if (classFields.Select(t => t.FieldName).Contains(field.FiledName))
+                        throw new DuplicateClassFieldException(field.FiledName, @class.ClassName, @class.FilePlace);
+                    
+                    if (field.FieldType == LatteType.Void)
+                        throw new InvalidVariableTypeException(field.FieldType, field.FilePlace);
+                    
+                    classFields.Add(new ClassField(field.FieldType, field.FiledName));
+                }
+                var classDefinition = new ClassDefinition(@class.ClassName, classFields);
+                environment.DefineClass(classDefinition);
+            }
+            
             foreach (var function in program.Functions)
             {
                 var functionDef = new FunctionDefinition(function.ReturnType, 
@@ -41,7 +71,7 @@ namespace LatteTypeChecker
                 if (functionDef.ArgumentNames.Distinct().Count() != functionDef.ArgumentNames.Count)
                     throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
                 
-                if (environment.IsDefined(functionDef))
+                if (environment.IsFunctionDefined(functionDef))
                 {
                     throw new FunctionRedefinitionException(environment[function.Name], functionDef, function.FilePlace);
                 }
@@ -53,7 +83,7 @@ namespace LatteTypeChecker
                     throw new InvalidFunctionArgumentTypeException(functionDef, voidArgument, function.FilePlace);
                 }
                 
-                environment.Define(functionDef);
+                environment.DefineFunction(functionDef);
             }
 
             foreach (var function in program.Functions)
@@ -68,7 +98,7 @@ namespace LatteTypeChecker
                 blockVisitor.Visit(function.Body);
             }
             
-            if (!environment.IsDefined("main"))
+            if (!environment.IsFunctionDefined("main"))
                 throw new NoStartingPointException("main");
 
             if (environment["main"].ReturnType != LatteType.Int)

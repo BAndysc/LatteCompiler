@@ -2,6 +2,21 @@ namespace LatteAntlr.Visitors
 {
     internal class LatteBaseTopDefVisitor<T> : LatteLimitedVisitor<T>
     {
+        public sealed override T VisitFunctionDef(LatteParser.FunctionDefContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitClassDef(LatteParser.ClassDefContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitFieldDef(LatteParser.FieldDefContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
         public sealed override T VisitProgram(LatteParser.ProgramContext context)
         {
             return ThrowInvalidContext(context);
