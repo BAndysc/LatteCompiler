@@ -60,6 +60,7 @@
     <Compile Include="Bad\Bad025Tests.cs" />
     <Compile Include="Bad\Bad026Tests.cs" />
     <Compile Include="Bad\Bad027Tests.cs" />
+    <Compile Include="Bad\Classes\BadClassesTests.cs" />
     <Compile Include="Bad\TestProgramProviderFunctionCallAsReturn.cs" />
     <Compile Include="DummyFilePlace.cs" />
     <Compile Include="Good\AddTests.cs" />

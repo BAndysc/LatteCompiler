@@ -65,6 +65,7 @@
     <Compile Include="Bad\Bad025Tests.cs" />
     <Compile Include="Bad\Bad026Tests.cs" />
     <Compile Include="Bad\Bad027Tests.cs" />
+    <Compile Include="Bad\BadClassesTypeTests.cs" />
     <Compile Include="Bad\FunctionCallAsReturnTests.cs" />
     <Compile Include="Good\AddTests.cs" />
     <Compile Include="Good\Core001Tests.cs" />
