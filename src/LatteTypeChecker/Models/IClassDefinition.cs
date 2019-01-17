@@ -6,5 +6,8 @@ namespace LatteTypeChecker.Models
     {
         string Name { get; }
         IList<IClassField> Fields { get; }
+
+        bool HasField(string fieldName);
+        IClassField GetField(string fieldName);
     }
 }

@@ -97,5 +97,25 @@ namespace LatteAntlr.AST.Generators
             var right = Visit(context.expr()[1]);
             return new BinaryNode(@operator, left, right, new FilePlace(context));
         }
+
+        public override IExpressionNode VisitECast(LatteParser.ECastContext context)
+        {
+            return new CastExpressionNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()),  Visit(context.expr()));
+        }
+
+        public override IExpressionNode VisitENull(LatteParser.ENullContext context)
+        {
+            return new NullNode(new FilePlace(context));
+        }
+
+        public override IExpressionNode VisitENewObject(LatteParser.ENewObjectContext context)
+        {
+            return new NewObjectNode(new FilePlace(context), context.ID().GetText());
+        }
+
+        public override IExpressionNode VisitEObjectField(LatteParser.EObjectFieldContext context)
+        {
+            return new ObjectFieldNode(new FilePlace(context), Visit(context.expr()), context.ID().GetText());
+        }
     }
 }

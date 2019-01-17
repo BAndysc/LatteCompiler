@@ -41,19 +41,19 @@ namespace LatteBase.AST.Impl
 
     public class DeclarationNode : Node, IDeclarationNode
     {
-        public DeclarationNode(IFilePlace place, LatteType type, IEnumerable<ISingleDeclaration> declarations) :
+        public DeclarationNode(IFilePlace place, ILatteType type, IEnumerable<ISingleDeclaration> declarations) :
             base(place)
         {
             Type = type;
             Declarations = declarations;
         }
 
-        public DeclarationNode(IFilePlace place, LatteType type, params ISingleDeclaration[] declarations) : this(place,
+        public DeclarationNode(IFilePlace place, ILatteType type, params ISingleDeclaration[] declarations) : this(place,
             type, declarations.ToList())
         {
         }
 
-        public LatteType Type { get; }
+        public ILatteType Type { get; }
         public IEnumerable<ISingleDeclaration> Declarations { get; }
     }
 
@@ -153,5 +153,20 @@ namespace LatteBase.AST.Impl
         }
 
         public IExpressionNode Expression { get; }
+    }
+
+    public class StructAssignmentNode : Node, IStructAssignmentNode
+    {
+        public StructAssignmentNode(IFilePlace place, IExpressionNode o, string fieldName, IExpressionNode value) : base(place)
+        {
+            Object = o;
+            FieldName = fieldName;
+            Value = value;
+        }
+
+        public IExpressionNode Object { get; }
+        public string FieldName { get; }
+        public int FieldOffset { get; set; }
+        public IExpressionNode Value { get; }
     }
 }

@@ -75,7 +75,7 @@ namespace X86Generator
 
             return instructions.ToList();
         }
-        
+
         public override IEnumerable<IX86Instruction> Visit(SubQuadruple quadruple)
         {
             Clear();
@@ -168,6 +168,19 @@ namespace X86Generator
             return instructions.ToList();
         }
 
+        
+        public override IEnumerable<IX86Instruction> Visit(LoadIndirectQuadruple quadruple)
+        {
+            Clear();
+            var addr = mapping.Get(quadruple.Address);
+            var dest = mapping.Get(quadruple.ResultRegister);
+            Emit(new MovInstruction(Register32.EAX, addr), quadruple);
+            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.Offset)),quadruple);
+            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            
+            return instructions.ToList();
+        }
+        
         public override IEnumerable<IX86Instruction> Visit(LocalQuadruple quadruple)
         {
             Clear();
@@ -205,6 +218,18 @@ namespace X86Generator
             return instructions.ToList();
         }
         
+        public override IEnumerable<IX86Instruction> Visit(StoreIndirectQuadruple quadruple)
+        {
+            Clear();
+            var value = mapping.Get(quadruple.Value);
+            var addr = mapping.Get(quadruple.ObjectAddr);
+            Emit(new MovInstruction(Register32.EDX, addr), quadruple);
+            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new MovInstruction(new Memory32(Register32.EDX, quadruple.Offset), Register32.EAX), quadruple);
+
+            return instructions.ToList();
+        }
+
         public override IEnumerable<IX86Instruction> Visit(FunctionCallQuadruple quadruple)
         {
             Clear();

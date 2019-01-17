@@ -14,7 +14,8 @@ namespace CLI
             if (args.Length < 1)
             {
                 Console.WriteLine("Usage: ./cli [program] ");
-                Environment.Exit(-1);
+                //Environment.Exit(-1);
+                args = new string[] {"/Users/bartek/Programowanie/LatteCompiler/test.lat"};
             }
 
             foreach (var arg in args)
@@ -43,9 +44,9 @@ namespace CLI
                 
                 var outputAsmFile = baseDir + fileName + ".s";
                 var outputFile = baseDir + fileName;
-                //var intermediate = baseDir + fileName + ".q";
+                var intermediate = baseDir + fileName + ".q";
                 
-                //compiler.SetIntermediateOutput(intermediate);
+                compiler.SetIntermediateOutput(intermediate);
                 compiler.SetAssemblyOutput(outputAsmFile);
                 compiler.SetOutput(outputFile);
                 compiler.Compile(program);

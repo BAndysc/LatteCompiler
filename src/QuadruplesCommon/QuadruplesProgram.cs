@@ -8,6 +8,8 @@ namespace QuadruplesCommon
     {
         public readonly List<QuadrupleFunction> Functions = new List<QuadrupleFunction>();
         
+        public readonly List<QuadrupleClass> Classes = new List<QuadrupleClass>();
+        
         public readonly Dictionary<Label, string> ConstStrings = new Dictionary<Label, string>();
 
         private QuadrupleFunction currentFunction;
@@ -15,6 +17,11 @@ namespace QuadruplesCommon
         private int nextReg = 0;
         private int nextLabel = 0;
 
+        public void EmitClass(QuadrupleClass @class)
+        {
+            Classes.Add(@class);
+        }
+        
         public void EmitFunction(string functionName, int locals)
         {
             currentFunction = new QuadrupleFunction(functionName, locals);
@@ -40,6 +47,12 @@ namespace QuadruplesCommon
         public Label GetNextLabel()
         {
             return new Label(nextLabel++);
+        }
+
+        public QuadrupleClass GetClass(string className)
+        {
+            //@todo
+            return Classes[0];
         }
 
         public Label AllocString(string nodeText)

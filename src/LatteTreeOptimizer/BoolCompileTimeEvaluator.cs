@@ -129,5 +129,25 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+
+        public override bool? Visit(INullNode node)
+        {
+            return null;
+        }
+
+        public override bool? Visit(INewObjectNode node)
+        {
+            return null;
+        }
+
+        public override bool? Visit(ICastExpressionNode node)
+        {
+            return Visit(node.Expression);
+        }
+
+        public override bool? Visit(IObjectFieldNode node)
+        {
+            return null;
+        }
     }
 }

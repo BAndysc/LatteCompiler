@@ -11,8 +11,9 @@ namespace LatteAntlr.AST.Generators
         public override IFunctionDefinition VisitFunctionDef(LatteParser.FunctionDefContext context)
         {
             var typeGenerator = new LatteTypeGenerator();
-            
-            var type = typeGenerator.Visit(context.type_());
+
+            var type__ = context.type_();
+            var type = typeGenerator.Visit(type__);
             var name = context.ID().GetText();
 
             var arguments = new List<FunctionArgument>();

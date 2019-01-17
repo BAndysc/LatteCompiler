@@ -43,6 +43,7 @@
     <Compile Include="AST\IClassFieldNode.cs" />
     <Compile Include="AST\IExpressions.cs" />
     <Compile Include="AST\IFilePlace.cs" />
+    <Compile Include="AST\Impl\CastExpressionNode.cs" />
     <Compile Include="AST\Impl\ClassDefinitionNode.cs" />
     <Compile Include="AST\Impl\Expressions.cs" />
     <Compile Include="AST\Impl\ProgramNode.cs" />
@@ -57,13 +58,14 @@
     <Compile Include="CodeGenerators\FunctionCodeGenerator.cs" />
     <Compile Include="CodeGenerators\ProgramCodeGenerator.cs" />
     <Compile Include="CodeGenerators\StatementCodeGenerator.cs" />
-    <Compile Include="LatteType.cs" />
+    <Compile Include="ILatteType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visitors\ClassDefinitionVisitor.cs" />
     <Compile Include="Visitors\ExpressionVisitor.cs" />
     <Compile Include="Visitors\ProgramFunctionVisitor.cs" />
     <Compile Include="Visitors\ProgramVisitor.cs" />
     <Compile Include="Visitors\StatementVisitor.cs" />
-    <Compile Include="Visitors\TopDefinitionVisitor.cs" />
+    <Compile Include="Visitors\FunctionDefinitionVisitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

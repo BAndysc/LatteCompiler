@@ -90,5 +90,25 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+
+        public override int? Visit(INullNode node)
+        {
+            return null;
+        }
+
+        public override int? Visit(INewObjectNode node)
+        {
+            return null;
+        }
+
+        public override int? Visit(ICastExpressionNode node)
+        {
+            return null;
+        }
+
+        public override int? Visit(IObjectFieldNode node)
+        {
+            return null;
+        }
     }
 }

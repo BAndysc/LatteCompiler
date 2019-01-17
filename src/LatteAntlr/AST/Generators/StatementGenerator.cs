@@ -29,6 +29,16 @@ namespace LatteAntlr.AST.Generators
             return new DeclarationNode(new FilePlace(context), type, declarations);
         }
 
+        public override IStatement VisitStructAss(LatteParser.StructAssContext context)
+        {
+            var visitor = new ExpressionGenerator();
+            var obj = visitor.Visit(context.expr()[0]);
+            var value = visitor.Visit(context.expr()[1]);
+            var fieldName = context.ID().GetText();
+
+            return new StructAssignmentNode(new FilePlace(context), obj, fieldName, value);
+        }
+
         public override IStatement VisitAss(LatteParser.AssContext context)
         {
             var visitor = new ExpressionGenerator();

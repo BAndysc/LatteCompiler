@@ -73,5 +73,10 @@ namespace LatteBase.CodeGenerators
         {
             return $"new ExpressionStatementNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Expression)})";
         }
+
+        public override string Visit(IStructAssignmentNode node)
+        {
+            return $"new StructAssignmentNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {expressionGenerator.Visit(node.Value)})";
+        }
     }
 }

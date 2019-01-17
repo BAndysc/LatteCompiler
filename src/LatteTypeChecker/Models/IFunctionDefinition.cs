@@ -6,9 +6,9 @@ namespace LatteTypeChecker.Models
 {
     public interface IFunctionDefinition
     {
-        LatteType ReturnType { get; }
+        ILatteType ReturnType { get; }
         string Name { get; }
-        IList<LatteType> ArgumentTypes { get; }
+        IList<ILatteType> ArgumentTypes { get; }
         IList<string> ArgumentNames { get; }
     }
 }

@@ -17,8 +17,8 @@ namespace LatteTypeChecker
         public TypeChecker()
         {
             this.environment = new Environment();
-            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printInt", new List<LatteType>(){LatteType.Int}, new List<string>(){"number"}));
-            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printString", new List<LatteType>(){LatteType.String}, new List<string>(){"text"}));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printInt", new List<ILatteType>(){LatteType.Int}, new List<string>(){"number"}));
+            environment.DefineFunction(new FunctionDefinition(LatteType.Void, "printString", new List<ILatteType>(){LatteType.String}, new List<string>(){"text"}));
             environment.DefineFunction(new FunctionDefinition(LatteType.Void, "error", null, null));
             environment.DefineFunction(new FunctionDefinition(LatteType.Int, "readInt", null, null));
             environment.DefineFunction(new FunctionDefinition(LatteType.String, "readString", null, null));

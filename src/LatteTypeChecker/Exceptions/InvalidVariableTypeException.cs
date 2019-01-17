@@ -6,9 +6,9 @@ namespace LatteTypeChecker.Exceptions
 {
     public class InvalidVariableTypeException : TypeCheckerException
     {
-        private readonly LatteType declarationType;
+        private readonly ILatteType declarationType;
 
-        public InvalidVariableTypeException(LatteType declarationType, IFilePlace filePlace) : base(filePlace)
+        public InvalidVariableTypeException(ILatteType declarationType, IFilePlace filePlace) : base(filePlace)
         {
             this.declarationType = declarationType;
         }

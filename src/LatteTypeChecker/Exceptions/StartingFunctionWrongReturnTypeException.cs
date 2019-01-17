@@ -7,9 +7,9 @@ namespace LatteTypeChecker.Exceptions
     public class StartingFunctionWrongReturnTypeException : Exception
     {
         private readonly IFunctionDefinition functionDefinition;
-        private readonly LatteType expectedType;
+        private readonly ILatteType expectedType;
 
-        public StartingFunctionWrongReturnTypeException(IFunctionDefinition functionDefinition, LatteType expectedType)
+        public StartingFunctionWrongReturnTypeException(IFunctionDefinition functionDefinition, ILatteType expectedType)
         {
             this.functionDefinition = functionDefinition;
             this.expectedType = expectedType;

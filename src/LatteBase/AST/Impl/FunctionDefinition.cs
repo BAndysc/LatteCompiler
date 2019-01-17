@@ -7,19 +7,19 @@ namespace LatteBase.AST.Impl
 {
     public class FunctionArgument : IFunctionArgument
     {
-        public FunctionArgument(LatteType type, string name)
+        public FunctionArgument(ILatteType type, string name)
         {
             Type = type;
             Name = name;
         }
 
-        public LatteType Type { get; }
+        public ILatteType Type { get; }
         public string Name { get; }
     }
     
     public class FunctionDefinition : Node, IFunctionDefinition
     {
-        public FunctionDefinition(IFilePlace place, LatteType type, string name, IEnumerable<IFunctionArgument> arguments, IStatement body) : base(place)
+        public FunctionDefinition(IFilePlace place, ILatteType type, string name, IEnumerable<IFunctionArgument> arguments, IStatement body) : base(place)
         {
             ReturnType = type;
             Name = name;
@@ -27,13 +27,13 @@ namespace LatteBase.AST.Impl
             Body = body;
         }
 
-        public FunctionDefinition(IFilePlace place, LatteType type, string name, IStatement body,
+        public FunctionDefinition(IFilePlace place, ILatteType type, string name, IStatement body,
             params IFunctionArgument[] arguments) : this(place, type, name, arguments.ToList(), body)
         {
             
         }
         
-        public LatteType ReturnType { get; }
+        public ILatteType ReturnType { get; }
         public string Name { get; }
         public IEnumerable<IFunctionArgument> Arguments { get; }
         public IStatement Body { get; }

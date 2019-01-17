@@ -5,7 +5,9 @@ global error
 global readInt
 global readString
 global concat_string
+global lat_malloc
 global _main
+extern _lat_malloc
 extern _printInt
 extern _printString
 extern _error
@@ -26,5 +28,7 @@ readString:
     jmp _readString
 concat_string:
     jmp _concat_string
+lat_malloc:
+	jmp _lat_malloc
 _main:
     jmp main

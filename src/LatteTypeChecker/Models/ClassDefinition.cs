@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LatteTypeChecker.Models
 {
@@ -12,5 +13,15 @@ namespace LatteTypeChecker.Models
 
         public string Name { get; }
         public IList<IClassField> Fields { get; }
+        
+        public bool HasField(string fieldName)
+        {
+            return GetField(fieldName) != null;
+        }
+
+        public IClassField GetField(string fieldName)
+        {
+            return Fields.FirstOrDefault(t => t.FieldName == fieldName);
+        }
     }
 }

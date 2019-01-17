@@ -22,7 +22,7 @@ namespace LatteBase.AST
     }
     public interface IDeclarationNode : IStatement
     {
-        LatteType Type { get; }
+        ILatteType Type { get; }
         IEnumerable<ISingleDeclaration> Declarations { get; }
     }
     public interface IAssignmentNode : IStatement
@@ -64,5 +64,13 @@ namespace LatteBase.AST
     public interface IExpressionStatementNode : IStatement
     {
         IExpressionNode Expression { get; }
+    }
+
+    public interface IStructAssignmentNode : IStatement
+    {
+        IExpressionNode Object { get; }
+        string FieldName { get; }
+        int FieldOffset { get; set; }
+        IExpressionNode Value { get; }
     }
 }

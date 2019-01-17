@@ -6,10 +6,10 @@ namespace LatteTypeChecker.Exceptions
 {
     public class InvalidReturnTypeException : TypeCheckerException
     {
-        private readonly LatteType expectedReturnType;
-        private readonly LatteType givenReturnType;
+        private readonly ILatteType expectedReturnType;
+        private readonly ILatteType givenReturnType;
 
-        public InvalidReturnTypeException(LatteType expectedReturnType, LatteType givenReturnType, IFilePlace filePlace) : base(filePlace)
+        public InvalidReturnTypeException(ILatteType expectedReturnType, ILatteType givenReturnType, IFilePlace filePlace) : base(filePlace)
         {
             this.expectedReturnType = expectedReturnType;
             this.givenReturnType = givenReturnType;

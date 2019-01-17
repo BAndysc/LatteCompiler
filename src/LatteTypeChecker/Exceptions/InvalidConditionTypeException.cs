@@ -6,10 +6,10 @@ namespace LatteTypeChecker.Exceptions
 {
     public class InvalidConditionTypeException : TypeCheckerException
     {
-        private readonly LatteType expectedType;
-        private readonly LatteType givenType;
+        private readonly ILatteType expectedType;
+        private readonly ILatteType givenType;
 
-        public InvalidConditionTypeException(LatteType expectedType, LatteType givenType, IFilePlace filePlace) : base(filePlace)
+        public InvalidConditionTypeException(ILatteType expectedType, ILatteType givenType, IFilePlace filePlace) : base(filePlace)
         {
             this.expectedType = expectedType;
             this.givenType = givenType;

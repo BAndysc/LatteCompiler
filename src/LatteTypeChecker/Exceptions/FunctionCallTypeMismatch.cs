@@ -10,9 +10,9 @@ namespace LatteTypeChecker.Exceptions
     {
         private readonly IFunctionDefinition function;
         private readonly int argumentIndex;
-        private readonly LatteType givenArgumentType;
+        private readonly ILatteType givenArgumentType;
 
-        public FunctionCallTypeMismatch(IFunctionDefinition function, int argumentIndex, LatteType givenArgumentType, IFilePlace filePlace) : base(filePlace)
+        public FunctionCallTypeMismatch(IFunctionDefinition function, int argumentIndex, ILatteType givenArgumentType, IFilePlace filePlace) : base(filePlace)
         {
             this.function = function;
             this.argumentIndex = argumentIndex;

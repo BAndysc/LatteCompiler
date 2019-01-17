@@ -79,22 +79,7 @@ namespace LatteAntlr.Visitors
             return ThrowInvalidContext(context);
         }
 
-        public sealed override T VisitInt(LatteParser.IntContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
-        public sealed override T VisitStr(LatteParser.StrContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
-        public sealed override T VisitBool(LatteParser.BoolContext context)
-        {
-            return ThrowInvalidContext(context);
-        }
-
-        public sealed override T VisitVoid(LatteParser.VoidContext context)
+        public sealed override T VisitType(LatteParser.TTypeNameContext context)
         {
             return ThrowInvalidContext(context);
         }
@@ -246,6 +231,31 @@ namespace LatteAntlr.Visitors
         }
 
         public sealed override T VisitUnaryNeg(LatteParser.UnaryNegContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+       
+        public sealed override T VisitStructAss(LatteParser.StructAssContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+        
+        public sealed override T VisitECast(LatteParser.ECastContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitENull(LatteParser.ENullContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitENewObject(LatteParser.ENewObjectContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+        
+        public sealed override T VisitEObjectField(LatteParser.EObjectFieldContext context)
         {
             return ThrowInvalidContext(context);
         }

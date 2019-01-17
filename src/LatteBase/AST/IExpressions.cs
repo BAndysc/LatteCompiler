@@ -22,6 +22,22 @@ namespace LatteBase.AST
         
     }
 
+    public interface INullNode : IExpressionNode
+    {
+    
+    }
+
+    public interface ICastExpressionNode : IExpressionNode
+    {
+        IExpressionNode Expression { get; }
+        ILatteType CastType { get; }
+    }
+
+    public interface INewObjectNode : IExpressionNode
+    {
+        string TypeName { get; }
+    }
+    
     public interface IStringNode : IExpressionNode
     {
         string Text { get; }
@@ -72,5 +88,12 @@ namespace LatteBase.AST
     {
         string FunctionName { get; }
         IList<IExpressionNode> Arguments { get; }
+    }
+
+    public interface IObjectFieldNode : IExpressionNode
+    {
+        IExpressionNode Object { get; }
+        string FieldName { get; }
+        int FieldOffset { get; set;  }
     }
 }

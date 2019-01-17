@@ -11,12 +11,12 @@ namespace LatteTypeChecker.Visitors
     {
         private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
-        private readonly LatteType expectedReturnType;
+        private readonly ILatteType expectedReturnType;
 
         private readonly LatteExpressionTypeEvaluator expressionEvaluator;
         
         public StatementTypeChecker(IVariableEnvironment variables, IEnvironment functions,
-            LatteType expectedReturnType)
+            ILatteType expectedReturnType)
         {
             this.variables = variables;
             this.functions = functions;
@@ -61,7 +61,7 @@ namespace LatteTypeChecker.Visitors
                 {
                     var itemValueType = expressionEvaluator.Visit(item.Value);
                     
-                    if (itemValueType != declarationType)
+                    if (!Equals(itemValueType, declarationType))
                         throw new VariableDeclarationTypeMismatch(variableDefinition, itemValueType, node.FilePlace);
                 }
                 
@@ -78,12 +78,32 @@ namespace LatteTypeChecker.Visitors
             if (!variables.IsDefined(variable))
                 throw new UndeclaredVariableException(variable, node.FilePlace);
 
-            if (variables[node.Variable].Type != type)
+            if (!Equals(variables[node.Variable].Type, type))
             {
                 throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
             }
         }
 
+        public override void Visit(IStructAssignmentNode node)
+        {
+            var classType = expressionEvaluator.Visit(node.Object);
+            var valueType = expressionEvaluator.Visit(node.Value);
+
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasField(node.FieldName))
+                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+
+            var fieldType = classDef.GetField(node.FieldName).FieldType;
+            
+            if (!Equals(valueType, fieldType))
+                throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, valueType);
+            
+            node.FieldOffset = 0;
+            for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
+                node.FieldOffset += 4;
+        }
+        
         public override void Visit(IIncrementNode node)
         {
             var variable = new VariableDefinition(node.Variable, LatteType.Int);
@@ -113,7 +133,7 @@ namespace LatteTypeChecker.Visitors
             
             var givenReturnType = expressionEvaluator.Visit(node.ReturnExpression);
             
-            if (expectedReturnType != givenReturnType)
+            if (!Equals(expectedReturnType, givenReturnType))
                 throw new InvalidReturnTypeException(expectedReturnType, givenReturnType, node.FilePlace);
         }
 

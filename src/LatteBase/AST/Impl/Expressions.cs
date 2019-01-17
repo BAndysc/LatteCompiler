@@ -144,4 +144,46 @@ namespace LatteBase.AST.Impl
         
         public FunctionCallNode(IFilePlace place, string name, params IExpressionNode[] arguments) : this(name, arguments.ToList(), place) {}
     }
+    
+    public class CastExpressionNode : Node, ICastExpressionNode
+    {
+        public CastExpressionNode(IFilePlace filePlace, ILatteType castType, IExpressionNode expression) : base(filePlace)
+        {
+            Expression = expression;
+            CastType = castType;
+        }
+
+        public IExpressionNode Expression { get; }
+        public ILatteType CastType { get; }
+    }
+
+    public class NullNode : Node, INullNode
+    {
+        public NullNode(IFilePlace place) : base(place)
+        {
+        }
+    }
+
+    public class NewObjectNode : Node, INewObjectNode
+    {
+        public NewObjectNode(IFilePlace place, string typeName) : base(place)
+        {
+            TypeName = typeName;
+        }
+
+        public string TypeName { get; }
+    }
+
+    public class ObjectFieldNode : Node, IObjectFieldNode
+    {
+        public ObjectFieldNode(IFilePlace place, IExpressionNode obj, string fieldName) : base(place)
+        {
+            Object = obj;
+            FieldName = fieldName;
+        }
+
+        public IExpressionNode Object { get; }
+        public string FieldName { get; }
+        public int FieldOffset { get; set; }
+    }
 }

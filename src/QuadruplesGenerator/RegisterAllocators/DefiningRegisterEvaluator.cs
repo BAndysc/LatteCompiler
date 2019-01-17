@@ -119,5 +119,15 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return null;
         }
+
+        public override IRegister Visit(StoreIndirectQuadruple quadruple)
+        {
+            return null;
+        }
+
+        public override IRegister Visit(LoadIndirectQuadruple quadruple)
+        {
+            return quadruple.ResultRegister;
+        }
     }
 }

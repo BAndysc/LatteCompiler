@@ -18,7 +18,7 @@ namespace LatteAntlr.Exceptions
 
         public override string ToString()
         {
-            return $"Unhandled at line: {line} ({type.FullName}): {indentText(text, 4)}";
+            return $"Unhandled at line: {line} ({type.FullName}): {indentText(text, 4)}\n\n{StackTrace}";
         }
 
         private string indentText(string str, int spaces)

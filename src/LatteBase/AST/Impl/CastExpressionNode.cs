@@ -1,0 +1,4 @@
+namespace LatteBase.AST.Impl
+{
+
+}

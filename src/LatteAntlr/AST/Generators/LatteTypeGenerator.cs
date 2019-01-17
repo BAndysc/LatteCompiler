@@ -3,26 +3,23 @@ using LatteBase;
 
 namespace LatteAntlr.AST.Generators
 {
-    internal class LatteTypeGenerator : LatteBaseTypeVisitor<LatteType>
+    internal class LatteTypeGenerator : LatteBaseTypeVisitor<ILatteType>
     {
-        public override LatteType VisitInt(LatteParser.IntContext context)
+        public override ILatteType VisitTTypeName(LatteParser.TTypeNameContext context)
         {
-            return LatteType.Int;
-        }
-
-        public override LatteType VisitStr(LatteParser.StrContext context)
-        {
-            return LatteType.String;
-        }
-
-        public override LatteType VisitBool(LatteParser.BoolContext context)
-        {
-            return LatteType.Bool;
-        }
-
-        public override LatteType VisitVoid(LatteParser.VoidContext context)
-        {
-            return LatteType.Void;
+            switch (context.GetText())
+            {
+                case "int":
+                    return LatteType.Int;
+                case "void":
+                    return LatteType.Void;
+                case "boolean":
+                    return LatteType.Bool;
+                case "string":
+                    return LatteType.String;
+            }
+            
+            return new LatteType(context.GetText());
         }
     }
 }

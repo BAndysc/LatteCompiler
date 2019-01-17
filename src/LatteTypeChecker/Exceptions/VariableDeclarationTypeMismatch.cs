@@ -8,9 +8,9 @@ namespace LatteTypeChecker.Exceptions
     public class VariableDeclarationTypeMismatch : TypeCheckerException
     {
         private readonly IVariableDefinition variable;
-        private readonly LatteType itemValueType;
+        private readonly ILatteType itemValueType;
 
-        public VariableDeclarationTypeMismatch(IVariableDefinition variable, LatteType itemValueType, IFilePlace filePlace) : base(filePlace)
+        public VariableDeclarationTypeMismatch(IVariableDefinition variable, ILatteType itemValueType, IFilePlace filePlace) : base(filePlace)
         {
             this.variable = variable;
             this.itemValueType = itemValueType;

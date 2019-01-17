@@ -97,7 +97,12 @@ namespace X86IntelAsm
         {
             return Indent($"mov {sizeOf.Visit(instr.From)} {operandTranslator.Visit(instr.To)}, {operandTranslator.Visit(instr.From)}");
         }
-
+        
+        public override string Visit(LeaInstruction instr)
+        {
+            return Indent($"lea {sizeOf.Visit(instr.From)} {operandTranslator.Visit(instr.To)}, {operandTranslator.Visit(instr.From)}");
+        }
+        
         public override string Visit(MovzxInstruction instr)
         {
             return Indent($"movzx {operandTranslator.Visit(instr.To)}, {operandTranslator.Visit(instr.From)}");

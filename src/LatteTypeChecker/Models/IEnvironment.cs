@@ -12,6 +12,6 @@ namespace LatteTypeChecker.Models
 
         bool IsClassDefined(string className);
         void DefineClass(IClassDefinition @class);
-        IClassDefinition GetDefinition(string className);
+        IClassDefinition GetClass(string className);
     }
 }

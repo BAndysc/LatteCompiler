@@ -64,5 +64,10 @@ namespace LatteTreeOptimizer
         {
             return false;
         }
+
+        public override bool Visit(IStructAssignmentNode node)
+        {
+            return false;
+        }
     }
 }

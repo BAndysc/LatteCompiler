@@ -65,5 +65,25 @@ namespace LatteBase.CodeGenerators
         {
             return $"new FunctionCallNode(new DummyFilePlace(), \"{node.FunctionName}\"{string.Join("", node.Arguments.Select(Visit).Select(t => ", " +  t))})";
         }
+
+        public override string Visit(INullNode node)
+        {
+            return $"new NullNode(new DummyFilePlace())";
+        }
+
+        public override string Visit(INewObjectNode node)
+        {
+            return $"new NewObjectNode(new DummyFilePlace(), \"{node.TypeName}\")";
+        }
+
+        public override string Visit(ICastExpressionNode node)
+        {
+            return $"new CastExpressionNode(new DummyFilePlace(), LatteType.{node.CastType}, {Visit(node.Expression)})";
+        }
+
+        public override string Visit(IObjectFieldNode node)
+        {
+            return $"new ObjectFieldNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.FieldName}\")";
+        }
     }
 }

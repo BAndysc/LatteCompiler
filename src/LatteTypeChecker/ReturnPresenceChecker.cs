@@ -89,5 +89,10 @@ namespace LatteTypeChecker
         {
             return new IsExpressionExitCall().Visit(node.Expression);
         }
+
+        public override bool Visit(IStructAssignmentNode node)
+        {
+            return false;
+        }
     }
 }

@@ -211,5 +211,42 @@ namespace QuadruplesGenerator.Generators
             program.Emit(new FunctionCallQuadruple(node.FilePlace, node.FunctionName, result, args));
             return result;
         }
+
+        public override IRegister Visit(INullNode node)
+        {
+            var register = program.GetNextRegister();
+
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), register));
+            
+            return register;
+        }
+
+        public override IRegister Visit(INewObjectNode node)
+        {
+            var classDef = program.GetClass(node.TypeName);
+            var classSize = classDef.FieldsSize.Aggregate(0, (sum, val) => sum + val);
+            
+            var registerWithSize = program.GetNextRegister();
+            
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(classSize), registerWithSize));
+            
+            var register = program.GetNextRegister();
+            program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_malloc", register, new []{registerWithSize}));
+            return register;
+        }
+
+        public override IRegister Visit(ICastExpressionNode node)
+        {
+            return Visit(node.Expression);
+        }
+
+        public override IRegister Visit(IObjectFieldNode node)
+        {
+            var addr = Visit(node.Object);
+            var result = program.GetNextRegister();
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, node.FieldOffset, result));
+
+            return result;
+        }
     }
 }

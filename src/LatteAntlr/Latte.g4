@@ -26,6 +26,7 @@ stmt
     | block                              # BlockStmt
     | type_ item ( ',' item )* ';'       # Decl
     | ID '=' expr ';'                    # Ass
+    | expr '.' ID '=' expr ';'           # StructAss
     | ID '++' ';'                        # Incr
     | ID '--' ';'                        # Decr
     | 'return' expr ';'                  # Ret
@@ -37,10 +38,7 @@ stmt
     ;
 
 type_
-    : 'int'     # Int
-    | 'string'  # Str
-    | 'boolean' # Bool
-    | 'void'    # Void
+    : ID                                 # TTypeName
     ;
 
 item
@@ -59,6 +57,10 @@ expr
     | INT                                 # EInt
     | 'true'                              # ETrue
     | 'false'                             # EFalse
+    | 'null'                              # ENull
+    | '(' type_ ')' expr                  # ECast
+    | expr '.' ID                         # EObjectField
+    | 'new' ID                            # ENewObject
     | ID '(' ( expr ( ',' expr )* )? ')'  # EFunCall
     | STR                           # EStr
     | '(' expr ')'                  # EParen

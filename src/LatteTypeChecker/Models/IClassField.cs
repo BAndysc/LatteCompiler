@@ -5,6 +5,6 @@ namespace LatteTypeChecker.Models
     public interface IClassField
     {
         string FieldName { get; }
-        LatteType FieldType { get; }
+        ILatteType FieldType { get; }
     }
 }

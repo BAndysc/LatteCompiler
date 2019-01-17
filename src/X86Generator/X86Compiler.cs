@@ -29,6 +29,7 @@ namespace X86Generator
             builder.AppendLine("    extern readInt");
             builder.AppendLine("    extern readString");
             builder.AppendLine("    extern concat_string");
+            builder.AppendLine("    extern lat_malloc");
 
             var translator = new IntelAsmTranslator(withIndent: true);
             

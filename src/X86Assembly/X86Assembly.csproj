@@ -48,6 +48,7 @@
     <Compile Include="Instructions\JmpInstruction.cs" />
     <Compile Include="Instructions\JneInstruction.cs" />
     <Compile Include="Instructions\LabelInstruction.cs" />
+    <Compile Include="Instructions\LeaInstruction.cs" />
     <Compile Include="Instructions\LeaveInstruction.cs" />
     <Compile Include="Instructions\MovInstruction.cs" />
     <Compile Include="Instructions\MovzxInstruction.cs" />

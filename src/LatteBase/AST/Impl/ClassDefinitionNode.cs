@@ -18,7 +18,7 @@ namespace LatteBase.AST.Impl
 
     public class ClassFieldNode : IClassFieldNode
     {
-        public ClassFieldNode(IFilePlace source, string filedName, LatteType fieldType)
+        public ClassFieldNode(IFilePlace source, string filedName, ILatteType fieldType)
         {
             FilePlace = source;
             FiledName = filedName;
@@ -27,7 +27,7 @@ namespace LatteBase.AST.Impl
 
         public IFilePlace FilePlace { get; }
         public string FiledName { get; }
-        public LatteType FieldType { get; }
+        public ILatteType FieldType { get; }
     }
     
 }

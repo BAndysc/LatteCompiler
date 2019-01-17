@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generator.cs" />
+    <Compile Include="Generators\ClassGenerator.cs" />
     <Compile Include="Generators\ExpressionGenerator.cs" />
     <Compile Include="Generators\StatementGenerator.cs" />
     <Compile Include="LocalValuesCounter.cs" />

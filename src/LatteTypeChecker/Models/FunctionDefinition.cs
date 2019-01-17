@@ -6,12 +6,12 @@ namespace LatteTypeChecker.Models
 {
     public struct FunctionDefinition : IFunctionDefinition
     {
-        public LatteType ReturnType { get; }
+        public ILatteType ReturnType { get; }
         public string Name { get; }
-        public IList<LatteType> ArgumentTypes { get; }
+        public IList<ILatteType> ArgumentTypes { get; }
         public IList<string> ArgumentNames { get; }
 
-        public FunctionDefinition(LatteType returnType, string name, IList<LatteType> argumentTypes = null, IList<string> argumentNames = null)
+        public FunctionDefinition(ILatteType returnType, string name, IList<ILatteType> argumentTypes = null, IList<string> argumentNames = null)
         {
             ReturnType = returnType;
             Name = name;
@@ -19,7 +19,7 @@ namespace LatteTypeChecker.Models
             ArgumentNames = argumentNames;
 
             if (argumentTypes == null)
-                ArgumentTypes = new List<LatteType>();
+                ArgumentTypes = new List<ILatteType>();
             if (argumentNames == null)
                 ArgumentNames = new List<string>();
             

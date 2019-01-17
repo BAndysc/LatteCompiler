@@ -102,5 +102,25 @@ namespace LatteTreeOptimizer
         {
             return node;
         }
+
+        public override IExpressionNode Visit(INullNode node)
+        {
+            return node;
+        }
+
+        public override IExpressionNode Visit(INewObjectNode node)
+        {
+            return node;
+        }
+
+        public override IExpressionNode Visit(ICastExpressionNode node)
+        {
+            return node;
+        }
+
+        public override IExpressionNode Visit(IObjectFieldNode node)
+        {
+            return node;
+        }
     }
 }

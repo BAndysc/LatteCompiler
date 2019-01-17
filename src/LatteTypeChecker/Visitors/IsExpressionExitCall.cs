@@ -64,5 +64,25 @@ namespace LatteTypeChecker.Visitors
         {
             return node.FunctionName == "error";
         }
+
+        public override bool Visit(INullNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(INewObjectNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(ICastExpressionNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(IObjectFieldNode node)
+        {
+            return false;
+        }
     }
 }

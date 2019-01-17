@@ -4,13 +4,13 @@ namespace LatteBase.AST
 {
     public interface IFunctionArgument
     {
-        LatteType Type { get; }
+        ILatteType Type { get; }
         string Name { get; }
     }
     
     public interface IFunctionDefinition : INode
     {
-        LatteType ReturnType { get; }
+        ILatteType ReturnType { get; }
         string Name { get; }
         IEnumerable<IFunctionArgument> Arguments { get; }
         IStatement Body { get; }

@@ -99,6 +99,13 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAss([NotNull] LatteParser.AssContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>StructAss</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStructAss([NotNull] LatteParser.StructAssContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>Incr</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// </summary>
@@ -155,33 +162,12 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitSExp([NotNull] LatteParser.SExpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>Int</c>
+	/// Visit a parse tree produced by the <c>TTypeName</c>
 	/// labeled alternative in <see cref="LatteParser.type_"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitInt([NotNull] LatteParser.IntContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>Str</c>
-	/// labeled alternative in <see cref="LatteParser.type_"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitStr([NotNull] LatteParser.StrContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>Bool</c>
-	/// labeled alternative in <see cref="LatteParser.type_"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitBool([NotNull] LatteParser.BoolContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>Void</c>
-	/// labeled alternative in <see cref="LatteParser.type_"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitVoid([NotNull] LatteParser.VoidContext context);
+	Result VisitTTypeName([NotNull] LatteParser.TTypeNameContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.item"/>.
 	/// </summary>
@@ -216,6 +202,13 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitETrue([NotNull] LatteParser.ETrueContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>ECast</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitECast([NotNull] LatteParser.ECastContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>EOr</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
@@ -259,6 +252,13 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitEAnd([NotNull] LatteParser.EAndContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>EObjectField</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEObjectField([NotNull] LatteParser.EObjectFieldContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>EParen</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
 	/// </summary>
@@ -279,6 +279,20 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitEAddOp([NotNull] LatteParser.EAddOpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>ENull</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitENull([NotNull] LatteParser.ENullContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>ENewObject</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitENewObject([NotNull] LatteParser.ENewObjectContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>UnaryMinus</c>
 	/// labeled alternative in <see cref="LatteParser.unOp"/>.

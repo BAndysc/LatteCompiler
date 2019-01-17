@@ -53,6 +53,11 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitStructAss(LatteParser.StructAssContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitIncr(LatteParser.IncrContext context)
         {
             return ReportError(context);
@@ -93,22 +98,12 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
-        public virtual T VisitInt(LatteParser.IntContext context)
+        public virtual T VisitTTypeName(LatteParser.TTypeNameContext context)
         {
             return ReportError(context);
         }
 
-        public virtual T VisitStr(LatteParser.StrContext context)
-        {
-            return ReportError(context);
-        }
-
-        public virtual T VisitBool(LatteParser.BoolContext context)
-        {
-            return ReportError(context);
-        }
-
-        public virtual T VisitVoid(LatteParser.VoidContext context)
+        public virtual T VisitType(LatteParser.TTypeNameContext context)
         {
             return ReportError(context);
         }
@@ -134,6 +129,11 @@ namespace LatteAntlr.Visitors
         }
 
         public virtual T VisitETrue(LatteParser.ETrueContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitECast(LatteParser.ECastContext context)
         {
             return ReportError(context);
         }
@@ -168,6 +168,11 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitEObjectField(LatteParser.EObjectFieldContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitEParen(LatteParser.EParenContext context)
         {
             return ReportError(context);
@@ -179,6 +184,16 @@ namespace LatteAntlr.Visitors
         }
 
         public virtual T VisitEAddOp(LatteParser.EAddOpContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitENull(LatteParser.ENullContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitENewObject(LatteParser.ENewObjectContext context)
         {
             return ReportError(context);
         }
@@ -277,5 +292,7 @@ namespace LatteAntlr.Visitors
         {
             return ReportError(context);
         }
+        
+        
     }
 }

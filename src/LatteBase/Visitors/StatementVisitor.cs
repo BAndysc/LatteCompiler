@@ -15,7 +15,8 @@ namespace LatteBase.Visitors
         public abstract T Visit(IIfNode node);
         public abstract T Visit(IIfElseNode node);
         public abstract T Visit(IWhileNode node);
-        public abstract T Visit(IExpressionStatementNode nodeNode);
+        public abstract T Visit(IExpressionStatementNode node);
+        public abstract T Visit(IStructAssignmentNode node);
 
         public T Visit(IStatement node)
         {
@@ -36,7 +37,8 @@ namespace LatteBase.Visitors
         public abstract void Visit(IIfNode node);
         public abstract void Visit(IIfElseNode node);
         public abstract void Visit(IWhileNode node);
-        public abstract void Visit(IExpressionStatementNode nodeNode);
+        public abstract void Visit(IExpressionStatementNode node);
+        public abstract void Visit(IStructAssignmentNode node);
 
         public void Visit(IStatement node)
         {

@@ -1,3 +1,4 @@
+using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 using LatteTypeChecker.Models;
@@ -6,13 +7,13 @@ namespace LatteTypeChecker.Exceptions
 {
     public class InvalidOperatorUsageException : TypeCheckerException
     {
-        private readonly LatteType givenType;
-        private readonly LatteType[] expectedType;
+        private readonly ILatteType givenType;
+        private readonly ILatteType[] expectedType;
 
         public InvalidOperatorUsageException(
-            LatteType givenType,
+            ILatteType givenType,
             IFilePlace source,
-            params LatteType[] expectedType) : base(source)
+            params ILatteType[] expectedType) : base(source)
         {
             this.givenType = givenType;
             this.expectedType = expectedType;
@@ -20,7 +21,7 @@ namespace LatteTypeChecker.Exceptions
 
         public override string ToString()
         {
-            return $"Given operator is valid only for types {string.Join(", ", expectedType)}, but given {givenType}.\n{base.ToString()}";
+            return $"Given operator is valid only for types {string.Join(", ", expectedType.Select(t => t.Name))}, but given {givenType}.\n{base.ToString()}";
         }
     }
 }

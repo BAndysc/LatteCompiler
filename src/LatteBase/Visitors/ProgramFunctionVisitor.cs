@@ -6,6 +6,7 @@ namespace LatteBase.Visitors
     {   
         public abstract T Visit(IProgram program);
         public abstract T Visit(IFunctionDefinition function);
+        public abstract T Visit(IClassDefinitionNode @class);
         
         public T Visit(IExpressionNode node)
         {

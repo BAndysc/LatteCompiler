@@ -49,6 +49,7 @@
     <Compile Include="Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadrupleBase.cs" />
+    <Compile Include="QuadrupleClass.cs" />
     <Compile Include="QuadruplesProgram.cs" />
     <Compile Include="Quadruples\AddQuadruple.cs" />
     <Compile Include="Quadruples\CompareQuadruple.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Quadruples\JumpQuadruple.cs" />
     <Compile Include="Quadruples\LabelQuadruple.cs" />
     <Compile Include="Quadruples\LoadArgumentQuadruple.cs" />
+    <Compile Include="Quadruples\LoadIndirectQuadruple.cs" />
     <Compile Include="Quadruples\LoadLabelPtrQuadruple.cs" />
     <Compile Include="Quadruples\LoadQuadruple.cs" />
     <Compile Include="Quadruples\LocalQuadruple.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Quadruples\ReturnQuadruple.cs" />
     <Compile Include="Quadruples\ReturnVoidQuadruple.cs" />
     <Compile Include="Quadruples\SetIfQuadruple.cs" />
+    <Compile Include="Quadruples\StoreIndirectQuadruple.cs" />
     <Compile Include="Quadruples\StoreQuadruple.cs" />
     <Compile Include="Quadruples\SubQuadruple.cs" />
     <Compile Include="Register.cs" />

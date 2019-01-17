@@ -16,6 +16,10 @@ namespace LatteBase.Visitors
         public abstract T Visit(IBinaryNode node);
         public abstract T Visit(ICompareNode node);
         public abstract T Visit(IFunctionCallNode node);
+        public abstract T Visit(INullNode node);
+        public abstract T Visit(INewObjectNode node);
+        public abstract T Visit(ICastExpressionNode node);
+        public abstract T Visit(IObjectFieldNode node);
 
         public T Visit(IExpressionNode node)
         {

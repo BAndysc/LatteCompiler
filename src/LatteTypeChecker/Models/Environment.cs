@@ -39,7 +39,7 @@ namespace LatteTypeChecker.Models
             definedClasses[@class.Name] = @class;
         }
 
-        public IClassDefinition GetDefinition(string className)
+        public IClassDefinition GetClass(string className)
         {
             return definedClasses[className];
         }

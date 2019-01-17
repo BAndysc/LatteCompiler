@@ -49,18 +49,10 @@ namespace QuadruplesGenerator.Generators
                 if (decl.Value == null)
                 {
                     dest = program.GetNextRegister();
-                    switch (node.Type)
-                    {
-                        case LatteType.Int:
-                            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), dest));
-                            break;
-                        case LatteType.String:
-                            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), dest));
-                            break;
-                        case LatteType.Bool:
-                            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectBoolValue(false), dest));
-                            break;
-                    }                    
+                    if (dest == LatteType.Bool)
+                        program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectBoolValue(false), dest));                
+                    else
+                        program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), dest));
                 }
                 else
                 {
@@ -79,6 +71,16 @@ namespace QuadruplesGenerator.Generators
             var result = exprGen.Visit(node.Value);
             
             program.Emit(new StoreQuadruple(node.FilePlace, store.Get(node.Variable), result));
+
+            return null;
+        }
+
+        public override object Visit(IStructAssignmentNode node)
+        {
+            var objectAddr = exprGen.Visit(node.Object);
+            var value = exprGen.Visit(node.Value);
+
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, value));
 
             return null;
         }

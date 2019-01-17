@@ -1,6 +1,6 @@
 namespace LatteAntlr.Visitors
 {
-    internal class LatteBaseTypeVisitor<T> : LatteLimitedVisitor<T>
+    internal abstract class LatteBaseTypeVisitor<T> : LatteLimitedVisitor<T>
     {
         public sealed override T VisitTopDef(LatteParser.TopDefContext context)
         {
@@ -230,5 +230,33 @@ namespace LatteAntlr.Visitors
         {
             return ThrowInvalidContext(context);
         }
+        
+        public sealed override T VisitStructAss(LatteParser.StructAssContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+        
+        public sealed override T VisitECast(LatteParser.ECastContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitENull(LatteParser.ENullContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public sealed override T VisitENewObject(LatteParser.ENewObjectContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+        
+        public sealed override T VisitEObjectField(LatteParser.EObjectFieldContext context)
+        {
+            return ThrowInvalidContext(context);
+        }
+
+        public abstract override T VisitTTypeName(LatteParser.TTypeNameContext context);
+
     }
 }

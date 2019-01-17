@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using LatteBase;
@@ -8,7 +9,7 @@ using LatteTypeChecker.Models;
 
 namespace LatteTypeChecker.Visitors
 {
-    public class LatteExpressionTypeEvaluator : ExpressionVisitor<LatteType>
+    public class LatteExpressionTypeEvaluator : ExpressionVisitor<ILatteType>
     {
         private readonly IVariableEnvironment variables;
         private readonly IEnvironment functions;
@@ -19,27 +20,27 @@ namespace LatteTypeChecker.Visitors
             this.functions = functions;
         }
 
-        public override LatteType Visit(IIntNode node)
+        public override ILatteType Visit(IIntNode node)
         {
             return LatteType.Int;
         }
 
-        public override LatteType Visit(ITrueNode node)
+        public override ILatteType Visit(ITrueNode node)
         {
             return LatteType.Bool;
         }
 
-        public override LatteType Visit(IFalseNode node)
+        public override ILatteType Visit(IFalseNode node)
         {
             return LatteType.Bool;
         }
 
-        public override LatteType Visit(IStringNode node)
+        public override ILatteType Visit(IStringNode node)
         {
             return LatteType.String;
         }
 
-        public override LatteType Visit(IVariableNode node)
+        public override ILatteType Visit(IVariableNode node)
         {
             if (!variables.IsDefined(node.Variable))
                 throw new UndeclaredVariableAnyTypeException(node.Variable, node.FilePlace);
@@ -47,7 +48,7 @@ namespace LatteTypeChecker.Visitors
             return variables[node.Variable].Type;
         }
 
-        public override LatteType Visit(INegateNode node)
+        public override ILatteType Visit(INegateNode node)
         {
             var exprType = Visit(node.Expression);
             
@@ -57,7 +58,7 @@ namespace LatteTypeChecker.Visitors
             return exprType;
         }
 
-        public override LatteType Visit(ILogicalNegateNode node)
+        public override ILatteType Visit(ILogicalNegateNode node)
         {
             var exprType = Visit(node.Expression);
             
@@ -67,7 +68,7 @@ namespace LatteTypeChecker.Visitors
             return exprType;
         }
         
-        public override LatteType Visit(IAndNode node)
+        public override ILatteType Visit(IAndNode node)
         {
             var left = Visit(node.Left);
             var right = Visit(node.Right);
@@ -81,7 +82,7 @@ namespace LatteTypeChecker.Visitors
             return LatteType.Bool;
         }
 
-        public override LatteType Visit(IOrNode node)
+        public override ILatteType Visit(IOrNode node)
         {
             var left = Visit(node.Left);
             var right = Visit(node.Right);
@@ -95,7 +96,7 @@ namespace LatteTypeChecker.Visitors
             return LatteType.Bool;
         }
 
-        public override LatteType Visit(IBinaryNode node)
+        public override ILatteType Visit(IBinaryNode node)
         {
             var left = Visit(node.Left);
             var right = Visit(node.Right);
@@ -106,7 +107,7 @@ namespace LatteTypeChecker.Visitors
             if (right != LatteType.Int && (right != LatteType.String || node.Operator != BinaryOperator.Add))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
             
-            if (left != right)
+            if (!Equals(left, right))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
 
             if (left == LatteType.String)
@@ -115,7 +116,7 @@ namespace LatteTypeChecker.Visitors
             return left;
         }
 
-        public override LatteType Visit(ICompareNode node)
+        public override ILatteType Visit(ICompareNode node)
         {
             var left = Visit(node.Left);
             var right = Visit(node.Right);
@@ -137,23 +138,23 @@ namespace LatteTypeChecker.Visitors
                     throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
             }
             
-            if (left != right)
+            if (!Equals(left, right))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, left);
                         
             return LatteType.Bool;
         }
 
-        private bool IsDefinedEquality(LatteType type)
+        private bool IsDefinedEquality(ILatteType type)
         {
             return type != LatteType.Void;
         }
 
-        private bool IsDefinedComparison(LatteType type)
+        private bool IsDefinedComparison(ILatteType type)
         {
             return type == LatteType.Int;
         }
         
-        public override LatteType Visit(IFunctionCallNode node)
+        public override ILatteType Visit(IFunctionCallNode node)
         { 
             if (!functions.IsFunctionDefined(node.FunctionName))
                 throw new UndeclaredFunctionException(node.FunctionName, node.FilePlace);
@@ -168,11 +169,49 @@ namespace LatteTypeChecker.Visitors
                 var givenArgumentType = Visit(node.Arguments[i]);
                 var expectedArgumentType = function.ArgumentTypes[i];
 
-                if (givenArgumentType != expectedArgumentType)
+                if (!Equals(givenArgumentType, expectedArgumentType))
                     throw new FunctionCallTypeMismatch(function, i, givenArgumentType, node.FilePlace);
             }
             
             return function.ReturnType;
+        }
+
+        public override ILatteType Visit(INullNode node)
+        {
+            return LatteType.Null;
+        }
+
+        public override ILatteType Visit(INewObjectNode node)
+        {
+            return new LatteType(node.TypeName);
+        }
+
+        public override ILatteType Visit(ICastExpressionNode node)
+        {
+            var exprType = Visit(node.Expression);
+            if (exprType != LatteType.Null && !Equals(exprType, node.CastType))
+            {
+                throw new BadCastException(node.FilePlace, exprType, node.CastType);
+            }
+            return node.CastType;
+        }
+
+        public override ILatteType Visit(IObjectFieldNode node)
+        {
+            var classType = Visit(node.Object);
+            
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasField(node.FieldName))
+                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+
+            var fieldType = classDef.GetField(node.FieldName).FieldType;
+                        
+            node.FieldOffset = 0;
+            for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
+                node.FieldOffset += 4;
+
+            return fieldType;
         }
     }
 }

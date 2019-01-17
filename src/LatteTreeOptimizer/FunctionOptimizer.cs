@@ -4,7 +4,7 @@ using LatteBase.Visitors;
 
 namespace LatteTreeOptimizer
 {
-    internal class FunctionOptimizer : TopDefinitionVisitor<IFunctionDefinition>
+    internal class FunctionOptimizer : FunctionDefinitionVisitor<IFunctionDefinition>
     {
         public override IFunctionDefinition Visit(IFunctionDefinition function)
         {

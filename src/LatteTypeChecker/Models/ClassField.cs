@@ -4,13 +4,13 @@ namespace LatteTypeChecker.Models
 {
     public class ClassField : IClassField
     {
-        public ClassField(LatteType fieldType, string fieldName)
+        public ClassField(ILatteType fieldType, string fieldName)
         {
             FieldType = fieldType;
             FieldName = fieldName;
         }
 
         public string FieldName { get; }
-        public LatteType FieldType { get; }
+        public ILatteType FieldType { get; }
     }
 }

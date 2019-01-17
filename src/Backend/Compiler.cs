@@ -44,7 +44,14 @@ namespace Backend
 
             if (intermediateOutputFile != null)
             {
-                File.WriteAllText(intermediateOutputFile, string.Join("\n", quadProgram.Functions.SelectMany(f => f.Instructions).Select(q => $"{q,-40} ; {q.FilePlace.Text.Split('\n').FirstOrDefault()}")));
+                var content = "";
+                content += "#classes:\n";
+                content += string.Join("\n", quadProgram.Classes);
+                content += "\n#methods:\n";
+                content += string.Join("\n",
+                    quadProgram.Functions.SelectMany(f => f.Instructions).Select(q =>
+                        $"{q,-40} ; {q.FilePlace.Text.Split('\n').FirstOrDefault()}"));
+                File.WriteAllText(intermediateOutputFile, content);
             }
             
             X86Compiler compiler = new X86Compiler();

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
+using LatteTypeChecker.Visitors;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
 using QuadruplesGenerator.Generators;
@@ -18,14 +20,29 @@ namespace QuadruplesGenerator
         {
             prog = new QuadruplesProgram();
 
+            foreach (var cls in program.Classes)
+                Visit(cls);
+            
             foreach (var func in program.Functions)
-            {
                 Visit(func);
-            }
 
             return prog;
         }
 
+        public override QuadruplesProgram Visit(IClassDefinitionNode @class)
+        {
+            var cls = new QuadrupleClass(@class.ClassName, @class.Fields.Select(t => GetLatteTypeSize(t.FieldType)), @class.Fields.Select(t => t.FiledName));
+            prog.EmitClass(cls);
+            return prog;
+        }
+
+        private int GetLatteTypeSize(ILatteType @type)
+        {
+            if (@type == LatteType.Void)
+                throw new Exception();
+            return 4;
+        }
+        
         public override QuadruplesProgram Visit(IFunctionDefinition function)
         {
             

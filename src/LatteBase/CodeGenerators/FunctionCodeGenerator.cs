@@ -4,7 +4,7 @@ using LatteBase.Visitors;
 
 namespace LatteBase.CodeGenerators
 {
-    public class FunctionCodeGenerator : TopDefinitionVisitor<string>
+    public class FunctionCodeGenerator : FunctionDefinitionVisitor<string>
     {
         public override string Visit(IFunctionDefinition function)
         {
