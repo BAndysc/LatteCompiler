@@ -83,5 +83,25 @@ namespace LatteBase.CodeGenerators
         {
             return $"new StructAssignmentWithOffsetNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {expressionGenerator.Visit(node.Value)}, {node.FieldOffset})";
         }
+
+        public override string Visit(IStructIncrementNode node)
+        {
+            return $"new StructIncrementNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\")";
+        }
+
+        public override string Visit(IStructIncrementWithOffsetNode node)
+        {
+            return $"new StructIncrementWithOffsetNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {node.FieldOffset})";
+        }
+
+        public override string Visit(IStructDecrementNode node)
+        {
+            return $"new StructDecrementNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\")";
+        }
+
+        public override string Visit(IStructDecrementWithOffsetNode node)
+        {
+            return $"new StructDecrementWithOffsetNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {node.FieldOffset})";
+        }
     }
 }

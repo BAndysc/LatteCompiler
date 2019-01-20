@@ -203,5 +203,45 @@ namespace LatteTypeChecker.Visitors
         {
             expressionEvaluator.Visit(nodeNode.Expression);
         }
+
+        public override void Visit(IStructIncrementNode node)
+        {
+            var classType = expressionEvaluator.Visit(node.Object);
+
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasField(node.FieldName))
+                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+
+            var fieldType = classDef.GetField(node.FieldName).FieldType;
+            
+            if (!functions.IsTypeAssignable(LatteType.Int, fieldType))
+                throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, LatteType.Int);
+        }
+
+        public override void Visit(IStructIncrementWithOffsetNode node)
+        {
+            Visit((IStructIncrementNode) node);
+        }
+
+        public override void Visit(IStructDecrementNode node)
+        {
+            var classType = expressionEvaluator.Visit(node.Object);
+
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasField(node.FieldName))
+                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+
+            var fieldType = classDef.GetField(node.FieldName).FieldType;
+            
+            if (!functions.IsTypeAssignable(LatteType.Int, fieldType))
+                throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, LatteType.Int);
+        }
+
+        public override void Visit(IStructDecrementWithOffsetNode node)
+        {
+            Visit((IStructDecrementNode) node);
+        }
     }
 }

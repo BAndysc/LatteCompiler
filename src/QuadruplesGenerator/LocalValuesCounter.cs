@@ -93,5 +93,25 @@ namespace QuadruplesGenerator
         {
             return 0;
         }
+
+        public override int Visit(IStructIncrementNode node)
+        {
+            return 0;
+        }
+
+        public override int Visit(IStructIncrementWithOffsetNode node)
+        {
+            return 0;
+        }
+
+        public override int Visit(IStructDecrementNode node)
+        {
+            return 0;
+        }
+
+        public override int Visit(IStructDecrementWithOffsetNode node)
+        {
+            return 0;
+        }
     }
 }

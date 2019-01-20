@@ -99,5 +99,25 @@ namespace LatteTypeChecker
         {
             return false;
         }
+
+        public override bool Visit(IStructIncrementNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(IStructIncrementWithOffsetNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(IStructDecrementNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(IStructDecrementWithOffsetNode node)
+        {
+            return false;
+        }
     }
 }

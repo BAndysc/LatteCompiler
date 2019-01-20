@@ -57,6 +57,16 @@ namespace LatteAntlr.AST.Generators
             return new DecrementNode(new FilePlace(context), context.ID().GetText());
         }
 
+        public override IStatement VisitStructIncr(LatteParser.StructIncrContext context)
+        {
+            return new StructIncrementNode(new FilePlace(context), new ExpressionGenerator().Visit(context.expr()), context.ID().GetText());
+        }
+
+        public override IStatement VisitStructDecr(LatteParser.StructDecrContext context)
+        {
+            return new StructDecrementNode(new FilePlace(context), new ExpressionGenerator().Visit(context.expr()), context.ID().GetText());
+        }
+
         public override IStatement VisitRet(LatteParser.RetContext context)
         {
             var visitor = new ExpressionGenerator();

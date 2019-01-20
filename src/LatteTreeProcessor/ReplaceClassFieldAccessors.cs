@@ -5,6 +5,7 @@ using LatteBase;
 using LatteBase.AST;
 using LatteBase.AST.Impl;
 using LatteBase.CodeGenerators;
+using LatteBase.Transformers;
 using LatteBase.Visitors;
 
 namespace LatteTreeProcessor
@@ -66,100 +67,57 @@ namespace LatteTreeProcessor
         }
     }
 
-    internal class StatementVisitor : StatementVisitor<IStatement>
+    internal class StatementVisitor : StatementTransformer
     {
         private readonly IClassDefinitionNode @class;
         private readonly IVariableEnvironment variables;
-        private readonly ExpressionVisitor expressionVisitor;
-
+        protected override ExpressionVisitor<IExpressionNode> ExpressionVisitor { get; }
+        
         public StatementVisitor(IClassDefinitionNode @class, IVariableEnvironment variables)
         {
             this.@class = @class;
             this.variables = variables;
-            expressionVisitor = new ExpressionVisitor(@class, variables);
+            ExpressionVisitor = new ExpressionVisitor(@class, variables);
         }
 
-        public override IStatement Visit(IEmptyNode node)
+        protected override StatementVisitor<IStatement> GetTransformerForBlock()
         {
-            return node;
-        }
-
-        public override IStatement Visit(IBlockNode node)
-        {
-            var visitor = new StatementVisitor(@class, variables.CopyForBlock());
-            return new BlockNode(node.FilePlace, node.Statements.Select(visitor.Visit).ToList());
+            return new StatementVisitor(@class, variables.CopyForBlock());
         }
 
         public override IStatement Visit(IDeclarationNode node)
         {
-            var declarations = new List<ISingleDeclaration>();
-
             foreach (var decl in node.Declarations)
-            {
-                declarations.Add(new SingleDeclaration(decl.Name, decl.Value == null ? null : expressionVisitor.Visit(decl.Value)));
                 variables.Define(new VariableDefinition(decl.Name, node.Type));
-            }
-            
-            return new DeclarationNode(node.FilePlace, node.Type, declarations);
+
+            return base.Visit(node);
         }
 
         public override IStatement Visit(IAssignmentNode node)
         {
             if (variables.IsDefined(node.Variable))
-                return new AssignmentNode(node.FilePlace, node.Variable, expressionVisitor.Visit(node.Value));
+                return base.Visit(node);
 
-            return new StructAssignmentNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable, expressionVisitor.Visit(node.Value));
+            return new StructAssignmentNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable, ExpressionVisitor.Visit(node.Value));
         }
 
         public override IStatement Visit(IIncrementNode node)
         {
-            return node; // @TODO
+            if (variables.IsDefined(node.Variable))
+                return base.Visit(node);
+            
+            return new StructIncrementNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable);
         }
 
         public override IStatement Visit(IDecrementNode node)
         {
-            return node; // @TODO
+            if (variables.IsDefined(node.Variable))
+                return base.Visit(node);
+            
+            return new StructDecrementNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable);
         }
-
-        public override IStatement Visit(IReturnNode node)
-        {
-            return new ReturnNode(node.FilePlace, expressionVisitor.Visit(node.ReturnExpression));
-        }
-
-        public override IStatement Visit(IVoidReturnNode node)
-        {
-            return node;
-        }
-
-        public override IStatement Visit(IIfNode node)
-        {
-            return new IfNode(node.FilePlace, expressionVisitor.Visit(node.Condition), Visit(node.Statement));
-        }
-
-        public override IStatement Visit(IIfElseNode node)
-        {
-            return new IfElseNode(node.FilePlace, expressionVisitor.Visit(node.Condition), Visit(node.Statement), Visit(node.ElseStatement));
-        }
-
-        public override IStatement Visit(IWhileNode node)
-        {
-            return new WhileNode(node.FilePlace, expressionVisitor.Visit(node.Condition), Visit(node.Statement));
-        }
-
-        public override IStatement Visit(IExpressionStatementNode node)
-        {
-            return new ExpressionStatementNode(node.FilePlace, expressionVisitor.Visit(node.Expression));
-        }
-
-        public override IStatement Visit(IStructAssignmentNode node)
-        {
-            return new StructAssignmentNode(node.FilePlace, expressionVisitor.Visit(node.Object), node.FieldName, expressionVisitor.Visit(node.Value));
-        }
-
-        public override IStatement Visit(IStructAssignmentWithOffsetNode node)
-        {
-            return new StructAssignmentWithOffsetNode(node.FilePlace, expressionVisitor.Visit(node.Object), node.FieldName, expressionVisitor.Visit(node.Value), node.FieldOffset);
-        }
+        
+        
     }
 
     internal class ExpressionVisitor : ExpressionVisitor<IExpressionNode>

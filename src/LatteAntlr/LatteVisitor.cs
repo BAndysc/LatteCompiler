@@ -132,6 +132,20 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDecr([NotNull] LatteParser.DecrContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>StructIncr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStructIncr([NotNull] LatteParser.StructIncrContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>StructDecr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStructDecr([NotNull] LatteParser.StructDecrContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>Ret</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// </summary>

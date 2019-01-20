@@ -307,7 +307,15 @@ namespace LatteAntlr.Visitors
         {
             return ReportError(context);
         }
-        
-        
+
+        public virtual T VisitStructIncr(LatteParser.StructIncrContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitStructDecr(LatteParser.StructDecrContext context)
+        {
+            return ReportError(context);
+        }
     }
 }

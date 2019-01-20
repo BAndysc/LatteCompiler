@@ -88,5 +88,25 @@ namespace LatteBase.Transformers
         {
             return new StructAssignmentWithOffsetNode(node.FilePlace, ExpressionVisitor.Visit(node.Object), node.FieldName, ExpressionVisitor.Visit(node.Value), node.FieldOffset);
         }
+
+        public override IStatement Visit(IStructIncrementNode node)
+        {
+            return new StructIncrementNode(node.FilePlace, ExpressionVisitor.Visit(node.Object), node.FieldName);
+        }
+
+        public override IStatement Visit(IStructIncrementWithOffsetNode node)
+        {
+            return new StructIncrementWithOffsetNode(node.FilePlace, ExpressionVisitor.Visit(node.Object), node.FieldName, node.FieldOffset);
+        }
+
+        public override IStatement Visit(IStructDecrementNode node)
+        {
+            return new StructDecrementNode(node.FilePlace, ExpressionVisitor.Visit(node.Object), node.FieldName);
+        }
+
+        public override IStatement Visit(IStructDecrementWithOffsetNode node)
+        {
+            return new StructDecrementWithOffsetNode(node.FilePlace, ExpressionVisitor.Visit(node.Object), node.FieldName, node.FieldOffset);
+        }
     }
 }

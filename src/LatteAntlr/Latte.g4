@@ -38,6 +38,8 @@ stmt
     | expr '.' ID '=' expr ';'           # StructAss
     | ID '++' ';'                        # Incr
     | ID '--' ';'                        # Decr
+    | expr '.' ID '++' ';'               # StructIncr
+    | expr '.' ID '--' ';'               # StructDecr
     | 'return' expr ';'                  # Ret
     | 'return' ';'                       # VRet
     | 'if' '(' expr ')' stmt             # Cond

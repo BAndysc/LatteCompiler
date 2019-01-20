@@ -118,6 +118,46 @@ namespace QuadruplesGenerator.Generators
             return null;
         }
 
+        public override object Visit(IStructIncrementNode node)
+        {
+            throw new Exception("Unexpected node here! At this point IStructIncrementWithOffsetNode is expected instead of IStructIncrementNode");
+        }
+
+        public override object Visit(IStructIncrementWithOffsetNode node)
+        {
+            var objectAddr = exprGen.Visit(node.Object);
+            var curVal = program.GetNextRegister();
+            var result = program.GetNextRegister();
+            var m1 = program.GetNextRegister();
+            
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(1), m1));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, curVal));
+            program.Emit(new AddQuadruple(node.FilePlace, curVal, m1, result));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, result));
+
+            return null;
+        }
+
+        public override object Visit(IStructDecrementNode node)
+        {
+            throw new Exception("Unexpected node here! At this point IStructDecrementWithOffsetNode is expected instead of IStructDecrementNode");
+        }
+
+        public override object Visit(IStructDecrementWithOffsetNode node)
+        {
+            var objectAddr = exprGen.Visit(node.Object);
+            var curVal = program.GetNextRegister();
+            var result = program.GetNextRegister();
+            var m1 = program.GetNextRegister();
+            
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(-1), m1));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, curVal));
+            program.Emit(new AddQuadruple(node.FilePlace, curVal, m1, result));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, result));
+
+            return null;
+        }
+
         public override object Visit(IReturnNode node)
         {
             var functionCall = node.ReturnExpression as IFunctionCallNode;

@@ -200,6 +200,30 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDecr([NotNull] LatteParser.DecrContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>StructIncr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStructIncr([NotNull] LatteParser.StructIncrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>StructIncr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStructIncr([NotNull] LatteParser.StructIncrContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>StructDecr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStructDecr([NotNull] LatteParser.StructDecrContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>StructDecr</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStructDecr([NotNull] LatteParser.StructDecrContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>Ret</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// </summary>

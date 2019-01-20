@@ -18,6 +18,11 @@ namespace LatteBase.Visitors
         public abstract T Visit(IExpressionStatementNode node);
         public abstract T Visit(IStructAssignmentNode node);
         public abstract T Visit(IStructAssignmentWithOffsetNode node);
+        public abstract T Visit(IStructIncrementNode node);
+        public abstract T Visit(IStructIncrementWithOffsetNode node);
+        public abstract T Visit(IStructDecrementNode node);
+        public abstract T Visit(IStructDecrementWithOffsetNode node);
+        
 
         public T Visit(IStatement node)
         {
@@ -41,6 +46,10 @@ namespace LatteBase.Visitors
         public abstract void Visit(IExpressionStatementNode node);
         public abstract void Visit(IStructAssignmentNode node);
         public abstract void Visit(IStructAssignmentWithOffsetNode node);
+        public abstract void Visit(IStructIncrementNode node);
+        public abstract void Visit(IStructIncrementWithOffsetNode node);
+        public abstract void Visit(IStructDecrementNode node);
+        public abstract void Visit(IStructDecrementWithOffsetNode node);
 
         public void Visit(IStatement node)
         {

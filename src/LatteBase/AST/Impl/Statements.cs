@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using LatteBase;
@@ -177,5 +178,49 @@ namespace LatteBase.AST.Impl
         }
         
         public int FieldOffset { get; set; }
+    }
+    
+    public class StructIncrementNode : Node, IStructIncrementNode
+    {
+        public IExpressionNode Object { get; }
+        public string FieldName { get; }
+
+        public StructIncrementNode(IFilePlace place, IExpressionNode o, string fieldName) : base(place)
+        {
+            Object = o;
+            FieldName = fieldName;
+        }
+    }
+
+    public class StructIncrementWithOffsetNode : StructIncrementNode, IStructIncrementWithOffsetNode
+    {
+        public int FieldOffset { get; }
+
+        public StructIncrementWithOffsetNode(IFilePlace place, IExpressionNode o, string fieldName, int offset) : base(place, o, fieldName)
+        {
+            FieldOffset = offset;
+        }
+    }
+    
+    public class StructDecrementNode : Node, IStructDecrementNode
+    {
+        public IExpressionNode Object { get; }
+        public string FieldName { get; }
+
+        public StructDecrementNode(IFilePlace place, IExpressionNode o, string fieldName) : base(place)
+        {
+            Object = o;
+            FieldName = fieldName;
+        }
+    }
+
+    public class StructDecrementWithOffsetNode : StructDecrementNode, IStructDecrementNode
+    {
+        public int FieldOffset { get; }
+
+        public StructDecrementWithOffsetNode(IFilePlace place, IExpressionNode o, string fieldName, int offset) : base(place, o, fieldName)
+        {
+            FieldOffset = offset;
+        }
     }
 }

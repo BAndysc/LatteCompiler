@@ -75,6 +75,28 @@ namespace LatteBase.AST
 
     public interface IStructAssignmentWithOffsetNode : IStructAssignmentNode
     {
-        int FieldOffset { get; set; }
+        int FieldOffset { get; }
+    }
+    
+    public interface IStructIncrementNode : IStatement
+    {
+        IExpressionNode Object { get; }
+        string FieldName { get; }
+    }
+
+    public interface IStructIncrementWithOffsetNode : IStructIncrementNode
+    {
+        int FieldOffset { get; }
+    }
+    
+    public interface IStructDecrementNode : IStatement
+    {
+        IExpressionNode Object { get; }
+        string FieldName { get; }
+    }
+
+    public interface IStructDecrementWithOffsetNode : IStructDecrementNode
+    {
+        int FieldOffset { get; }
     }
 }

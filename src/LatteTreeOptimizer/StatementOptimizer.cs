@@ -140,5 +140,25 @@ namespace LatteTreeOptimizer
         {
             return new StructAssignmentWithOffsetNode(node.FilePlace, expressionOptimizer.Visit(node.Object), node.FieldName, expressionOptimizer.Visit(node.Value), node.FieldOffset);
         }
+
+        public override IStatement Visit(IStructIncrementNode node)
+        {
+            return node;
+        }
+
+        public override IStatement Visit(IStructIncrementWithOffsetNode node)
+        {
+            return node;
+        }
+
+        public override IStatement Visit(IStructDecrementNode node)
+        {
+            return node;
+        }
+
+        public override IStatement Visit(IStructDecrementWithOffsetNode node)
+        {
+            return node;
+        }
     }
 }

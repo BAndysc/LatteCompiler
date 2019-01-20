@@ -391,6 +391,22 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
             var newNode = new StructAssignmentWithOffsetNode(node.FilePlace, node.Object, node.FieldName, node.Value, @class.GetFieldOffset(node.FieldName));
             return base.Visit(newNode);
         }
+
+        public override IStatement Visit(IStructIncrementNode node)
+        {
+            var objectType = typeEvaluator.Visit(node.Object);
+            var @class = classes.GetClass(objectType.Name);
+            var newNode = new StructIncrementWithOffsetNode(node.FilePlace, node.Object, node.FieldName, @class.GetFieldOffset(node.FieldName));
+            return base.Visit(newNode);
+        }
+
+        public override IStatement Visit(IStructDecrementNode node)
+        {
+            var objectType = typeEvaluator.Visit(node.Object);
+            var @class = classes.GetClass(objectType.Name);
+            var newNode = new StructDecrementWithOffsetNode(node.FilePlace, node.Object, node.FieldName, @class.GetFieldOffset(node.FieldName));
+            return base.Visit(newNode);
+        }
     }
     
     
