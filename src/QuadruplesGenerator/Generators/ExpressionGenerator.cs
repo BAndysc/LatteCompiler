@@ -214,13 +214,18 @@ namespace QuadruplesGenerator.Generators
 
         public override IRegister Visit(IMethodCallNode node)
         {
+            throw new Exception("At this point this node is not expected, use IMethodCallWithOffsetNode instead");
+        }
+        
+        public override IRegister Visit(IMethodCallWithOffsetNode node)
+        {
             var result = program.GetNextRegister();
             var args = node.Arguments.Select(Visit).ToList();
             var objectValue = Visit(node.Object);
-            program.Emit(new FunctionCallQuadruple(node.FilePlace, node.ObjectType.Name + "____" + node.MethodName, result, new []{objectValue}.Union(args)));
+            program.Emit(new VirtualCallQuadruple(node.FilePlace, node.MethodName, result, objectValue, node.MethodOffset, new []{objectValue}.Union(args)));
             return result;
         }
-        
+
         public override IRegister Visit(INullNode node)
         {
             var register = program.GetNextRegister();
@@ -241,7 +246,8 @@ namespace QuadruplesGenerator.Generators
                 classSize += superClass.FieldsSize.Aggregate(0, (sum, val) => sum + val);
                 superClass = superClass.SuperClass;
             }
-            
+
+            classSize += 4; // place for vtable
             
             var registerWithSize = program.GetNextRegister();
             
@@ -249,6 +255,7 @@ namespace QuadruplesGenerator.Generators
             
             var register = program.GetNextRegister();
             program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_malloc", register, new []{registerWithSize}));
+            program.Emit(new InitVtableQuadruple(node.FilePlace, register, node.TypeName));
             return register;
         }
 
@@ -267,7 +274,7 @@ namespace QuadruplesGenerator.Generators
         {
             var addr = Visit(node.Object);
             var result = program.GetNextRegister();
-            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, node.FieldOffset, result));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, node.FieldOffset + 4, result));
 
             return result;
         }

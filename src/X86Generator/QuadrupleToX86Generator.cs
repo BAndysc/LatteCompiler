@@ -13,14 +13,18 @@ namespace X86Generator
 {
     public class QuadrupleToX86Generator : QuadrupleVisitor<IEnumerable<IX86Instruction>>
     {
+        private readonly QuadruplesProgram program;
         private readonly IRegisterAllocation<Memory32> mapping;
         private readonly int regsMaxUsedRegisters;
         private readonly List<IX86Instruction> instructions = new List<IX86Instruction>();
+        private readonly bool UseVTable;
 
-        public QuadrupleToX86Generator(IRegisterAllocation<Memory32> mapping, int regsMaxUsedRegisters)
+        public QuadrupleToX86Generator(QuadruplesProgram program, IRegisterAllocation<Memory32> mapping, int regsMaxUsedRegisters, bool useVTable)
         {
+            this.program = program;
             this.mapping = mapping;
             this.regsMaxUsedRegisters = regsMaxUsedRegisters;
+            this.UseVTable = useVTable;
         }
 
         private void Clear()
@@ -253,6 +257,47 @@ namespace X86Generator
             return instructions.ToList();
         }
 
+        
+        public override IEnumerable<IX86Instruction> Visit(VirtualCallQuadruple quadruple)
+        {
+            Clear();
+            int argsCount = quadruple.Arguments.Count();
+            int alignment = (4 - (argsCount % 4)) % 4;
+            
+            Emit(new MovInstruction(Register32.EAX, mapping.Get(quadruple.This)), quadruple); // EAX = this
+            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, 0)), quadruple); // EAX = vtable ptr 
+            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.MethodOffset)), quadruple);
+            
+            if (alignment > 0)  
+                Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4 * alignment)), quadruple);
+            foreach (var arg in quadruple.Arguments.Reverse())
+            {
+                var value = mapping.Get(arg);
+                Emit(new PushInstruction(value), quadruple);
+            }
+
+            Emit(new CallInstruction(Register32.EAX), quadruple);
+
+            Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * (alignment + argsCount))), quadruple);
+                        
+            if (mapping.IsAllocated(quadruple.ResultRegister))
+                Emit(new MovInstruction(mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
+
+            return instructions.ToList();
+        }
+
+        public override IEnumerable<IX86Instruction> Visit(InitVtableQuadruple quadruple)
+        {
+            Clear();
+
+            var vTable = new X86Label(program.GetClass(quadruple.ObjectType).VTable.Text);
+            
+            Emit(new MovInstruction(Register32.EAX, mapping.Get(quadruple.Addr)), quadruple);
+            Emit(new MovInstruction(new Memory32(Register32.EAX, 0), new ImmediateValue32(vTable)), quadruple);
+            
+            return instructions.ToList();
+        }
+
         public override IEnumerable<IX86Instruction> Visit(CompareQuadruple quadruple)
         {
             Clear();
@@ -351,6 +396,10 @@ namespace X86Generator
         {
             Clear();
             Emit(new LabelInstruction(new X86Label(quadruple.FunctionName)), quadruple);
+            
+            if (quadruple.FunctionName == "main" && UseVTable)
+                Emit(new CallInstruction(new X86Label("lat_initvtable")), quadruple);
+            
             Emit(new PushInstruction(Register32.EBP), quadruple);
             Emit(new MovInstruction(Register32.EBP, Register32.ESP), quadruple);
             // alignment to 16 bytes

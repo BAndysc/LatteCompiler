@@ -94,7 +94,13 @@ namespace LatteBase.Transformers
 
         public override IExpressionNode Visit(IMethodCallNode node)
         {
-            return new MethodCallNode(node.FilePlace, Visit(node.Object), node.MethodName, node.Arguments.Select(Visit), node.ObjectType);
+            return new MethodCallNode(node.FilePlace, Visit(node.Object), node.MethodName, node.Arguments.Select(Visit));
+        }
+
+        public override IExpressionNode Visit(IMethodCallWithOffsetNode node)
+        {
+            return new MethodCallWithOffsetNode(node.FilePlace, Visit(node.Object), node.MethodName,
+                node.Arguments.Select(Visit), node.ObjectType, node.MethodOffset);
         }
     }
 

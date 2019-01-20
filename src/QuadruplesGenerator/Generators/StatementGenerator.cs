@@ -85,7 +85,7 @@ namespace QuadruplesGenerator.Generators
             var objectAddr = exprGen.Visit(node.Object);
             var value = exprGen.Visit(node.Value);
 
-            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, value));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset + 4, value));
 
             return null;
         }
@@ -131,9 +131,9 @@ namespace QuadruplesGenerator.Generators
             var m1 = program.GetNextRegister();
             
             program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(1), m1));
-            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, curVal));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset + 4, curVal));
             program.Emit(new AddQuadruple(node.FilePlace, curVal, m1, result));
-            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, result));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset + 4, result));
 
             return null;
         }
@@ -151,9 +151,9 @@ namespace QuadruplesGenerator.Generators
             var m1 = program.GetNextRegister();
             
             program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(-1), m1));
-            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, curVal));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset + 4, curVal));
             program.Emit(new AddQuadruple(node.FilePlace, curVal, m1, result));
-            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset, result));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, objectAddr, node.FieldOffset + 4, result));
 
             return null;
         }

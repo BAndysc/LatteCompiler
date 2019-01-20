@@ -94,5 +94,10 @@ namespace LatteTypeChecker.Visitors
         {
             return false;
         }
+
+        public override bool Visit(IMethodCallWithOffsetNode node)
+        {
+            return false;
+        }
     }
 }

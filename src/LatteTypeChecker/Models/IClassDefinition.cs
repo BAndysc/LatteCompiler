@@ -17,6 +17,7 @@ namespace LatteTypeChecker.Models
         int GetBaseClassFieldsCount();
 
         bool HasMethod(string methodName);
+        bool DirectlyHasMethod(string methodName);
         IFunctionDefinition GetMethod(string methodName);
         ILatteType GetBaseTypeWithMethod(string methodName);
         void DefineMethod(IFunctionDefinition functionDef);

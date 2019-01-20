@@ -198,17 +198,27 @@ namespace LatteBase.AST.Impl
 
     public class MethodCallNode : Node, IMethodCallNode
     {
-        public MethodCallNode(IFilePlace place, IExpressionNode o, string methodName, IEnumerable<IExpressionNode> arguments, ILatteType objectType = null) : base(place)
+        public MethodCallNode(IFilePlace place, IExpressionNode o, string methodName, IEnumerable<IExpressionNode> arguments) : base(place)
         {
             Object = o;
             MethodName = methodName;
             Arguments = arguments.ToList();
-            ObjectType = objectType;
         }
 
         public IExpressionNode Object { get; }
         public string MethodName { get; }
         public IList<IExpressionNode> Arguments { get; }
-        public ILatteType ObjectType { get; set; }
+    }
+
+    public class MethodCallWithOffsetNode : MethodCallNode, IMethodCallWithOffsetNode
+    {
+        public MethodCallWithOffsetNode(IFilePlace place, IExpressionNode o, string methodName, IEnumerable<IExpressionNode> arguments, ILatteType objectType, int methodOffset) : base(place, o, methodName, arguments)
+        {
+            ObjectType = objectType;
+            MethodOffset = methodOffset;
+        }
+
+        public ILatteType ObjectType { get; }
+        public int MethodOffset { get; }
     }
 }

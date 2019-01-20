@@ -58,6 +58,7 @@
     <Compile Include="Quadruples\FuncDefQuadruple.cs" />
     <Compile Include="Quadruples\FunctionCallQuadruple.cs" />
     <Compile Include="Quadruples\ImmediateValueQuadruple.cs" />
+    <Compile Include="Quadruples\InitVtableQuadruple.cs" />
     <Compile Include="Quadruples\JumpAlwaysQuadruple.cs" />
     <Compile Include="Quadruples\JumpQuadruple.cs" />
     <Compile Include="Quadruples\LabelQuadruple.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Quadruples\StoreIndirectQuadruple.cs" />
     <Compile Include="Quadruples\StoreQuadruple.cs" />
     <Compile Include="Quadruples\SubQuadruple.cs" />
+    <Compile Include="Quadruples\VirtualCallQuadruple.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Store.cs" />
   </ItemGroup>

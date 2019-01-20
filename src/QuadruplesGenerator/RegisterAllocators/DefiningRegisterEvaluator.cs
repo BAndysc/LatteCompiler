@@ -129,5 +129,15 @@ namespace QuadruplesGenerator.RegisterAllocators
         {
             return quadruple.ResultRegister;
         }
+
+        public override IRegister Visit(VirtualCallQuadruple quadruple)
+        {
+            return quadruple.ResultRegister;
+        }
+
+        public override IRegister Visit(InitVtableQuadruple quadruple)
+        {
+            return null;
+        }
     }
 }

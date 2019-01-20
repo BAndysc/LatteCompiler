@@ -27,7 +27,9 @@ namespace QuadruplesCommon.Quadruples
         public abstract T Visit(LogicalNegateQuadruple quadruple);
         public abstract T Visit(StoreIndirectQuadruple quadruple);
         public abstract T Visit(LoadIndirectQuadruple quadruple);
-
+        public abstract T Visit(VirtualCallQuadruple quadruple);
+        public abstract T Visit(InitVtableQuadruple quadruple);
+        
         public T Visit(QuadrupleBase quadruple)
         {
             return Visit((dynamic) quadruple);

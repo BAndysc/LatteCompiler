@@ -225,8 +225,6 @@ namespace LatteTypeChecker.Visitors
             if (!classDef.HasMethod(node.MethodName))
                 throw new UndeclaredFunctionException($"{classDef.Name}::{node.MethodName}", node.FilePlace);
 
-            node.ObjectType = classDef.GetBaseTypeWithMethod(node.MethodName);
-            
             var method = classDef.GetMethod(node.MethodName);
             
             if (method.ArgumentTypes.Count != node.Arguments.Count)
@@ -242,6 +240,11 @@ namespace LatteTypeChecker.Visitors
             }
 
             return method.ReturnType;
+        }
+        
+        public override ILatteType Visit(IMethodCallWithOffsetNode node)
+        {
+            throw  new Exception("At this point, this node is not expected, use IMethodCallNode instead");
         }
     }
 }

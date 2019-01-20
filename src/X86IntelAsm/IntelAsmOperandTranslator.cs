@@ -17,6 +17,8 @@ namespace X86IntelAsm
 
         public override string Visit(Memory32 operand)
         {
+            if (operand.Label != null)
+                return $"[{operand.Label} + {operand.Offset}]";
             return $"[{Visit(operand.Register)} + {operand.Offset}]";
         }
 

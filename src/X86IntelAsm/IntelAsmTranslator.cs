@@ -60,6 +60,8 @@ namespace X86IntelAsm
 
         public override string Visit(CallInstruction instr)
         {
+            if (instr.Function == null)
+                return Indent($"call {operandTranslator.Visit(instr.Register)}");
             return Indent($"call {instr.Function.Label}");
         }
 

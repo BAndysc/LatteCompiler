@@ -88,7 +88,7 @@ namespace LatteTypeChecker
                     if (functionDef.ArgumentNames.Distinct().Count() != functionDef.ArgumentNames.Count)
                         throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
                 
-                    if (classDefinition.HasMethod(function.Name))
+                    if (classDefinition.DirectlyHasMethod(function.Name))
                         throw new FunctionRedefinitionException(classDefinition.GetMethod(function.Name), functionDef, function.FilePlace);
 
                     var voidArgument = function.Arguments.FirstOrDefault(t => t.Type == LatteType.Void);

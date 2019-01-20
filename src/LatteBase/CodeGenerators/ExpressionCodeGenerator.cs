@@ -96,5 +96,11 @@ namespace LatteBase.CodeGenerators
         {
             return $"new MethodCallNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}});";
         }
+        
+        public override string Visit(IMethodCallWithOffsetNode node)
+        {
+            return $"new MethodCallWithOffsetNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}}, {node.ObjectType});";
+        }
+        
     }
 }

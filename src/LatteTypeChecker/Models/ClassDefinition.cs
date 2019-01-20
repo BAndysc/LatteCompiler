@@ -43,7 +43,12 @@ namespace LatteTypeChecker.Models
 
         public bool HasMethod(string methodName)
         {
-            return methods.ContainsKey(methodName) || (SuperClass != null && SuperClass.HasMethod(methodName));
+            return DirectlyHasMethod(methodName) || (SuperClass != null && SuperClass.HasMethod(methodName));
+        }
+
+        public bool DirectlyHasMethod(string methodName)
+        {
+            return methods.ContainsKey(methodName);
         }
 
         public IFunctionDefinition GetMethod(string methodName)

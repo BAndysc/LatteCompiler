@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
 
@@ -129,6 +130,18 @@ namespace QuadruplesGenerator.RegisterAllocators
         public override HashSet<IRegister> Visit(LoadIndirectQuadruple quadruple)
         {
             return new HashSet<IRegister>() {quadruple.Address};
+        }
+
+        public override HashSet<IRegister> Visit(VirtualCallQuadruple quadruple)
+        {
+            var set = new HashSet<IRegister>(quadruple.Arguments);
+            set.Add(quadruple.This);
+            return set;
+        }
+
+        public override HashSet<IRegister> Visit(InitVtableQuadruple quadruple)
+        {
+            return new HashSet<IRegister>(){quadruple.Addr};
         }
     }
 }

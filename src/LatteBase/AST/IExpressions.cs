@@ -106,6 +106,11 @@ namespace LatteBase.AST
         IExpressionNode Object { get; }
         string MethodName { get; }
         IList<IExpressionNode> Arguments { get; }
-        ILatteType ObjectType { get; set; }
+    }
+    
+    public interface IMethodCallWithOffsetNode : IMethodCallNode
+    {
+        ILatteType ObjectType { get; }
+        int MethodOffset { get; }
     }
 }

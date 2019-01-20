@@ -76,6 +76,9 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         int GetFieldOffset(string fieldName);
         ILatteType GetFieldType(string fieldName);
         IFunction GetMethod(string methodName);
+        int GetMethodOffset(string methodName);
+        bool HasMethod(string methodName);
+        IEnumerable<string> GetAllMethods();
     }
 
     internal interface IClassField
@@ -110,17 +113,45 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
                 offset += 4; // @todo: based on type
             }
 
+            int methodOffset = 0;
             foreach (var method in methods)
             {
                 this.methods.Add(method.Name, method);
+                if (!(superClass?.HasMethod(method.Name) ?? false))
+                {
+                    methodToOffset[method.Name] = methodOffset;
+                    methodOffset += 4;
+                }
             }
 
             Size = offset;
         }
 
+        public int GetMethodOffset(string methodName)
+        {
+            if (SuperClass != null && SuperClass.HasMethod(methodName))
+                return SuperClass.GetMethodOffset(methodName);
+
+            int offset = methodToOffset[methodName];
+            
+            return (SuperClass?.GetAllMethods().Count() ?? 0) + offset;
+        }
+
+        public bool HasMethod(string methodName)
+        {
+            return methods.ContainsKey(methodName) || (SuperClass != null && SuperClass.HasMethod(methodName));
+        }
+
+        public IEnumerable<string> GetAllMethods()
+        {
+            return methods.Keys.Union(SuperClass == null ? new string[] { } : SuperClass.GetAllMethods())
+                .Distinct();
+        }
+
         private Dictionary<string, int> fieldToOffset = new Dictionary<string, int>();
         private Dictionary<string, ILatteType> fieldToType = new Dictionary<string, ILatteType>();
         private Dictionary<string, IFunction> methods = new Dictionary<string, IFunction>(); 
+        private Dictionary<string, int> methodToOffset = new Dictionary<string, int>(); 
         
         public string ClassName { get; }
         public IClassDefinition SuperClass { get; }
@@ -236,7 +267,13 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         {
             var objType = typeEvaluator.Visit(node.Object);
             var @class = classes.GetClass(objType.Name);
-            return new ObjectFieldWithOffsetNode(node.FilePlace, node.Object, node.FieldName, @class.GetFieldOffset(node.FieldName));
+            return base.Visit(new ObjectFieldWithOffsetNode(node.FilePlace, node.Object, node.FieldName, @class.GetFieldOffset(node.FieldName)));
+        }
+
+        public override IExpressionNode Visit(IMethodCallNode node)
+        {
+            var objType = typeEvaluator.Visit(node.Object);
+            return base.Visit(new MethodCallWithOffsetNode(node.FilePlace, node.Object, node.MethodName, node.Arguments, objType, classes.GetClass(objType.Name).GetMethodOffset(node.MethodName)));
         }
     }
 
@@ -343,6 +380,15 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         }
 
         public override ILatteType Visit(IMethodCallNode node)
+        {
+            var obType = Visit(node.Object);
+
+            var @class = classes.GetClass(obType.Name);
+
+            return @class.GetMethod(node.MethodName).ReturnType;
+        }
+
+        public override ILatteType Visit(IMethodCallWithOffsetNode node)
         {
             var obType = Visit(node.Object);
 
