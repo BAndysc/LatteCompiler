@@ -207,12 +207,13 @@ namespace LatteTypeChecker.Visitors
                 throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
 
             var fieldType = classDef.GetField(node.FieldName).FieldType;
-                        
-            node.FieldOffset = classDef.GetBaseClassFieldsCount() * 4;
-            for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
-                node.FieldOffset += 4;
 
             return fieldType;
+        }
+
+        public override ILatteType Visit(IObjectFieldWithOffsetNode node)
+        {
+            throw new Exception("Unexpected node in type checker");
         }
 
         public override ILatteType Visit(IMethodCallNode node)

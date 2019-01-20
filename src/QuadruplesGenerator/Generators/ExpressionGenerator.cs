@@ -259,6 +259,12 @@ namespace QuadruplesGenerator.Generators
 
         public override IRegister Visit(IObjectFieldNode node)
         {
+            throw new Exception(
+                "Unexpected node exception. At this point this node should be transformed to IObjectFieldWithOffsetNode");
+        }
+
+        public override IRegister Visit(IObjectFieldWithOffsetNode node)
+        {
             var addr = Visit(node.Object);
             var result = program.GetNextRegister();
             program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, node.FieldOffset, result));

@@ -108,10 +108,7 @@ namespace LatteTreeProcessor
             if (variables.IsDefined(node.Variable))
                 return new AssignmentNode(node.FilePlace, node.Variable, expressionVisitor.Visit(node.Value));
 
-            int i = 0;
-            for (; @class.Fields.ToList()[i].FiledName != node.Variable; ++i) ;
-            
-            return new StructAssignmentNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable, expressionVisitor.Visit(node.Value), i * 4);
+            return new StructAssignmentNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable, expressionVisitor.Visit(node.Value));
         }
 
         public override IStatement Visit(IIncrementNode node)
@@ -156,7 +153,12 @@ namespace LatteTreeProcessor
 
         public override IStatement Visit(IStructAssignmentNode node)
         {
-            return new StructAssignmentNode(node.FilePlace, expressionVisitor.Visit(node.Object), node.FieldName, expressionVisitor.Visit(node.Value), node.FieldOffset);
+            return new StructAssignmentNode(node.FilePlace, expressionVisitor.Visit(node.Object), node.FieldName, expressionVisitor.Visit(node.Value));
+        }
+
+        public override IStatement Visit(IStructAssignmentWithOffsetNode node)
+        {
+            return new StructAssignmentWithOffsetNode(node.FilePlace, expressionVisitor.Visit(node.Object), node.FieldName, expressionVisitor.Visit(node.Value), node.FieldOffset);
         }
     }
 
@@ -195,11 +197,14 @@ namespace LatteTreeProcessor
         {
             if (variables.IsDefined(node.Variable))
                 return node;
-            int i = 0;
-            for (; @class.Fields.ToList()[i].FiledName != node.Variable; ++i) ;
-            return new ObjectFieldNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable, i * 4);
+            return new ObjectFieldNode(node.FilePlace, new VariableNode("this", node.FilePlace), node.Variable);
         }
 
+        public override IExpressionNode Visit(IObjectFieldWithOffsetNode node)
+        {
+            return node;
+        }
+        
         public override IExpressionNode Visit(INegateNode node)
         {
             return new NegateNode(Visit(node.Expression), node.FilePlace);

@@ -69,5 +69,10 @@ namespace LatteTypeChecker.Visitors
         {
             return false;
         }
+
+        public override bool Visit(IStructAssignmentWithOffsetNode node)
+        {
+            return false;
+        }
     }
 }

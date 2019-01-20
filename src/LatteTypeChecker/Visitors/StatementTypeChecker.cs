@@ -99,10 +99,22 @@ namespace LatteTypeChecker.Visitors
             
             if (!functions.IsTypeAssignable(valueType, fieldType))
                 throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, valueType);
+        }
+        
+        public override void Visit(IStructAssignmentWithOffsetNode node)
+        {
+            var classType = expressionEvaluator.Visit(node.Object);
+            var valueType = expressionEvaluator.Visit(node.Value);
+
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasField(node.FieldName))
+                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+
+            var fieldType = classDef.GetField(node.FieldName).FieldType;
             
-            node.FieldOffset = classDef.GetBaseClassFieldsCount() * 4;
-            for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
-                node.FieldOffset += 4;
+            if (!functions.IsTypeAssignable(valueType, fieldType))
+                throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, valueType);
         }
         
         public override void Visit(IIncrementNode node)

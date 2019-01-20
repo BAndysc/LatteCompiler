@@ -133,9 +133,12 @@ namespace LatteTreeOptimizer
 
         public override IStatement Visit(IStructAssignmentNode node)
         {
-            var s = new StructAssignmentNode(node.FilePlace, expressionOptimizer.Visit(node.Object), node.FieldName, expressionOptimizer.Visit(node.Value));
-            s.FieldOffset = node.FieldOffset;
-            return s;
+            return new StructAssignmentNode(node.FilePlace, expressionOptimizer.Visit(node.Object), node.FieldName, expressionOptimizer.Visit(node.Value));
+        }
+
+        public override IStatement Visit(IStructAssignmentWithOffsetNode node)
+        {
+            return new StructAssignmentWithOffsetNode(node.FilePlace, expressionOptimizer.Visit(node.Object), node.FieldName, expressionOptimizer.Visit(node.Value), node.FieldOffset);
         }
     }
 }

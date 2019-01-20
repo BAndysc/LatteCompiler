@@ -60,6 +60,8 @@
     <Compile Include="CodeGenerators\StatementCodeGenerator.cs" />
     <Compile Include="ILatteType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transformers\ExpressionTransformer.cs" />
+    <Compile Include="Transformers\StatementTransformer.cs" />
     <Compile Include="Visitors\ClassDefinitionVisitor.cs" />
     <Compile Include="Visitors\ExpressionVisitor.cs" />
     <Compile Include="Visitors\ProgramFunctionVisitor.cs" />

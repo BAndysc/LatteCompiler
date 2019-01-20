@@ -86,6 +86,12 @@ namespace LatteBase.CodeGenerators
             return $"new ObjectFieldNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.FieldName}\")";
         }
 
+        public override string Visit(IObjectFieldWithOffsetNode node)
+        {
+            return
+                $"new ObjectFieldWithOffsetNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.FieldName}\", {node.FieldOffset})";
+        }
+
         public override string Visit(IMethodCallNode node)
         {
             return $"new MethodCallNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}});";

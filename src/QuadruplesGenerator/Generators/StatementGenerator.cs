@@ -77,6 +77,11 @@ namespace QuadruplesGenerator.Generators
 
         public override object Visit(IStructAssignmentNode node)
         {
+            throw new Exception("Unexpected node here! At this point IStructAssignmentWithOffsetNode is expected instead of IStructAssignmentNode");
+        }
+
+        public override object Visit(IStructAssignmentWithOffsetNode node)
+        {
             var objectAddr = exprGen.Visit(node.Object);
             var value = exprGen.Visit(node.Value);
 

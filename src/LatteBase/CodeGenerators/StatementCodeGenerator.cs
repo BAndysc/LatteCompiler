@@ -78,5 +78,10 @@ namespace LatteBase.CodeGenerators
         {
             return $"new StructAssignmentNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {expressionGenerator.Visit(node.Value)})";
         }
+        
+        public override string Visit(IStructAssignmentWithOffsetNode node)
+        {
+            return $"new StructAssignmentWithOffsetNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {expressionGenerator.Visit(node.Value)}, {node.FieldOffset})";
+        }
     }
 }

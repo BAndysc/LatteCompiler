@@ -70,7 +70,11 @@ namespace LatteBase.AST
     {
         IExpressionNode Object { get; }
         string FieldName { get; }
-        int FieldOffset { get; set; }
         IExpressionNode Value { get; }
+    }
+
+    public interface IStructAssignmentWithOffsetNode : IStructAssignmentNode
+    {
+        int FieldOffset { get; set; }
     }
 }

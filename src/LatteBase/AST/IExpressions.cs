@@ -94,7 +94,11 @@ namespace LatteBase.AST
     {
         IExpressionNode Object { get; }
         string FieldName { get; }
-        int FieldOffset { get; set;  }
+    }
+
+    public interface IObjectFieldWithOffsetNode : IObjectFieldNode
+    {
+        int FieldOffset { get; }
     }
 
     public interface IMethodCallNode : IExpressionNode

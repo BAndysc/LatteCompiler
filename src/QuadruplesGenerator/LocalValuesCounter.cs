@@ -49,6 +49,11 @@ namespace QuadruplesGenerator
             return 0;
         }
 
+        public override int Visit(IStructAssignmentWithOffsetNode node)
+        {
+            return 0;
+        }
+
         public override int Visit(IIncrementNode node)
         {
             return 0;

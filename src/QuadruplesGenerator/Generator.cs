@@ -22,6 +22,7 @@ namespace QuadruplesGenerator
             prog = new QuadruplesProgram();
 
             program = new LatteTreeProcessor.ReplaceClassFieldAccessors().Visit(program);
+            program = new LatteTreeProcessor.CalculateFieldOffsets.CalculateFieldOffsetProcessor().Visit(program);
             
             foreach (var cls in program.Classes)
                 Visit(cls);

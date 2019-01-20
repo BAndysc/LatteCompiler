@@ -150,6 +150,11 @@ namespace LatteTreeOptimizer
             return null;
         }
 
+        public override bool? Visit(IObjectFieldWithOffsetNode node)
+        {
+            return null;
+        }
+
         public override bool? Visit(IMethodCallNode node)
         {
             return null;
