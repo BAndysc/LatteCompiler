@@ -12,8 +12,8 @@ namespace TestPrograms.Bad.Classes
             return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass"),
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass"),
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null),
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null),
                 });
         
         }
@@ -23,7 +23,7 @@ namespace TestPrograms.Bad.Classes
             return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null,
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null,null,
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Int), 
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Int)),
                 });
@@ -35,7 +35,7 @@ namespace TestPrograms.Bad.Classes
             return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null,
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null, null,
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Void))
                 });
         

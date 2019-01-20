@@ -62,7 +62,7 @@ namespace LatteTypeChecker.Visitors
                 {
                     var itemValueType = expressionEvaluator.Visit(item.Value);
                     
-                    if (!Equals(itemValueType, declarationType))
+                    if (!functions.IsTypeAssignable(itemValueType, declarationType))
                         throw new VariableDeclarationTypeMismatch(variableDefinition, itemValueType, node.FilePlace);
                 }
                 
@@ -79,7 +79,7 @@ namespace LatteTypeChecker.Visitors
             if (!variables.IsDefined(variable))
                 throw new UndeclaredVariableException(variable, node.FilePlace);
 
-            if (!Equals(variables[node.Variable].Type, type))
+            if (!functions.IsTypeAssignable(type, variables[node.Variable].Type))
             {
                 throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
             }
@@ -97,10 +97,10 @@ namespace LatteTypeChecker.Visitors
 
             var fieldType = classDef.GetField(node.FieldName).FieldType;
             
-            if (!Equals(valueType, fieldType))
+            if (!functions.IsTypeAssignable(valueType, fieldType))
                 throw new FieldTypeMismatchException(node.FilePlace, node.FieldName, fieldType, valueType);
             
-            node.FieldOffset = 0;
+            node.FieldOffset = classDef.GetBaseClassFieldsCount() * 4;
             for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
                 node.FieldOffset += 4;
         }

@@ -24,7 +24,7 @@ namespace LatteTreeProcessor
                 {
                     methods.Add(methodVisitor.Visit(method));
                 }
-                classes.Add(new ClassDefinitionNode(@class.FilePlace, @class.ClassName,
+                classes.Add(new ClassDefinitionNode(@class.FilePlace, @class.ClassName, @class.SuperClass,
                     methods, @class.Fields.ToArray()));
             }
 

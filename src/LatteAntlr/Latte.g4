@@ -6,7 +6,7 @@ program
 
 topDef
     : type_ ID '(' arg? ')' block       # functionDef
-    | 'class' ID '{' fieldOrMethodDef* '}'      # classDef
+    | 'class' ID ('extends' ID)? '{' fieldOrMethodDef* '}'      # classDef
     ;
 
 fieldOrMethodDef

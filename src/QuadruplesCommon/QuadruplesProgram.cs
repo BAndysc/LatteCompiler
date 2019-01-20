@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using QuadruplesCommon.Quadruples;
 
@@ -51,8 +52,7 @@ namespace QuadruplesCommon
 
         public QuadrupleClass GetClass(string className)
         {
-            //@todo
-            return Classes[0];
+            return Classes.FirstOrDefault(t => t.ClassName == className);
         }
 
         public Label AllocString(string nodeText)

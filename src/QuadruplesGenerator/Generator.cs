@@ -34,7 +34,11 @@ namespace QuadruplesGenerator
 
         public override QuadruplesProgram Visit(IClassDefinitionNode @class)
         {
-            var cls = new QuadrupleClass(@class.ClassName, @class.Fields.Select(t => GetLatteTypeSize(t.FieldType)), @class.Fields.Select(t => t.FiledName));
+            QuadrupleClass superClass = null;
+            if (@class.SuperClass != null)
+                superClass = prog.GetClass(@class.SuperClass);
+            
+            var cls = new QuadrupleClass(@class.ClassName, @class.Fields.Select(t => GetLatteTypeSize(t.FieldType)), @class.Fields.Select(t => t.FiledName), superClass);
             prog.EmitClass(cls);
 
             foreach (var method in @class.Methods)

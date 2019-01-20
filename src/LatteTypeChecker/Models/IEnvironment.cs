@@ -1,3 +1,4 @@
+using LatteBase;
 using LatteBase.AST;
 using LatteTypeChecker.Models;
 
@@ -13,5 +14,6 @@ namespace LatteTypeChecker.Models
         bool IsClassDefined(string className);
         void DefineClass(IClassDefinition @class);
         IClassDefinition GetClass(string className);
+        bool IsTypeAssignable(ILatteType type, ILatteType toType);
     }
 }

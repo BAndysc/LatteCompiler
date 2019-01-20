@@ -48,6 +48,12 @@ namespace LatteTypeChecker
 
             foreach (var @class in program.Classes)
             {
+                if (@class.SuperClass != null && !classNames.Contains(@class.SuperClass))
+                    throw new Exception("Super class doesn't exist " + @class.SuperClass);
+            }
+            
+            foreach (var @class in program.Classes)
+            {
                 List<IClassField> classFields = new List<IClassField>();
                 foreach (var field in @class.Fields)
                 {
@@ -59,7 +65,12 @@ namespace LatteTypeChecker
                     
                     classFields.Add(new ClassField(field.FieldType, field.FiledName));
                 }
-                var classDefinition = new ClassDefinition(@class.ClassName, classFields);
+
+                IClassDefinition superClass = null;
+                if (@class.SuperClass != null)
+                    superClass = environment.GetClass(@class.SuperClass);
+                
+                var classDefinition = new ClassDefinition(@class.ClassName, superClass, classFields);
                 environment.DefineClass(classDefinition);
             }
 

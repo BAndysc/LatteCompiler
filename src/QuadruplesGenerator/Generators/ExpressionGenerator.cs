@@ -233,7 +233,15 @@ namespace QuadruplesGenerator.Generators
         public override IRegister Visit(INewObjectNode node)
         {
             var classDef = program.GetClass(node.TypeName);
-            var classSize = classDef.FieldsSize.Aggregate(0, (sum, val) => sum + val);
+            var classSize = 0;
+            var superClass = classDef;
+
+            while (superClass != null)
+            {
+                classSize += superClass.FieldsSize.Aggregate(0, (sum, val) => sum + val);
+                superClass = superClass.SuperClass;
+            }
+            
             
             var registerWithSize = program.GetNextRegister();
             

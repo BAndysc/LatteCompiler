@@ -36,8 +36,12 @@ namespace LatteAntlr.AST.Generators
                     methods.Add(new FunctionDefinitionNode(new FilePlace(method), new LatteTypeGenerator().Visit(method.type_()), method.ID().GetText(), statement, arguments.ToArray()));
                 }
             }
+
+            string superClass = null;
+            if (context.ID().Length > 1 && context.ID()[1] != null && !string.IsNullOrEmpty(context.ID()[1].GetText()))
+                superClass = context.ID()[1].GetText();
             
-            return  new ClassDefinitionNode(new FilePlace(context), context.ID().GetText(), methods, fields.ToArray());
+            return  new ClassDefinitionNode(new FilePlace(context), context.ID()[0].GetText(), superClass, methods, fields.ToArray());
         }
 
         public override IClassDefinitionNode VisitFunctionDef(LatteParser.FunctionDefContext context)

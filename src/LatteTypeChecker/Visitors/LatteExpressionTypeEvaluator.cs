@@ -208,7 +208,7 @@ namespace LatteTypeChecker.Visitors
 
             var fieldType = classDef.GetField(node.FieldName).FieldType;
                         
-            node.FieldOffset = 0;
+            node.FieldOffset = classDef.GetBaseClassFieldsCount() * 4;
             for (int i = 0; i < classDef.Fields.Count && classDef.Fields[i].FieldName != node.FieldName; ++i)
                 node.FieldOffset += 4;
 
@@ -219,13 +219,13 @@ namespace LatteTypeChecker.Visitors
         {
             var classType = Visit(node.Object);
 
-            node.ObjectType = classType;
-            
             var classDef = functions.GetClass(classType.Name);
 
             if (!classDef.HasMethod(node.MethodName))
                 throw new UndeclaredFunctionException($"{classDef.Name}::{node.MethodName}", node.FilePlace);
 
+            node.ObjectType = classDef.GetBaseTypeWithMethod(node.MethodName);
+            
             var method = classDef.GetMethod(node.MethodName);
             
             if (method.ArgumentTypes.Count != node.Arguments.Count)

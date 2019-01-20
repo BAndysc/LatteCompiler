@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LatteBase;
 using LatteBase.AST;
 using LatteTypeChecker.Models;
 
@@ -42,6 +43,31 @@ namespace LatteTypeChecker.Models
         public IClassDefinition GetClass(string className)
         {
             return definedClasses[className];
+        }
+
+        public bool IsTypeAssignable(ILatteType type, ILatteType toType)
+        {
+            if (type.Equals(toType))
+                return true;
+
+            if (IsSimpleType(type) || IsSimpleType(toType))
+                return false;
+
+            IClassDefinition classDefinition = GetClass(type.Name);
+            while (classDefinition != null)
+            {
+                if (classDefinition.Type.Equals(toType))
+                    return true;
+
+                classDefinition = classDefinition.SuperClass;
+            }
+            
+            return false;
+        }
+
+        private bool IsSimpleType(ILatteType type)
+        {
+            return (type == LatteType.Int || type == LatteType.Bool || type == LatteType.String);
         }
     }
 }

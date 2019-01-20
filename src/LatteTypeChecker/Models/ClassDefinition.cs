@@ -8,15 +8,17 @@ namespace LatteTypeChecker.Models
     {
         private Dictionary<string, IFunctionDefinition> methods;
         
-        public ClassDefinition(string name, IList<IClassField> fields)
+        public ClassDefinition(string name, IClassDefinition superClass, IList<IClassField> fields)
         {
             methods = new Dictionary<string, IFunctionDefinition>();
             Name = name;
+            SuperClass = superClass;
             Type = new LatteType(name);
             Fields = fields;
         }
 
         public string Name { get; }
+        public IClassDefinition SuperClass { get; }
         public IList<IClassField> Fields { get; }
         public IEnumerable<IFunctionDefinition> Methods => methods.Values;
         public ILatteType Type { get; }
@@ -31,14 +33,33 @@ namespace LatteTypeChecker.Models
             return Fields.FirstOrDefault(t => t.FieldName == fieldName);
         }
 
+        public int GetBaseClassFieldsCount()
+        {
+            if (SuperClass == null)
+                return 0;
+
+            return SuperClass.Fields.Count + SuperClass.GetBaseClassFieldsCount();
+        }
+
         public bool HasMethod(string methodName)
         {
-            return methods.ContainsKey(methodName);
+            return methods.ContainsKey(methodName) || (SuperClass != null && SuperClass.HasMethod(methodName));
         }
 
         public IFunctionDefinition GetMethod(string methodName)
         {
-            return methods[methodName];
+            if (methods.ContainsKey(methodName))
+                return methods[methodName];
+
+            return SuperClass?.GetMethod(methodName);
+        }
+
+        public ILatteType GetBaseTypeWithMethod(string methodName)
+        {
+            if (methods.ContainsKey(methodName))
+                return Type;
+
+            return SuperClass?.GetBaseTypeWithMethod(methodName);
         }
 
         public void DefineMethod(IFunctionDefinition functionDef)
