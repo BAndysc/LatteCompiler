@@ -21,7 +21,7 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main",
+            return new ProgramNode(new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main",
                 new BlockNode(new DummyFilePlace(),
                         new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("a", new IntNode(1, new DummyFilePlace()))),
                         new IfNode(new DummyFilePlace(), 

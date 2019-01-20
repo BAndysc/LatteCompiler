@@ -6,11 +6,20 @@ program
 
 topDef
     : type_ ID '(' arg? ')' block       # functionDef
-    | 'class' ID '{' fieldDef* '}'      # classDef
+    | 'class' ID '{' fieldOrMethodDef* '}'      # classDef
+    ;
+
+fieldOrMethodDef
+    : fieldDef ';'
+    | methodDef
     ;
 
 fieldDef
-    : type_ ID ';'
+    : type_ ID
+    ;
+
+methodDef
+    : type_ ID '(' arg? ')' block
     ;
 
 arg
@@ -47,7 +56,8 @@ item
     ;
 
 expr
-    : unOp expr                           # EUnOp
+    : expr '.' ID '(' ( expr ( ',' expr )* )? ')' # EMethodCall
+    | unOp expr                           # EUnOp
     | expr mulOp expr                     # EMulOp
     | expr addOp expr                     # EAddOp
     | expr relOp expr                     # ERelOp

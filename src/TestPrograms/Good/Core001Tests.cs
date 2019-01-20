@@ -91,7 +91,7 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+            return new ProgramNode(new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                     new DummyFilePlace(),
                     new ExpressionStatementNode(new DummyFilePlace(),
                         new FunctionCallNode(new DummyFilePlace(), "printInt",
@@ -135,7 +135,7 @@ namespace TestPrograms.Good
                         new FunctionCallNode(new DummyFilePlace(), "printString",
                             new StringNode("/* world", new DummyFilePlace()))),
                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "fac", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "fac", new BlockNode(new DummyFilePlace(),
                         new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("r", null)),
                         new DeclarationNode(new DummyFilePlace(), LatteType.Int, new SingleDeclaration("n", null)),
                         new AssignmentNode(new DummyFilePlace(), "r", new IntNode(1, new DummyFilePlace())),
@@ -156,7 +156,7 @@ namespace TestPrograms.Good
                                     new DummyFilePlace())))))),
                         new ReturnNode(new DummyFilePlace(), new VariableNode("r", new DummyFilePlace()))),
                     new FunctionArgument(LatteType.Int, "a")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "rfac", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "rfac", new BlockNode(new DummyFilePlace(),
                     new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
                             new VariableNode("n", new DummyFilePlace()),
                             new IntNode(0, new DummyFilePlace()),
@@ -175,7 +175,7 @@ namespace TestPrograms.Good
                                         new IntNode(1, new DummyFilePlace()),
                                         new DummyFilePlace())),
                                     new DummyFilePlace())))))), new FunctionArgument(LatteType.Int, "n")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "mfac", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "mfac", new BlockNode(new DummyFilePlace(),
                     new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
                             new VariableNode("n", new DummyFilePlace()),
                             new IntNode(0, new DummyFilePlace()),
@@ -194,7 +194,7 @@ namespace TestPrograms.Good
                                         new IntNode(1, new DummyFilePlace()),
                                         new DummyFilePlace())),
                                     new DummyFilePlace())))))), new FunctionArgument(LatteType.Int, "n")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "nfac", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "nfac", new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.NotEquals,
                                 new VariableNode("n", new DummyFilePlace()),
                                 new IntNode(0, new DummyFilePlace()),
@@ -212,13 +212,13 @@ namespace TestPrograms.Good
                                 new BlockNode(new DummyFilePlace(),
                                     new ReturnNode(new DummyFilePlace(), new IntNode(1, new DummyFilePlace())))))),
                     new FunctionArgument(LatteType.Int, "n")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "ifac",
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "ifac",
                     new BlockNode(new DummyFilePlace(),
                         new ReturnNode(new DummyFilePlace(),
                             new FunctionCallNode(new DummyFilePlace(), "ifac2f", new IntNode(1, new DummyFilePlace()),
                                 new VariableNode("n", new DummyFilePlace())))),
                     new FunctionArgument(LatteType.Int, "n")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "ifac2f", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "ifac2f", new BlockNode(new DummyFilePlace(),
                         new IfNode(new DummyFilePlace(), new CompareNode(RelOperator.Equals,
                                 new VariableNode("l", new DummyFilePlace()),
                                 new VariableNode("h", new DummyFilePlace()),
@@ -252,7 +252,7 @@ namespace TestPrograms.Good
                                 new DummyFilePlace()), new VariableNode("h", new DummyFilePlace())),
                             new DummyFilePlace()))), new FunctionArgument(LatteType.Int, "l"),
                     new FunctionArgument(LatteType.Int, "h")),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.String, "repStr", new BlockNode(
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.String, "repStr", new BlockNode(
                         new DummyFilePlace(),
                         new DeclarationNode(new DummyFilePlace(), LatteType.String,
                             new SingleDeclaration("r", new StringNode("", new DummyFilePlace()))),

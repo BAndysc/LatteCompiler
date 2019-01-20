@@ -6,7 +6,7 @@ namespace LatteBase.CodeGenerators
 {
     public class FunctionCodeGenerator : FunctionDefinitionVisitor<string>
     {
-        public override string Visit(IFunctionDefinition function)
+        public override string Visit(IFunctionDefinitionNode function)
         {
             var statementGenerator = new StatementCodeGenerator();
             var args = function.Arguments.Select(t => $"new FunctionArgument(LatteType.{t.Type}, \"{t.Name}\")");

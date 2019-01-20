@@ -55,9 +55,9 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new List<IFunctionDefinition>()
+            return new ProgramNode(new List<IFunctionDefinitionNode>()
                 {
-                    new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
+                    new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()
                         {
                             new DeclarationNode(new DummyFilePlace(), LatteType.Int,
@@ -174,7 +174,7 @@ namespace TestPrograms.Good
                                     }, new DummyFilePlace())),
                             new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))
                         })),
-                    new FunctionDefinition(new DummyFilePlace(), LatteType.Bool, "dontCallMe",
+                    new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Bool, "dontCallMe",
                         new List<IFunctionArgument>() {new FunctionArgument(LatteType.Int, "x")}, new BlockNode(
                             new DummyFilePlace(), new List<IStatement>()
                             {
@@ -184,7 +184,7 @@ namespace TestPrograms.Good
                                         new DummyFilePlace())),
                                 new ReturnNode(new DummyFilePlace(), new TrueNode(new DummyFilePlace()))
                             })),
-                    new FunctionDefinition(new DummyFilePlace(), LatteType.Void, "printBool",
+                    new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Void, "printBool",
                         new List<IFunctionArgument>() {new FunctionArgument(LatteType.Bool, "b")}, new BlockNode(
                             new DummyFilePlace(), new List<IStatement>()
                             {
@@ -206,7 +206,7 @@ namespace TestPrograms.Good
                                     })),
                                 new VoidReturnNode(new DummyFilePlace())
                             })),
-                    new FunctionDefinition(new DummyFilePlace(), LatteType.Bool, "implies",
+                    new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Bool, "implies",
                         new List<IFunctionArgument>()
                             {new FunctionArgument(LatteType.Bool, "x"), new FunctionArgument(LatteType.Bool, "y")},
                         new BlockNode(new DummyFilePlace(), new List<IStatement>()

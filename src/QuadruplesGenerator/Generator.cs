@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using LatteBase;
 using LatteBase.AST;
+using LatteBase.AST.Impl;
 using LatteBase.Visitors;
 using LatteTypeChecker.Visitors;
 using QuadruplesCommon;
@@ -20,6 +21,8 @@ namespace QuadruplesGenerator
         {
             prog = new QuadruplesProgram();
 
+            program = new LatteTreeProcessor.ReplaceClassFieldAccessors().Visit(program);
+            
             foreach (var cls in program.Classes)
                 Visit(cls);
             
@@ -33,6 +36,14 @@ namespace QuadruplesGenerator
         {
             var cls = new QuadrupleClass(@class.ClassName, @class.Fields.Select(t => GetLatteTypeSize(t.FieldType)), @class.Fields.Select(t => t.FiledName));
             prog.EmitClass(cls);
+
+            foreach (var method in @class.Methods)
+            {
+                var args = new[] {new FunctionArgument(new LatteType(cls.ClassName), "this")}.Union(method.Arguments);
+                var methodWithMangledName = new FunctionDefinitionNode(method.FilePlace, method.ReturnType,
+                    $"{@class.ClassName}____{method.Name}", args, method.Body);
+                Visit(methodWithMangledName);
+            }
             return prog;
         }
 
@@ -43,7 +54,7 @@ namespace QuadruplesGenerator
             return 4;
         }
         
-        public override QuadruplesProgram Visit(IFunctionDefinition function)
+        public override QuadruplesProgram Visit(IFunctionDefinitionNode function)
         {
             
             var counter = new ValueMaxCounter();

@@ -10,7 +10,7 @@ namespace TestPrograms.Good
         public IProgram GetProgram()
         {
             return new ProgramNode(
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new List<IFunctionArgument>() { },
                     new BlockNode(new DummyFilePlace(),
                         new ExpressionStatementNode(new DummyFilePlace(), new FunctionCallNode(new DummyFilePlace(), "printInt",
                                 new BinaryNode(BinaryOperator.Add,

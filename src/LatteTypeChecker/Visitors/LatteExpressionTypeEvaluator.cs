@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Common;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -212,6 +213,34 @@ namespace LatteTypeChecker.Visitors
                 node.FieldOffset += 4;
 
             return fieldType;
+        }
+
+        public override ILatteType Visit(IMethodCallNode node)
+        {
+            var classType = Visit(node.Object);
+
+            node.ObjectType = classType;
+            
+            var classDef = functions.GetClass(classType.Name);
+
+            if (!classDef.HasMethod(node.MethodName))
+                throw new UndeclaredFunctionException($"{classDef.Name}::{node.MethodName}", node.FilePlace);
+
+            var method = classDef.GetMethod(node.MethodName);
+            
+            if (method.ArgumentTypes.Count != node.Arguments.Count)
+                throw new ArgumentsCountMismatchException(method, node.Arguments.Count, node.FilePlace);
+
+            for (int i = 0; i < method.ArgumentTypes.Count; ++i)
+            {
+                var givenArgumentType = Visit(node.Arguments[i]);
+                var expectedArgumentType = method.ArgumentTypes[i];
+
+                if (!Equals(givenArgumentType, expectedArgumentType))
+                    throw new FunctionCallTypeMismatch(method, i, givenArgumentType, node.FilePlace);
+            }
+
+            return method.ReturnType;
         }
     }
 }

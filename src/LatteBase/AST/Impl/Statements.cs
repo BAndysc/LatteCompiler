@@ -157,11 +157,12 @@ namespace LatteBase.AST.Impl
 
     public class StructAssignmentNode : Node, IStructAssignmentNode
     {
-        public StructAssignmentNode(IFilePlace place, IExpressionNode o, string fieldName, IExpressionNode value) : base(place)
+        public StructAssignmentNode(IFilePlace place, IExpressionNode o, string fieldName, IExpressionNode value, int fieldOffset = 0) : base(place)
         {
             Object = o;
             FieldName = fieldName;
             Value = value;
+            FieldOffset = fieldOffset;
         }
 
         public IExpressionNode Object { get; }

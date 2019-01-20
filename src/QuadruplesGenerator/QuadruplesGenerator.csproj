@@ -55,6 +55,10 @@
       <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
       <Name>LatteBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LatteTreeProcessor\LatteTreeProcessor.csproj">
+      <Project>{0823649d-52c6-49c0-994b-06327398fc7b}</Project>
+      <Name>LatteTreeProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteTypeChecker\LatteTypeChecker.csproj">
       <Project>{bef6d4e6-4745-4140-b4aa-919b7a05ddce}</Project>
       <Name>LatteTypeChecker</Name>

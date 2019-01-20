@@ -13,7 +13,7 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", 
+            return new ProgramNode(new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", 
                 new ExpressionStatementNode(new DummyFilePlace(), new FunctionCallNode(new DummyFilePlace(), "error"))));
         }
 

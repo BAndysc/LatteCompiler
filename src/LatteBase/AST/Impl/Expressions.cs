@@ -176,14 +176,31 @@ namespace LatteBase.AST.Impl
 
     public class ObjectFieldNode : Node, IObjectFieldNode
     {
-        public ObjectFieldNode(IFilePlace place, IExpressionNode obj, string fieldName) : base(place)
+        public ObjectFieldNode(IFilePlace place, IExpressionNode obj, string fieldName, int fieldOffset = 0) : base(place)
         {
             Object = obj;
             FieldName = fieldName;
+            FieldOffset = fieldOffset;
         }
 
         public IExpressionNode Object { get; }
         public string FieldName { get; }
         public int FieldOffset { get; set; }
+    }
+
+    public class MethodCallNode : Node, IMethodCallNode
+    {
+        public MethodCallNode(IFilePlace place, IExpressionNode o, string methodName, IEnumerable<IExpressionNode> arguments, ILatteType objectType = null) : base(place)
+        {
+            Object = o;
+            MethodName = methodName;
+            Arguments = arguments.ToList();
+            ObjectType = objectType;
+        }
+
+        public IExpressionNode Object { get; }
+        public string MethodName { get; }
+        public IList<IExpressionNode> Arguments { get; }
+        public ILatteType ObjectType { get; set; }
     }
 }

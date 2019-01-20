@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Common;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
@@ -60,6 +62,32 @@ namespace LatteTypeChecker
                 var classDefinition = new ClassDefinition(@class.ClassName, classFields);
                 environment.DefineClass(classDefinition);
             }
+
+            foreach (var @class in program.Classes)
+            {
+                var classDefinition = environment.GetClass(@class.ClassName);
+                
+                foreach (var function in @class.Methods)
+                {
+                    var functionDef = new FunctionDefinition(function.ReturnType, 
+                        function.Name, 
+                        function.Arguments.Select(t => t.Type).ToList(),
+                        function.Arguments.Select(t => t.Name).ToList());
+
+                    if (functionDef.ArgumentNames.Distinct().Count() != functionDef.ArgumentNames.Count)
+                        throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
+                
+                    if (classDefinition.HasMethod(function.Name))
+                        throw new FunctionRedefinitionException(classDefinition.GetMethod(function.Name), functionDef, function.FilePlace);
+
+                    var voidArgument = function.Arguments.FirstOrDefault(t => t.Type == LatteType.Void);
+
+                    if (voidArgument != null)
+                        throw new InvalidFunctionArgumentTypeException(functionDef, voidArgument, function.FilePlace);
+                
+                    classDefinition.DefineMethod(functionDef);
+                }
+            }
             
             foreach (var function in program.Functions)
             {
@@ -72,16 +100,12 @@ namespace LatteTypeChecker
                     throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
                 
                 if (environment.IsFunctionDefined(functionDef))
-                {
                     throw new FunctionRedefinitionException(environment[function.Name], functionDef, function.FilePlace);
-                }
 
                 var voidArgument = function.Arguments.FirstOrDefault(t => t.Type == LatteType.Void);
 
                 if (voidArgument != null)
-                {
                     throw new InvalidFunctionArgumentTypeException(functionDef, voidArgument, function.FilePlace);
-                }
                 
                 environment.DefineFunction(functionDef);
             }
@@ -96,6 +120,28 @@ namespace LatteTypeChecker
                 var blockVisitor = new StatementTypeChecker(variables, environment, function.ReturnType);
                 
                 blockVisitor.Visit(function.Body);
+            }
+
+            foreach (var @class in program.Classes)
+            {
+                var classDefinition = environment.GetClass(@class.ClassName);
+
+                foreach (var method in @class.Methods)
+                {
+                    var variables = new VariableEnvironment();
+
+                    foreach (var arg in method.Arguments)
+                        variables.Define(new VariableDefinition(arg.Name, arg.Type));
+                
+                    variables.Define(new VariableDefinition("this", classDefinition.Type));
+                    
+                    foreach (var field in classDefinition.Fields)
+                        variables.Define(new VariableDefinition(field.FieldName, field.FieldType));
+                    
+                    var blockVisitor = new StatementTypeChecker(variables, environment, method.ReturnType);
+                
+                    blockVisitor.Visit(method.Body);       
+                }
             }
             
             if (!environment.IsFunctionDefined("main"))

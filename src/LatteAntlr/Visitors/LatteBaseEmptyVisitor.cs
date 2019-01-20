@@ -23,6 +23,11 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitMethodDef(LatteParser.MethodDefContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitArg(LatteParser.ArgContext context)
         {
             return ReportError(context);
@@ -168,6 +173,11 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitEMethodCall(LatteParser.EMethodCallContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitEObjectField(LatteParser.EObjectFieldContext context)
         {
             return ReportError(context);
@@ -284,6 +294,11 @@ namespace LatteAntlr.Visitors
         }
 
         public virtual T VisitClassDef(LatteParser.ClassDefContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitFieldOrMethodDef(LatteParser.FieldOrMethodDefContext context)
         {
             return ReportError(context);
         }

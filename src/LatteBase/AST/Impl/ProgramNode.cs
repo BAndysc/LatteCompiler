@@ -6,7 +6,7 @@ namespace LatteBase.AST.Impl
 {
     public class ProgramNode : IProgram
     {
-        public ProgramNode(IEnumerable<IFunctionDefinition> functions,
+        public ProgramNode(IEnumerable<IFunctionDefinitionNode> functions,
                             IEnumerable<IClassDefinitionNode> classes = null)
         {
             Functions = functions;
@@ -15,11 +15,11 @@ namespace LatteBase.AST.Impl
             Classes = classes;
         }
 
-        public ProgramNode(params IFunctionDefinition[] functions) : this(functions.ToList(), new List<IClassDefinitionNode>())
+        public ProgramNode(params IFunctionDefinitionNode[] functions) : this(functions.ToList(), new List<IClassDefinitionNode>())
         {
         }
         
-        public IEnumerable<IFunctionDefinition> Functions { get; }
+        public IEnumerable<IFunctionDefinitionNode> Functions { get; }
         public IEnumerable<IClassDefinitionNode> Classes { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace LatteBase.AST
         string Name { get; }
     }
     
-    public interface IFunctionDefinition : INode
+    public interface IFunctionDefinitionNode : INode
     {
         ILatteType ReturnType { get; }
         string Name { get; }

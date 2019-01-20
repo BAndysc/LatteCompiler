@@ -1,3 +1,4 @@
+using System.Linq;
 using LatteBase.AST;
 using LatteBase.AST.Impl;
 using LatteBase.Visitors;
@@ -121,6 +122,11 @@ namespace LatteTreeOptimizer
         public override IExpressionNode Visit(IObjectFieldNode node)
         {
             return node;
+        }
+
+        public override IExpressionNode Visit(IMethodCallNode node)
+        {
+            return new MethodCallNode(node.FilePlace, Visit(node.Object), node.MethodName, node.Arguments.Select(Visit), node.ObjectType);
         }
     }
 }

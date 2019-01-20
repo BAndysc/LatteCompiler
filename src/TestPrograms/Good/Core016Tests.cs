@@ -30,7 +30,7 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+            return new ProgramNode(new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                 new DummyFilePlace(),
                 new DeclarationNode(new DummyFilePlace(), LatteType.Int,
                     new SingleDeclaration("y", new IntNode(17, new DummyFilePlace()))),

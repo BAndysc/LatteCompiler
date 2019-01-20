@@ -66,6 +66,16 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitClassDef([NotNull] LatteParser.ClassDefContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="LatteParser.fieldOrMethodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFieldOrMethodDef([NotNull] LatteParser.FieldOrMethodDefContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="LatteParser.fieldOrMethodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFieldOrMethodDef([NotNull] LatteParser.FieldOrMethodDefContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.fieldDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -75,6 +85,16 @@ public interface ILatteListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitFieldDef([NotNull] LatteParser.FieldDefContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="LatteParser.methodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMethodDef([NotNull] LatteParser.MethodDefContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="LatteParser.methodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMethodDef([NotNull] LatteParser.MethodDefContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.arg"/>.
 	/// </summary>
@@ -405,6 +425,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitEAnd([NotNull] LatteParser.EAndContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>EMethodCall</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEMethodCall([NotNull] LatteParser.EMethodCallContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>EMethodCall</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEMethodCall([NotNull] LatteParser.EMethodCallContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>EObjectField</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.

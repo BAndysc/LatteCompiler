@@ -48,11 +48,11 @@
     <Compile Include="AST\Impl\Expressions.cs" />
     <Compile Include="AST\Impl\ProgramNode.cs" />
     <Compile Include="AST\Impl\Statements.cs" />
-    <Compile Include="AST\Impl\FunctionDefinition.cs" />
+    <Compile Include="AST\Impl\FunctionDefinitionNode.cs" />
     <Compile Include="AST\INode.cs" />
     <Compile Include="AST\IProgram.cs" />
     <Compile Include="AST\IStatements.cs" />
-    <Compile Include="AST\IFunctionDefinition.cs" />
+    <Compile Include="AST\IFunctionDefinitionNode.cs" />
     <Compile Include="AST\Operators.cs" />
     <Compile Include="CodeGenerators\ExpressionCodeGenerator.cs" />
     <Compile Include="CodeGenerators\FunctionCodeGenerator.cs" />

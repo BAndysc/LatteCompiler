@@ -117,5 +117,10 @@ namespace LatteAntlr.AST.Generators
         {
             return new ObjectFieldNode(new FilePlace(context), Visit(context.expr()), context.ID().GetText());
         }
+
+        public override IExpressionNode VisitEMethodCall(LatteParser.EMethodCallContext context)
+        {
+            return new MethodCallNode(new FilePlace(context), Visit(context.expr()[0]), context.ID().GetText(), context.expr().Skip(1).Select(Visit));
+        }
     }
 }

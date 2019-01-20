@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using LatteTypeChecker.Models;
 
-namespace LatteTypeChecker.Models
+namespace Common
 {
     public class VariableEnvironment : IVariableEnvironment
     {

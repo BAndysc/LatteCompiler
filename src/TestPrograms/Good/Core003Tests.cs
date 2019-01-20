@@ -39,7 +39,7 @@ namespace TestPrograms.Good
         public IProgram GetProgram()
         {
             return new ProgramNode(
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "f",
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "f",
                     new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new TrueNode(new DummyFilePlace()),
                             new BlockNode(new DummyFilePlace(),
@@ -48,7 +48,7 @@ namespace TestPrograms.Good
                             new BlockNode(new DummyFilePlace(),
                                 new BlockNode(new DummyFilePlace(),
                                     new BlockNode(new DummyFilePlace(), new EmptyNode(new DummyFilePlace()))))))),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "g",
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "g",
                     new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new FalseNode(new DummyFilePlace()),
                             new BlockNode(new DummyFilePlace(),
@@ -57,9 +57,9 @@ namespace TestPrograms.Good
                             new BlockNode(new DummyFilePlace(),
                                 new BlockNode(new DummyFilePlace(),
                                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace()))))))),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Void, "p",
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Void, "p",
                     new BlockNode(new DummyFilePlace(), new EmptyNode(new DummyFilePlace()))),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(new DummyFilePlace(),
                     new ExpressionStatementNode(new DummyFilePlace(), new FunctionCallNode(new DummyFilePlace(), "p")),
                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))));
         }

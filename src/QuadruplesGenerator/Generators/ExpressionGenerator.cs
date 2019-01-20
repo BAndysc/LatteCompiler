@@ -212,6 +212,15 @@ namespace QuadruplesGenerator.Generators
             return result;
         }
 
+        public override IRegister Visit(IMethodCallNode node)
+        {
+            var result = program.GetNextRegister();
+            var args = node.Arguments.Select(Visit).ToList();
+            var objectValue = Visit(node.Object);
+            program.Emit(new FunctionCallQuadruple(node.FilePlace, node.ObjectType.Name + "____" + node.MethodName, result, new []{objectValue}.Union(args)));
+            return result;
+        }
+        
         public override IRegister Visit(INullNode node)
         {
             var register = program.GetNextRegister();

@@ -30,13 +30,13 @@ namespace TestPrograms.Good
     {
         public IProgram GetProgram()
         {
-            return new ProgramNode(new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
+            return new ProgramNode(new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "main", new BlockNode(
                     new DummyFilePlace(),
                     new ExpressionStatementNode(new DummyFilePlace(),
                         new FunctionCallNode(new DummyFilePlace(), "printInt",
                             new FunctionCallNode(new DummyFilePlace(), "ev", new IntNode(17, new DummyFilePlace())))),
                     new ReturnNode(new DummyFilePlace(), new IntNode(0, new DummyFilePlace())))),
-                new FunctionDefinition(new DummyFilePlace(), LatteType.Int, "ev", new BlockNode(new DummyFilePlace(),
+                new FunctionDefinitionNode(new DummyFilePlace(), LatteType.Int, "ev", new BlockNode(new DummyFilePlace(),
                         new IfElseNode(new DummyFilePlace(), new CompareNode(RelOperator.GreaterThan,
                             new VariableNode("y", new DummyFilePlace()),
                             new IntNode(0, new DummyFilePlace()),

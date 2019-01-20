@@ -149,5 +149,10 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+
+        public override bool? Visit(IMethodCallNode node)
+        {
+            return null;
+        }
     }
 }

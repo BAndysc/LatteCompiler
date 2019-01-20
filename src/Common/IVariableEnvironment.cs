@@ -1,6 +1,5 @@
-using LatteTypeChecker.Models;
 
-namespace LatteTypeChecker.Models
+namespace Common
 {
     public interface IVariableEnvironment
     {

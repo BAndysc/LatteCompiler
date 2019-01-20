@@ -74,10 +74,6 @@
     <Compile Include="Models\IClassField.cs" />
     <Compile Include="Models\IEnvironment.cs" />
     <Compile Include="Models\IFunctionDefinition.cs" />
-    <Compile Include="Models\IVariableDefinition.cs" />
-    <Compile Include="Models\IVariableEnvironment.cs" />
-    <Compile Include="Models\VariableDefinition.cs" />
-    <Compile Include="Models\VariableEnvironment.cs" />
     <Compile Include="ReturnPresenceChecker.cs" />
     <Compile Include="StaticAnalysisChecker.cs" />
     <Compile Include="TypeChecker.cs" />
@@ -88,6 +84,10 @@
     <Compile Include="Visitors\StatementTypeChecker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1bde038e-6d2e-4d4a-bb9d-3d021467b666}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteBase\LatteBase.csproj">
       <Project>{72B0740B-4914-45F7-9A77-058CEDE43ACC}</Project>
       <Name>LatteBase</Name>

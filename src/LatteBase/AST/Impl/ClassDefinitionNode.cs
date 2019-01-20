@@ -7,12 +7,16 @@ namespace LatteBase.AST.Impl
         public IFilePlace FilePlace { get; }
         public string ClassName { get; }
         public IEnumerable<IClassFieldNode> Fields { get; }
+        public IEnumerable<IFunctionDefinitionNode> Methods { get; }
 
-        public ClassDefinitionNode(IFilePlace filePlace, string className, params IClassFieldNode[] fields)
+        public ClassDefinitionNode(IFilePlace filePlace, string className, IEnumerable<IFunctionDefinitionNode> methods = null, params IClassFieldNode[] fields)
         {
             FilePlace = filePlace;
             ClassName = className;
             Fields = fields;
+            if (methods ==  null)
+                methods = new List<IFunctionDefinitionNode>();
+            Methods = methods;
         }
     }
 

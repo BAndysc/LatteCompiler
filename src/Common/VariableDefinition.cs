@@ -1,7 +1,7 @@
 
 using LatteBase;
 
-namespace LatteTypeChecker.Models
+namespace Common
 {
     public struct VariableDefinition : IVariableDefinition
     {

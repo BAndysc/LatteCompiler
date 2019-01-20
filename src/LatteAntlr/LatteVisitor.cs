@@ -53,11 +53,23 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitClassDef([NotNull] LatteParser.ClassDefContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="LatteParser.fieldOrMethodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFieldOrMethodDef([NotNull] LatteParser.FieldOrMethodDefContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.fieldDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitFieldDef([NotNull] LatteParser.FieldDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="LatteParser.methodDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMethodDef([NotNull] LatteParser.MethodDefContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="LatteParser.arg"/>.
 	/// </summary>
@@ -251,6 +263,13 @@ public interface ILatteVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitEAnd([NotNull] LatteParser.EAndContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>EMethodCall</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEMethodCall([NotNull] LatteParser.EMethodCallContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>EObjectField</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.

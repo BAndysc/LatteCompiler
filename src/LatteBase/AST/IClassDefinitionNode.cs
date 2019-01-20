@@ -6,5 +6,6 @@ namespace LatteBase.AST
     {
         string ClassName { get; }
         IEnumerable<IClassFieldNode> Fields { get; }
+        IEnumerable<IFunctionDefinitionNode> Methods { get; }
     }
 }

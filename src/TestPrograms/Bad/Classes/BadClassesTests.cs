@@ -9,7 +9,7 @@ namespace TestPrograms.Bad.Classes
     {
         public IProgram GetDuplicateClassesTestCase()
         {
-            return new ProgramNode(new List<IFunctionDefinition>(),
+            return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
                     new ClassDefinitionNode(new DummyFilePlace(), "MyClass"),
@@ -20,10 +20,10 @@ namespace TestPrograms.Bad.Classes
 
         public IProgram GetDuplicateFieldTestCase()
         {
-            return new ProgramNode(new List<IFunctionDefinition>(),
+            return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", 
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null,
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Int), 
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Int)),
                 });
@@ -32,10 +32,10 @@ namespace TestPrograms.Bad.Classes
 
         public IProgram GetInvalidFieldTypeTestCase()
         {
-            return new ProgramNode(new List<IFunctionDefinition>(),
+            return new ProgramNode(new List<IFunctionDefinitionNode>(),
                 new List<IClassDefinitionNode>()
                 {
-                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass",
+                    new ClassDefinitionNode(new DummyFilePlace(), "MyClass", null,
                         new ClassFieldNode(new DummyFilePlace(), "a", LatteType.Void))
                 });
         

@@ -96,4 +96,12 @@ namespace LatteBase.AST
         string FieldName { get; }
         int FieldOffset { get; set;  }
     }
+
+    public interface IMethodCallNode : IExpressionNode
+    {
+        IExpressionNode Object { get; }
+        string MethodName { get; }
+        IList<IExpressionNode> Arguments { get; }
+        ILatteType ObjectType { get; set; }
+    }
 }
