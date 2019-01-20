@@ -53,6 +53,9 @@ namespace LatteTypeChecker.Models
             if (IsSimpleType(type) || IsSimpleType(toType))
                 return false;
 
+            if (type == LatteType.Null)
+                return true;
+            
             IClassDefinition classDefinition = GetClass(type.Name);
             while (classDefinition != null)
             {

@@ -146,7 +146,7 @@ namespace LatteTypeChecker.Visitors
             
             var givenReturnType = expressionEvaluator.Visit(node.ReturnExpression);
             
-            if (!Equals(expectedReturnType, givenReturnType))
+            if (!functions.IsTypeAssignable(givenReturnType, expectedReturnType))
                 throw new InvalidReturnTypeException(expectedReturnType, givenReturnType, node.FilePlace);
         }
 

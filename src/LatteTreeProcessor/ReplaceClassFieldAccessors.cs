@@ -159,8 +159,8 @@ namespace LatteTreeProcessor
         }
 
         public override IExpressionNode Visit(IObjectFieldWithOffsetNode node)
-        {
-            return node;
+        {  
+            return new ObjectFieldWithOffsetNode(node.FilePlace, Visit(node.Object), node.FieldName, node.FieldOffset);
         }
         
         public override IExpressionNode Visit(INegateNode node)
@@ -215,7 +215,7 @@ namespace LatteTreeProcessor
 
         public override IExpressionNode Visit(IObjectFieldNode node)
         {
-            return node;
+            return new ObjectFieldNode(node.FilePlace, Visit(node.Object), node.FieldName);
         }
 
         public override IExpressionNode Visit(IMethodCallNode node)

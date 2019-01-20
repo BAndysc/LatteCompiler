@@ -139,7 +139,7 @@ namespace LatteTypeChecker.Visitors
                     throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
             }
             
-            if (!Equals(left, right))
+            if (!functions.IsTypeAssignable(left, right) && !functions.IsTypeAssignable(right, left))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, left);
                         
             return LatteType.Bool;
