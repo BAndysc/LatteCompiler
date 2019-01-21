@@ -134,7 +134,7 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
 
             int offset = methodToOffset[methodName];
             
-            return (SuperClass?.GetAllMethods().Count() ?? 0) + offset;
+            return (SuperClass?.GetAllMethods().Count() * 4 ?? 0) + offset;
         }
 
         public bool HasMethod(string methodName)
