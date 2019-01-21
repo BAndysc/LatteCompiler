@@ -99,5 +99,15 @@ namespace LatteTypeChecker.Visitors
         {
             return false;
         }
+
+        public override bool Visit(IArrayAccessNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(INewArrayNode node)
+        {
+            return false;
+        }
     }
 }

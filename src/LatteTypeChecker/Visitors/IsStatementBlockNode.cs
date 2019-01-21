@@ -94,5 +94,15 @@ namespace LatteTypeChecker.Visitors
         {
             return false;
         }
+
+        public override bool Visit(IArrayAssignmentNode node)
+        {
+            return false;
+        }
+
+        public override bool Visit(IForEachNode node)
+        {
+            return false;
+        }
     }
 }

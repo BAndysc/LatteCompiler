@@ -21,5 +21,10 @@ namespace LatteAntlr.AST.Generators
             
             return new LatteType(context.GetText());
         }
+
+        public override ILatteType VisitTArray(LatteParser.TArrayContext context)
+        {
+            return new LatteType(Visit(context.type_()));
+        }
     }
 }

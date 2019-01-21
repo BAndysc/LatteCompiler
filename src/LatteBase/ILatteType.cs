@@ -2,12 +2,16 @@ namespace LatteBase
 {
     public interface ILatteType
     {
+        ILatteType BaseType { get; }
         string Name { get; }
+        bool IsArray { get; }
     }
 
     public class LatteType : ILatteType
     {
+        public ILatteType BaseType { get; }
         public string Name { get; }
+        public bool IsArray { get; }
         public static readonly LatteType Int = new LatteType("int");
         public static readonly LatteType String = new LatteType("string");
         public static readonly LatteType Bool = new LatteType("bool");
@@ -17,8 +21,18 @@ namespace LatteBase
         public LatteType(string name)
         {
             Name = name;
+            IsArray = false;
+            BaseType = null;
         }
 
+        public LatteType(ILatteType baseType)
+        {
+            BaseType = baseType;
+            IsArray = true;
+            Name = baseType.Name + "[]";
+        }
+
+        
         public override string ToString()
         {
             return Name;

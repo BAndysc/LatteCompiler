@@ -138,5 +138,14 @@ namespace LatteTreeOptimizer
         {
             return new MethodCallWithOffsetNode(node.FilePlace, Visit(node.Object), node.MethodName, node.Arguments.Select(Visit), node.ObjectType, node.MethodOffset);
         }
+        public override IExpressionNode Visit(IArrayAccessNode node)
+        {
+            return new ArrayAccessNode(node.FilePlace, Visit(node.Array), Visit(node.Index));
+        }
+
+        public override IExpressionNode Visit(INewArrayNode node)
+        {
+            return new NewArrayNode(node.FilePlace, node.ArrayType, Visit(node.Size));
+        }
     }
 }

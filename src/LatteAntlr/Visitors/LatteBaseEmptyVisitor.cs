@@ -143,6 +143,11 @@ namespace LatteAntlr.Visitors
             return ReportError(context);
         }
 
+        public virtual T VisitEForceCast(LatteParser.EForceCastContext context)
+        {
+            return ReportError(context);
+        }
+
         public virtual T VisitEOr(LatteParser.EOrContext context)
         {
             return ReportError(context);
@@ -314,6 +319,31 @@ namespace LatteAntlr.Visitors
         }
 
         public virtual T VisitStructDecr(LatteParser.StructDecrContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitArrayAss(LatteParser.ArrayAssContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitTArray(LatteParser.TArrayContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitENewArray(LatteParser.ENewArrayContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitEArrayAccess(LatteParser.EArrayAccessContext context)
+        {
+            return ReportError(context);
+        }
+
+        public virtual T VisitForEach(LatteParser.ForEachContext context)
         {
             return ReportError(context);
         }

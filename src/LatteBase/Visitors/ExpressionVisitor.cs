@@ -23,6 +23,8 @@ namespace LatteBase.Visitors
         public abstract T Visit(IObjectFieldWithOffsetNode node);
         public abstract T Visit(IMethodCallNode node);
         public abstract T Visit(IMethodCallWithOffsetNode node);
+        public abstract T Visit(IArrayAccessNode node);
+        public abstract T Visit(INewArrayNode node);
 
         public T Visit(IExpressionNode node)
         {

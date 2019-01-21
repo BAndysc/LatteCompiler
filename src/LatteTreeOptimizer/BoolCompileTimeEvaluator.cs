@@ -164,5 +164,15 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+
+        public override bool? Visit(IArrayAccessNode node)
+        {
+            return null;
+        }
+
+        public override bool? Visit(INewArrayNode node)
+        {
+            return null;
+        }
     }
 }

@@ -99,4 +99,19 @@ namespace LatteBase.AST
     {
         int FieldOffset { get; }
     }
+
+    public interface IArrayAssignmentNode : IStatement
+    {
+        IExpressionNode Array { get; }
+        IExpressionNode Index { get; }
+        IExpressionNode Value { get; }
+    }
+
+    public interface IForEachNode : IStatement
+    {
+        ILatteType IteratorType { get; }
+        string IteratorName { get; }
+        IExpressionNode Array { get; }
+        IStatement Body { get; }
+    }
 }

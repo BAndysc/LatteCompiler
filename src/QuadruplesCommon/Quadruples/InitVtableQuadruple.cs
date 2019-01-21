@@ -1,3 +1,4 @@
+using LatteBase;
 using LatteBase.AST;
 
 namespace QuadruplesCommon.Quadruples
@@ -5,9 +6,9 @@ namespace QuadruplesCommon.Quadruples
     public class InitVtableQuadruple : QuadrupleBase
     {
         public readonly IRegister Addr;
-        public readonly string ObjectType;
+        public readonly ILatteType ObjectType;
 
-        public InitVtableQuadruple(IFilePlace source, IRegister addr, string objectType) : base(source)
+        public InitVtableQuadruple(IFilePlace source, IRegister addr, ILatteType objectType) : base(source)
         {
             this.Addr = addr;
             this.ObjectType = objectType;

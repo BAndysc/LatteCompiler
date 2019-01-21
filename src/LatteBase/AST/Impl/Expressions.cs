@@ -147,14 +147,16 @@ namespace LatteBase.AST.Impl
     
     public class CastExpressionNode : Node, ICastExpressionNode
     {
-        public CastExpressionNode(IFilePlace filePlace, ILatteType castType, IExpressionNode expression) : base(filePlace)
+        public CastExpressionNode(IFilePlace filePlace, ILatteType castType, IExpressionNode expression, bool forceCast) : base(filePlace)
         {
             Expression = expression;
+            ForceCast = forceCast;
             CastType = castType;
         }
 
         public IExpressionNode Expression { get; }
         public ILatteType CastType { get; }
+        public bool ForceCast { get; }
     }
 
     public class NullNode : Node, INullNode
@@ -166,14 +168,14 @@ namespace LatteBase.AST.Impl
 
     public class NewObjectNode : Node, INewObjectNode
     {
-        public NewObjectNode(IFilePlace place, string typeName) : base(place)
+        public NewObjectNode(IFilePlace place, ILatteType typeName) : base(place)
         {
             TypeName = typeName;
         }
 
-        public string TypeName { get; }
+        public ILatteType TypeName { get; }
     }
-
+    
     public class ObjectFieldNode : Node, IObjectFieldNode
     {
         public ObjectFieldNode(IFilePlace place, IExpressionNode obj, string fieldName) : base(place)
@@ -220,5 +222,30 @@ namespace LatteBase.AST.Impl
 
         public ILatteType ObjectType { get; }
         public int MethodOffset { get; }
+    }
+    
+    
+    public class ArrayAccessNode :  Node, IArrayAccessNode
+    {
+        public IExpressionNode Array { get; }
+        public IExpressionNode Index { get; }
+
+        public ArrayAccessNode(IFilePlace place, IExpressionNode array, IExpressionNode index) : base(place)
+        {
+            Array = array;
+            Index = index;
+        }
+    }
+
+    public class NewArrayNode :  Node, INewArrayNode
+    {
+        public ILatteType ArrayType { get; }
+        public IExpressionNode Size { get; }
+
+        public NewArrayNode(IFilePlace place, ILatteType arrayType, IExpressionNode size) : base(place)
+        {
+            ArrayType = arrayType;
+            Size = size;
+        }
     }
 }

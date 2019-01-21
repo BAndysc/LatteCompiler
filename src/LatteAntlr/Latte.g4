@@ -36,6 +36,7 @@ stmt
     | type_ item ( ',' item )* ';'       # Decl
     | ID '=' expr ';'                    # Ass
     | expr '.' ID '=' expr ';'           # StructAss
+    | expr '[' expr ']' '=' expr ';'     # ArrayAss
     | ID '++' ';'                        # Incr
     | ID '--' ';'                        # Decr
     | expr '.' ID '++' ';'               # StructIncr
@@ -45,11 +46,13 @@ stmt
     | 'if' '(' expr ')' stmt             # Cond
     | 'if' '(' expr ')' stmt 'else' stmt # CondElse
     | 'while' '(' expr ')' stmt          # While
+    | 'for' '(' type_ ID ':' expr ')' stmt #ForEach
     | expr ';'                           # SExp
     ;
 
 type_
     : ID                                 # TTypeName
+    | type_ '[' ']'                      # TArray
     ;
 
 item
@@ -59,6 +62,11 @@ item
 
 expr
     : expr '.' ID '(' ( expr ( ',' expr )* )? ')' # EMethodCall
+    | '(' type_ '!' ')' expr              # EForceCast
+    | '(' type_ ')' expr                  # ECast
+    | expr '.' ID                         # EObjectField
+    | expr '[' expr ']'                   # EArrayAccess
+    | 'new' type_ '[' expr ']'            # ENewArray
     | unOp expr                           # EUnOp
     | expr mulOp expr                     # EMulOp
     | expr addOp expr                     # EAddOp
@@ -70,12 +78,10 @@ expr
     | 'true'                              # ETrue
     | 'false'                             # EFalse
     | 'null'                              # ENull
-    | '(' type_ ')' expr                  # ECast
-    | expr '.' ID                         # EObjectField
-    | 'new' ID                            # ENewObject
+    | 'new' type_                         # ENewObject
     | ID '(' ( expr ( ',' expr )* )? ')'  # EFunCall
-    | STR                           # EStr
-    | '(' expr ')'                  # EParen
+    | STR                                 # EStr
+    | '(' expr ')'                        # EParen
     ;
 
 unOp

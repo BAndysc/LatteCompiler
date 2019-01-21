@@ -243,5 +243,36 @@ namespace LatteTypeChecker.Visitors
         {
             Visit((IStructDecrementNode) node);
         }
+
+        public override void Visit(IArrayAssignmentNode node)
+        {
+            var arrayType = expressionEvaluator.Visit(node.Array);
+            var indexType = expressionEvaluator.Visit(node.Index);
+            var valueType = expressionEvaluator.Visit(node.Value);
+            
+            if (!arrayType.IsArray)
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Using not array in array context. Given {arrayType}!");
+            
+            if (indexType != LatteType.Int)
+                throw new InplaceTypeCheckerException(node.FilePlace, "Array index is not an int!");
+
+            if (!functions.IsTypeAssignable(valueType, arrayType.BaseType))
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Type {valueType} is not assignable to {arrayType.BaseType}");
+        }
+
+        public override void Visit(IForEachNode node)
+        {
+            var arrayType = expressionEvaluator.Visit(node.Array);
+            
+            if (!arrayType.IsArray)
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Type in foreach is not array! Given: {arrayType}");
+            
+            if (!functions.IsTypeAssignable(arrayType.BaseType, node.IteratorType))
+                throw new InplaceTypeCheckerException(node.FilePlace, $"{arrayType.BaseType} is not assignable to {node.IteratorType}");
+
+            var blockChecker = GetBlockTypeChecker();
+            blockChecker.variables.Define(new VariableDefinition(node.IteratorName, node.IteratorType));
+            blockChecker.Visit(node.Body);
+        }
     }
 }

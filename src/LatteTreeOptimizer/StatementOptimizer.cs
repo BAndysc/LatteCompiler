@@ -160,5 +160,15 @@ namespace LatteTreeOptimizer
         {
             return node;
         }
+
+        public override IStatement Visit(IArrayAssignmentNode node)
+        {
+            return new ArrayAssignmentNode(node.FilePlace, expressionOptimizer.Visit(node.Array), expressionOptimizer.Visit(node.Index), expressionOptimizer.Visit(node.Value));
+        }
+
+        public override IStatement Visit(IForEachNode node)
+        {
+            return new ForEachNode(node.FilePlace, node.IteratorType, node.IteratorName, expressionOptimizer.Visit(node.Array), Visit(node.Body));
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using LatteBase.AST;
+using LatteBase.AST.Impl;
 using LatteBase.Visitors;
 
 namespace LatteBase.CodeGenerators
@@ -101,6 +102,15 @@ namespace LatteBase.CodeGenerators
         {
             return $"new MethodCallWithOffsetNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}}, {node.ObjectType});";
         }
-        
+
+        public override string Visit(IArrayAccessNode node)
+        {
+            return $"new ArrayAccessNode(new DummyFilePlace(), {Visit(node.Array)}, {Visit(node.Index)}))";
+        }
+
+        public override string Visit(INewArrayNode node)
+        {
+            return $"new NewArrayNode(new DummyFilePlace(), LatteType.{node.ArrayType}, {Visit(node.Size)})";
+        }
     }
 }

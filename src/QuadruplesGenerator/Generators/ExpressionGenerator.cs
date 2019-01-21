@@ -225,7 +225,6 @@ namespace QuadruplesGenerator.Generators
             program.Emit(new VirtualCallQuadruple(node.FilePlace, node.MethodName, result, objectValue, node.MethodOffset, new []{objectValue}.Union(args)));
             return result;
         }
-
         public override IRegister Visit(INullNode node)
         {
             var register = program.GetNextRegister();
@@ -237,7 +236,7 @@ namespace QuadruplesGenerator.Generators
 
         public override IRegister Visit(INewObjectNode node)
         {
-            var classDef = program.GetClass(node.TypeName);
+            var classDef = program.GetClass(node.TypeName.Name);
             var classSize = 0;
             var superClass = classDef;
 
@@ -268,6 +267,43 @@ namespace QuadruplesGenerator.Generators
         {
             throw new Exception(
                 "Unexpected node exception. At this point this node should be transformed to IObjectFieldWithOffsetNode");
+        }
+
+        public override IRegister Visit(IArrayAccessNode node)
+        {
+            var addr = Visit(node.Array);
+            var index = Visit(node.Index);
+            var m4 = program.GetNextRegister();
+            var indexMul4 = program.GetNextRegister();
+            var indexMul4Plus4 = program.GetNextRegister();
+            var result = program.GetNextRegister();
+            var realAddr = program.GetNextRegister();
+            
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(4), m4));
+            program.Emit(new MulQuadruple(node.FilePlace, index, m4, indexMul4));
+            program.Emit(new AddQuadruple(node.FilePlace, indexMul4, m4, indexMul4Plus4));
+            program.Emit(new AddQuadruple(node.FilePlace, addr, indexMul4Plus4, realAddr));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, realAddr, 0, result));
+
+            return result;
+        }
+
+        public override IRegister Visit(INewArrayNode node)
+        {
+            var size = Visit(node.Size);
+            var m1 = program.GetNextRegister();
+            var m4 = program.GetNextRegister();
+            var realSize = program.GetNextRegister();
+            var bytes = program.GetNextRegister();
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(1), m1));
+            program.Emit(new AddQuadruple(node.FilePlace, size, m1, realSize));
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(4), m4));
+            program.Emit(new MulQuadruple(node.FilePlace, realSize, m4, bytes));
+            
+            var register = program.GetNextRegister();
+            program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_malloc", register, new []{bytes}));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, register, 0, size));
+            return register;
         }
 
         public override IRegister Visit(IObjectFieldWithOffsetNode node)

@@ -206,6 +206,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitStructAss([NotNull] LatteParser.StructAssContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>ArrayAss</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArrayAss([NotNull] LatteParser.ArrayAssContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ArrayAss</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArrayAss([NotNull] LatteParser.ArrayAssContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>Incr</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -332,6 +346,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitWhile([NotNull] LatteParser.WhileContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>ForEach</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterForEach([NotNull] LatteParser.ForEachContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ForEach</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitForEach([NotNull] LatteParser.ForEachContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>SExp</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -359,6 +387,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTTypeName([NotNull] LatteParser.TTypeNameContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>TArray</c>
+	/// labeled alternative in <see cref="LatteParser.type_"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTArray([NotNull] LatteParser.TArrayContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>TArray</c>
+	/// labeled alternative in <see cref="LatteParser.type_"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTArray([NotNull] LatteParser.TArrayContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.item"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -399,6 +441,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEFunCall([NotNull] LatteParser.EFunCallContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>ENewArray</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterENewArray([NotNull] LatteParser.ENewArrayContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ENewArray</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitENewArray([NotNull] LatteParser.ENewArrayContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by the <c>ERelOp</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
@@ -456,6 +512,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEOr([NotNull] LatteParser.EOrContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>EArrayAccess</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterEArrayAccess([NotNull] LatteParser.EArrayAccessContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>EArrayAccess</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitEArrayAccess([NotNull] LatteParser.EArrayAccessContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>EInt</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -483,6 +553,20 @@ public partial class LatteBaseListener : ILatteListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEUnOp([NotNull] LatteParser.EUnOpContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>EForceCast</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterEForceCast([NotNull] LatteParser.EForceCastContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>EForceCast</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitEForceCast([NotNull] LatteParser.EForceCastContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by the <c>EStr</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.

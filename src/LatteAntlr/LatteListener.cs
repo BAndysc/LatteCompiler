@@ -176,6 +176,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitStructAss([NotNull] LatteParser.StructAssContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>ArrayAss</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayAss([NotNull] LatteParser.ArrayAssContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ArrayAss</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayAss([NotNull] LatteParser.ArrayAssContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>Incr</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// </summary>
@@ -284,6 +296,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitWhile([NotNull] LatteParser.WhileContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>ForEach</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterForEach([NotNull] LatteParser.ForEachContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ForEach</c>
+	/// labeled alternative in <see cref="LatteParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitForEach([NotNull] LatteParser.ForEachContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>SExp</c>
 	/// labeled alternative in <see cref="LatteParser.stmt"/>.
 	/// </summary>
@@ -307,6 +331,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitTTypeName([NotNull] LatteParser.TTypeNameContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>TArray</c>
+	/// labeled alternative in <see cref="LatteParser.type_"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTArray([NotNull] LatteParser.TArrayContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>TArray</c>
+	/// labeled alternative in <see cref="LatteParser.type_"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTArray([NotNull] LatteParser.TArrayContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="LatteParser.item"/>.
 	/// </summary>
@@ -341,6 +377,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitEFunCall([NotNull] LatteParser.EFunCallContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>ENewArray</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterENewArray([NotNull] LatteParser.ENewArrayContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ENewArray</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitENewArray([NotNull] LatteParser.ENewArrayContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>ERelOp</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
@@ -390,6 +438,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitEOr([NotNull] LatteParser.EOrContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>EArrayAccess</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEArrayAccess([NotNull] LatteParser.EArrayAccessContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>EArrayAccess</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEArrayAccess([NotNull] LatteParser.EArrayAccessContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>EInt</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.
 	/// </summary>
@@ -413,6 +473,18 @@ public interface ILatteListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitEUnOp([NotNull] LatteParser.EUnOpContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>EForceCast</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEForceCast([NotNull] LatteParser.EForceCastContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>EForceCast</c>
+	/// labeled alternative in <see cref="LatteParser.expr"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEForceCast([NotNull] LatteParser.EForceCastContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>EStr</c>
 	/// labeled alternative in <see cref="LatteParser.expr"/>.

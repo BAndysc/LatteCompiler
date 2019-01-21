@@ -103,5 +103,15 @@ namespace LatteBase.CodeGenerators
         {
             return $"new StructDecrementWithOffsetNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Object)}, \"{node.FieldName}\", {node.FieldOffset})";
         }
+
+        public override string Visit(IArrayAssignmentNode node)
+        {
+            return $"new ArrayAssignmentNode(new DummyFilePlace(), {expressionGenerator.Visit(node.Array)}, {expressionGenerator.Visit(node.Index)}, {expressionGenerator.Visit(node.Value)})";
+        }
+
+        public override string Visit(IForEachNode node)
+        {
+            return $"new ForEachNode(new DummyFilePlace(), LatteType.{node.IteratorType}, \"{node.IteratorName}\", {expressionGenerator.Visit(node.Array)}, {Visit(node.Body)})";
+        }
     }
 }

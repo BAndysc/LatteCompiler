@@ -223,4 +223,35 @@ namespace LatteBase.AST.Impl
             FieldOffset = offset;
         }
     }
+    
+    
+    public class ArrayAssignmentNode : Node, IArrayAssignmentNode 
+    {
+        public IExpressionNode Array { get; }
+        public IExpressionNode Index { get; }
+        public IExpressionNode Value { get; }
+
+        public ArrayAssignmentNode(IFilePlace place, IExpressionNode array, IExpressionNode index, IExpressionNode value) : base(place)
+        {
+            Array = array;
+            Index = index;
+            Value = value;
+        }
+    }
+
+    public class ForEachNode : Node, IForEachNode
+    {
+        public ForEachNode(IFilePlace place, ILatteType iteratorType, string iteratorName, IExpressionNode array, IStatement body) : base(place)
+        {
+            IteratorType = iteratorType;
+            IteratorName = iteratorName;
+            Array = array;
+            Body = body;
+        }
+
+        public ILatteType IteratorType { get; }
+        public string IteratorName { get; }
+        public IExpressionNode Array { get; }
+        public IStatement Body { get; }
+    }
 }

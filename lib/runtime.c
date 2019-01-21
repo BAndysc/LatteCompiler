@@ -13,7 +13,7 @@ extern void *realloc(void *ptr, size_t size);
 
 extern int* lat_malloc(int size)
 {
-	return malloc(size);
+	return calloc(size, 1);
 }
 
 extern void printInt(int v)

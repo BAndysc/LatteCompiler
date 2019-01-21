@@ -89,6 +89,12 @@ namespace QuadruplesGenerator
             return Visit(node.Statement);
         }
 
+        public override int Visit(IForEachNode node)
+        {
+            valueMax.Add(2);
+            return 2 + Visit(node.Body);
+        }
+        
         public override int Visit(IExpressionStatementNode nodeNode)
         {
             return 0;
@@ -110,6 +116,11 @@ namespace QuadruplesGenerator
         }
 
         public override int Visit(IStructDecrementWithOffsetNode node)
+        {
+            return 0;
+        }
+
+        public override int Visit(IArrayAssignmentNode node)
         {
             return 0;
         }

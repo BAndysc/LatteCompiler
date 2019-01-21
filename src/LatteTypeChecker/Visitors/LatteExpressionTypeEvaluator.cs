@@ -190,7 +190,7 @@ namespace LatteTypeChecker.Visitors
         public override ILatteType Visit(ICastExpressionNode node)
         {
             var exprType = Visit(node.Expression);
-            if (exprType != LatteType.Null && !Equals(exprType, node.CastType))
+            if (!node.ForceCast && exprType != LatteType.Null && !functions.IsTypeAssignable(exprType, node.CastType))
             {
                 throw new BadCastException(node.FilePlace, exprType, node.CastType);
             }
@@ -200,15 +200,25 @@ namespace LatteTypeChecker.Visitors
         public override ILatteType Visit(IObjectFieldNode node)
         {
             var classType = Visit(node.Object);
-            
-            var classDef = functions.GetClass(classType.Name);
 
-            if (!classDef.HasField(node.FieldName))
-                throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
+            if (classType.IsArray)
+            {
+                if (node.FieldName != "length")
+                    throw new InplaceTypeCheckerException(node.FilePlace, $"Array has only property ::length, given: {node.FieldName}");
+                
+                return LatteType.Int;
+            }
+            else
+            {
+                var classDef = functions.GetClass(classType.Name);
 
-            var fieldType = classDef.GetField(node.FieldName).FieldType;
+                if (!classDef.HasField(node.FieldName))
+                    throw new UnknownFieldInClassException(node.FilePlace, classDef, node.FieldName);
 
-            return fieldType;
+                var fieldType = classDef.GetField(node.FieldName).FieldType;
+
+                return fieldType;       
+            }
         }
 
         public override ILatteType Visit(IObjectFieldWithOffsetNode node)
@@ -245,6 +255,31 @@ namespace LatteTypeChecker.Visitors
         public override ILatteType Visit(IMethodCallWithOffsetNode node)
         {
             throw  new Exception("At this point, this node is not expected, use IMethodCallNode instead");
+        }
+
+        public override ILatteType Visit(IArrayAccessNode node)
+        {
+            var arrayType = Visit(node.Array);
+            
+            if (!arrayType.IsArray)
+                throw new InplaceTypeCheckerException(node.FilePlace, "Type is not an array");
+
+            var index = Visit(node.Index);
+
+            if (index != LatteType.Int)
+                throw new InplaceTypeCheckerException(node.FilePlace, "Array index is not an int!");
+
+            return arrayType.BaseType;
+        }
+
+        public override ILatteType Visit(INewArrayNode node)
+        {
+            var sizeType = Visit(node.Size);
+            
+            if (sizeType != LatteType.Int)
+                throw new InplaceTypeCheckerException(node.FilePlace, "Array size is not an int!");
+
+            return new LatteType(node.ArrayType);
         }
     }
 }

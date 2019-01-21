@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LatteBase;
 using LatteBase.AST;
+using LatteBase.AST.Impl;
 using LatteBase.Visitors;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
@@ -90,6 +91,85 @@ namespace QuadruplesGenerator.Generators
             return null;
         }
 
+        public override object Visit(IForEachNode node)
+        {
+            var blockStore = store.CopyForBlock();
+            var newVisitor = new StatementGenerator(program, blockStore, currentFunction, startLabel);
+            
+            var arrayLength = newVisitor.exprGen.Visit(new ObjectFieldWithOffsetNode(node.FilePlace, node.Array, "length",
+                -4 /* hack, because we add 4 because of vtable */));
+            var addr = program.GetNextRegister();
+            var m1 = program.GetNextRegister();
+            var m4 = program.GetNextRegister();
+            var indexMul4 = program.GetNextRegister();
+            var indexMul4Plus4 = program.GetNextRegister();
+            var result = program.GetNextRegister();
+            var realAddr = program.GetNextRegister();
+
+            
+            var labelAfter = program.GetNextLabel();
+            var labelBody = program.GetNextLabel();
+            var labelCheck = program.GetNextLabel();
+
+            int valueLoc = blockStore.Alloc(node.IteratorName);
+            int iteratorLoc = blockStore.Alloc(node.IteratorName + "_____I_T_E_R_A_T_O_R");
+            
+            var m0 = program.GetNextRegister();
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), m0));
+            program.Emit(new StoreQuadruple(node.FilePlace, iteratorLoc, m0));
+            
+            program.Emit(new JumpAlwaysQuadruple(node.FilePlace, labelCheck));
+            program.Emit(new LabelQuadruple(node.FilePlace, labelBody));
+
+            var index = program.GetNextRegister();
+            program.Emit(new LoadQuadruple(node.FilePlace, iteratorLoc, index));
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(4), m4));
+            program.Emit(new MulQuadruple(node.FilePlace, index, m4, indexMul4));
+            program.Emit(new AddQuadruple(node.FilePlace, indexMul4, m4, indexMul4Plus4));
+            addr = newVisitor.exprGen.Visit(node.Array);
+            program.Emit(new AddQuadruple(node.FilePlace, addr, indexMul4Plus4, realAddr));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, realAddr, 0, result));            
+            program.Emit(new StoreQuadruple(node.FilePlace, valueLoc, result));
+            
+            newVisitor.Visit(node.Body);
+
+            index = program.GetNextRegister();
+            var index2 = program.GetNextRegister();
+            program.Emit(new LoadQuadruple(node.FilePlace, iteratorLoc, index));
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(1), m1));
+            program.Emit(new AddQuadruple(node.FilePlace, m1, index, index2));
+            program.Emit(new StoreQuadruple(node.FilePlace, iteratorLoc, index2));
+            
+            program.Emit(new LabelQuadruple(node.FilePlace, labelCheck));
+            index = program.GetNextRegister();
+            program.Emit(new LoadQuadruple(node.FilePlace, iteratorLoc, index));
+            program.Emit(new CompareQuadruple(node.FilePlace, arrayLength, index));
+            program.Emit(new JumpQuadruple(node.FilePlace, labelAfter, labelBody, RelOperator.Equals ));
+            program.Emit(new LabelQuadruple(node.FilePlace, labelAfter));
+            return null;
+        }
+
+        public override object Visit(IArrayAssignmentNode node)
+        {
+            var array = exprGen.Visit(node.Array);
+            var index = exprGen.Visit(node.Index);
+            var value = exprGen.Visit(node.Value);
+
+            var m4 = program.GetNextRegister();
+            var m1 = program.GetNextRegister();
+            var offset = program.GetNextRegister();
+            var offsetInBytes = program.GetNextRegister();
+            var addr = program.GetNextRegister();
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(4), m4));
+            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(1), m1));
+            program.Emit(new AddQuadruple(node.FilePlace, index, m1, offset));
+            program.Emit(new MulQuadruple(node.FilePlace, offset, m4, offsetInBytes));
+            program.Emit(new AddQuadruple(node.FilePlace, array, offsetInBytes, addr));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, addr, 0, value));
+
+            return null;
+        }
+        
         public override object Visit(IIncrementNode node)
         {
             var loaded = program.GetNextRegister();

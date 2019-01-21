@@ -113,5 +113,24 @@ namespace LatteAntlr.AST.Generators
             
             return new ExpressionStatementNode(new FilePlace(context), expression);
         }
+
+        public override IStatement VisitArrayAss(LatteParser.ArrayAssContext context)
+        {
+            var visitor = new ExpressionGenerator();
+            var array = visitor.Visit(context.expr()[0]);
+            var index = visitor.Visit(context.expr()[1]);
+            var value = visitor.Visit(context.expr()[2]);
+            return new ArrayAssignmentNode(new FilePlace(context), array, index, value);
+        }
+
+        public override IStatement VisitForEach(LatteParser.ForEachContext context)
+        {
+            var type_ = new LatteTypeGenerator().Visit(context.type_());
+            var name = context.ID().GetText();
+            var array = new ExpressionGenerator().Visit(context.expr());
+            var stmt = Visit(context.stmt());
+            
+            return new ForEachNode(new FilePlace(context), type_, name, array, new BlockNode(new FilePlace(context), stmt));
+        }
     }
 }

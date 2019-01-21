@@ -290,7 +290,7 @@ namespace X86Generator
         {
             Clear();
 
-            var @class = program.GetClass(quadruple.ObjectType);
+            var @class = program.GetClass(quadruple.ObjectType.Name);
 
             if (@class.VTable == null)
                 return instructions.ToList();

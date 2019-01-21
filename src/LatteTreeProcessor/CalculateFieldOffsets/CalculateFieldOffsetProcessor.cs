@@ -270,6 +270,12 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         public override IExpressionNode Visit(IObjectFieldNode node)
         {
             var objType = typeEvaluator.Visit(node.Object);
+
+            if (objType.IsArray) // length
+            {
+                return base.Visit(new ObjectFieldWithOffsetNode(node.FilePlace, node.Object, node.FieldName, -4 /* hack - 4 is added later because of vtable */));
+            }
+            
             var @class = classes.GetClass(objType.Name);
             return base.Visit(new ObjectFieldWithOffsetNode(node.FilePlace, node.Object, node.FieldName, @class.GetFieldOffset(node.FieldName)));
         }
@@ -373,6 +379,9 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         {
             var obType = Visit(node.Object);
 
+            if (obType.IsArray) // length
+                return LatteType.Int;
+            
             var @class = classes.GetClass(obType.Name);
 
             return @class.GetFieldType(node.FieldName);
@@ -399,6 +408,17 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
             var @class = classes.GetClass(obType.Name);
 
             return @class.GetMethod(node.MethodName).ReturnType;
+        }
+
+        public override ILatteType Visit(IArrayAccessNode node)
+        {
+            var array = Visit(node.Array);
+            return array.BaseType;
+        }
+
+        public override ILatteType Visit(INewArrayNode node)
+        {
+            return new LatteType(node.ArrayType);
         }
     }
     

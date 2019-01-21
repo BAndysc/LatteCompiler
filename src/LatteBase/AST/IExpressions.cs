@@ -31,11 +31,12 @@ namespace LatteBase.AST
     {
         IExpressionNode Expression { get; }
         ILatteType CastType { get; }
+        bool ForceCast { get; }
     }
 
     public interface INewObjectNode : IExpressionNode
     {
-        string TypeName { get; }
+        ILatteType TypeName { get; }
     }
     
     public interface IStringNode : IExpressionNode
@@ -112,5 +113,17 @@ namespace LatteBase.AST
     {
         ILatteType ObjectType { get; }
         int MethodOffset { get; }
+    }
+
+    public interface IArrayAccessNode : IExpressionNode
+    {
+        IExpressionNode Array { get; }
+        IExpressionNode Index { get; }
+    }
+
+    public interface INewArrayNode : IExpressionNode
+    {
+        ILatteType ArrayType { get; }
+        IExpressionNode Size { get; }
     }
 }

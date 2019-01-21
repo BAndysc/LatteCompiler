@@ -100,7 +100,12 @@ namespace LatteAntlr.AST.Generators
 
         public override IExpressionNode VisitECast(LatteParser.ECastContext context)
         {
-            return new CastExpressionNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()),  Visit(context.expr()));
+            return new CastExpressionNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()),  Visit(context.expr()), false);
+        }
+        
+        public override IExpressionNode VisitEForceCast(LatteParser.EForceCastContext context)
+        {
+            return new CastExpressionNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()),  Visit(context.expr()), true);
         }
 
         public override IExpressionNode VisitENull(LatteParser.ENullContext context)
@@ -110,7 +115,7 @@ namespace LatteAntlr.AST.Generators
 
         public override IExpressionNode VisitENewObject(LatteParser.ENewObjectContext context)
         {
-            return new NewObjectNode(new FilePlace(context), context.ID().GetText());
+            return new NewObjectNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()));
         }
 
         public override IExpressionNode VisitEObjectField(LatteParser.EObjectFieldContext context)
@@ -121,6 +126,17 @@ namespace LatteAntlr.AST.Generators
         public override IExpressionNode VisitEMethodCall(LatteParser.EMethodCallContext context)
         {
             return new MethodCallNode(new FilePlace(context), Visit(context.expr()[0]), context.ID().GetText(), context.expr().Skip(1).Select(Visit));
+        }
+
+        public override IExpressionNode VisitENewArray(LatteParser.ENewArrayContext context)
+        {
+            var size = Visit(context.expr());
+            return new NewArrayNode(new FilePlace(context), new LatteTypeGenerator().Visit(context.type_()), size);
+        }
+
+        public override IExpressionNode VisitEArrayAccess(LatteParser.EArrayAccessContext context)
+        {
+            return new ArrayAccessNode(new FilePlace(context), Visit(context.expr()[0]), Visit(context.expr()[1]));
         }
     }
 }

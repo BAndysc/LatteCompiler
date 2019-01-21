@@ -79,8 +79,9 @@ namespace LatteBase.Transformers
 
         public override IExpressionNode Visit(ICastExpressionNode node)
         {
-            return new CastExpressionNode(node.FilePlace, node.CastType, Visit(node.Expression));
+            return new CastExpressionNode(node.FilePlace, node.CastType, Visit(node.Expression), node.ForceCast);
         }
+        
 
         public override IExpressionNode Visit(IObjectFieldNode node)
         {
@@ -101,6 +102,16 @@ namespace LatteBase.Transformers
         {
             return new MethodCallWithOffsetNode(node.FilePlace, Visit(node.Object), node.MethodName,
                 node.Arguments.Select(Visit), node.ObjectType, node.MethodOffset);
+        }
+
+        public override IExpressionNode Visit(IArrayAccessNode node)
+        {
+            return new ArrayAccessNode(node.FilePlace, Visit(node.Array), Visit(node.Index));
+        }
+
+        public override IExpressionNode Visit(INewArrayNode node)
+        {
+            return new NewArrayNode(node.FilePlace, node.ArrayType, Visit(node.Size));
         }
     }
 

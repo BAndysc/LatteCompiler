@@ -124,5 +124,14 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+        public override int? Visit(IArrayAccessNode node)
+        {
+            return null;
+        }
+
+        public override int? Visit(INewArrayNode node)
+        {
+            return null;
+        }
     }
 }

@@ -18,4 +18,19 @@ namespace LatteTypeChecker.Exceptions
             return $"Here (line {_place.LineNumber}): {_place.Text}\n";
         }
     }
+    
+    public class InplaceTypeCheckerException : TypeCheckerException
+    {
+        private readonly string message;
+
+        public override string ToString()
+        {
+            return $"{message}\nHere (line {_place.LineNumber}): {_place.Text}\n";
+        }
+
+        public InplaceTypeCheckerException(IFilePlace source, string message) : base(source)
+        {
+            this.message = message;
+        }
+    }
 }
