@@ -17,9 +17,13 @@ namespace LatteAntlr.AST.Generators
             {
                 var field = fieldOrMethod.fieldDef();
                 var method = fieldOrMethod.methodDef();
-                
+
                 if (field != null)
-                    fields.Add(new ClassFieldNode(new FilePlace(field), field.ID().GetText(), new LatteTypeGenerator().Visit(field.type_())));
+                {
+                    var type = new LatteTypeGenerator().Visit(field.type_());
+                    foreach (var id in field.ID())
+                        fields.Add(new ClassFieldNode(new FilePlace(field), id.GetText(), type));
+                }
                 else
                 {
                     var statement = new BlockGenerator().Visit(method.block());

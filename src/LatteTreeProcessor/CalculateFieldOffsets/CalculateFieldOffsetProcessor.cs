@@ -158,11 +158,15 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         public int Size { get; }
         public int GetFieldOffset(string fieldName)
         {
+            if (!fieldToOffset.ContainsKey(fieldName))
+                return SuperClass.GetFieldOffset(fieldName);
             return fieldToOffset[fieldName];
         }
 
         public ILatteType GetFieldType(string fieldName)
         {
+            if (!fieldToType.ContainsKey(fieldName))
+                return SuperClass.GetFieldType(fieldName);
             return fieldToType[fieldName];
         }
 

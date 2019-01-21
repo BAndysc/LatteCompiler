@@ -20,6 +20,7 @@ namespace LatteTypeChecker.Models
         public string Name { get; }
         public IClassDefinition SuperClass { get; }
         public IList<IClassField> Fields { get; }
+        public IList<IClassField> AllFields => Fields.Union(SuperClass?.AllFields ?? new List<IClassField>()).ToList();
         public IEnumerable<IFunctionDefinition> Methods => methods.Values;
         public ILatteType Type { get; }
 
@@ -30,7 +31,8 @@ namespace LatteTypeChecker.Models
 
         public IClassField GetField(string fieldName)
         {
-            return Fields.FirstOrDefault(t => t.FieldName == fieldName);
+            var f = Fields.FirstOrDefault(t => t.FieldName == fieldName);
+            return f ?? (SuperClass?.GetField(fieldName));
         }
 
         public int GetBaseClassFieldsCount()

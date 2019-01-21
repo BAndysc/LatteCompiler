@@ -9,6 +9,7 @@ namespace LatteTypeChecker.Models
         string Name { get; }
         IClassDefinition SuperClass { get; }
         IList<IClassField> Fields { get; }
+        IList<IClassField> AllFields { get; }
         IEnumerable<IFunctionDefinition> Methods { get; }
         ILatteType Type { get;  }
 

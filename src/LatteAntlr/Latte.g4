@@ -15,7 +15,7 @@ fieldOrMethodDef
     ;
 
 fieldDef
-    : type_ ID
+    : type_ ID ( ',' ID )*
     ;
 
 methodDef
