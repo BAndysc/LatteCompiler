@@ -74,7 +74,7 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(INewObjectNode node)
         {
-            return $"new NewObjectNode(new DummyFilePlace(), \"{node.TypeName}\")";
+            return $"new NewObjectNode(new DummyFilePlace(), \"{node.Type}\")";
         }
 
         public override string Visit(ICastExpressionNode node)

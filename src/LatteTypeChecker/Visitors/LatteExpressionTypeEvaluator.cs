@@ -184,7 +184,7 @@ namespace LatteTypeChecker.Visitors
 
         public override ILatteType Visit(INewObjectNode node)
         {
-            return new LatteType(node.TypeName);
+            return node.Type;
         }
 
         public override ILatteType Visit(ICastExpressionNode node)

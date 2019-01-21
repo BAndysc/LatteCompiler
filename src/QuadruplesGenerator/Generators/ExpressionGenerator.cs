@@ -236,7 +236,7 @@ namespace QuadruplesGenerator.Generators
 
         public override IRegister Visit(INewObjectNode node)
         {
-            var classDef = program.GetClass(node.TypeName.Name);
+            var classDef = program.GetClass(node.Type.Name);
             var classSize = 0;
             var superClass = classDef;
 
@@ -254,7 +254,7 @@ namespace QuadruplesGenerator.Generators
             
             var register = program.GetNextRegister();
             program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_malloc", register, new []{registerWithSize}));
-            program.Emit(new InitVtableQuadruple(node.FilePlace, register, node.TypeName));
+            program.Emit(new InitVtableQuadruple(node.FilePlace, register, node.Type));
             return register;
         }
 

@@ -110,7 +110,7 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
             {
                 fieldToOffset.Add(field.FieldName, offset);
                 fieldToType.Add(field.FieldName, field.FieldType);
-                offset += 4; // @todo: based on type
+                offset += 4; // @ľtodo: based on type
             }
 
             int methodOffset = 0;
@@ -367,7 +367,7 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
 
         public override ILatteType Visit(INewObjectNode node)
         {
-            return new LatteType(node.TypeName);
+            return node.Type;
         }
 
         public override ILatteType Visit(ICastExpressionNode node)

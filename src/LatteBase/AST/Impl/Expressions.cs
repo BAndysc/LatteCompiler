@@ -170,10 +170,10 @@ namespace LatteBase.AST.Impl
     {
         public NewObjectNode(IFilePlace place, ILatteType typeName) : base(place)
         {
-            TypeName = typeName;
+            Type = typeName;
         }
 
-        public ILatteType TypeName { get; }
+        public ILatteType Type { get; }
     }
     
     public class ObjectFieldNode : Node, IObjectFieldNode

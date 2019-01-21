@@ -147,7 +147,8 @@ namespace LatteTypeChecker
                     variables.Define(new VariableDefinition("this", classDefinition.Type));
                     
                     foreach (var field in classDefinition.AllFields)
-                        variables.Define(new VariableDefinition(field.FieldName, field.FieldType));
+                        if (!method.Arguments.Select(t=>t.Name).Contains(field.FieldName))
+                            variables.Define(new VariableDefinition(field.FieldName, field.FieldType));
                     
                     var blockVisitor = new StatementTypeChecker(variables, environment, method.ReturnType);
                 

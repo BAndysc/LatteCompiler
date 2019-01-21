@@ -36,7 +36,7 @@ namespace LatteBase.AST
 
     public interface INewObjectNode : IExpressionNode
     {
-        ILatteType TypeName { get; }
+        ILatteType Type { get; }
     }
     
     public interface IStringNode : IExpressionNode
