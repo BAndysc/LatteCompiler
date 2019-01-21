@@ -25,9 +25,9 @@ namespace X86Generator
             foreach (var cls in program.Classes)
             {
                 var vtableSize = cls.VtableSize();
-                cls.VTable = program.GetNextLabel();
                 if (vtableSize > 0)
                 {
+                    cls.VTable = program.GetNextLabel();
                     hasVtable = true;
                     dataBuilder.AppendLine($"    {cls.VTable}: dd " +
                                            string.Join(", ", Enumerable.Repeat(0, vtableSize)));

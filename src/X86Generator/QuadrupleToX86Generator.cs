@@ -290,7 +290,12 @@ namespace X86Generator
         {
             Clear();
 
-            var vTable = new X86Label(program.GetClass(quadruple.ObjectType).VTable.Text);
+            var @class = program.GetClass(quadruple.ObjectType);
+
+            if (@class.VTable == null)
+                return instructions.ToList();
+            
+            var vTable = new X86Label(@class.VTable.Text);
             
             Emit(new MovInstruction(Register32.EAX, mapping.Get(quadruple.Addr)), quadruple);
             Emit(new MovInstruction(new Memory32(Register32.EAX, 0), new ImmediateValue32(vTable)), quadruple);
