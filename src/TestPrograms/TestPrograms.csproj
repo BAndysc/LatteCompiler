@@ -84,6 +84,7 @@
     <Compile Include="Good\Basic\void_return.cs" />
     <Compile Include="Good\Basic\while_true.cs" />
     <Compile Include="Good\Basic\while_true2.cs" />
+    <Compile Include="Good\ComplexTest.cs" />
     <Compile Include="Good\Core001Tests.cs" />
     <Compile Include="Good\Core002Tests.cs" />
     <Compile Include="Good\Core003Tests.cs" />

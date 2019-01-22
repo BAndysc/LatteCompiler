@@ -20,8 +20,13 @@ namespace LatteBase.CodeGenerators
             if (!string.IsNullOrEmpty(fields))
                 fields = ", " + fields;
 
+            var superClass = "null";
+
+            if (classNode.SuperClass != null)
+                superClass = $"\"{classNode.SuperClass}\"";
+            
             return
-                $"new ClassDefinitionNode(new DummyFilePlace(), \"{classNode.ClassName}\", \"{classNode.SuperClass}\", new List<IFunctionDefinitionNode>(){{{functions}}}{fields})";
+                $"new ClassDefinitionNode(new DummyFilePlace(), \"{classNode.ClassName}\", {superClass}, new List<IFunctionDefinitionNode>(){{{functions}}}{fields})";
         }
     }
 }

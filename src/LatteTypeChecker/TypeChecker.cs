@@ -49,7 +49,7 @@ namespace LatteTypeChecker
             foreach (var @class in program.Classes)
             {
                 if (@class.SuperClass != null && !classNames.Contains(@class.SuperClass))
-                    throw new Exception("Super class doesn't exist " + @class.SuperClass);
+                    throw new InplaceTypeCheckerException(@class.FilePlace, "Super class doesn't exist " + @class.SuperClass);
             }
             
             foreach (var @class in program.Classes)
