@@ -55,7 +55,7 @@ namespace Backend.Linker
 
                 args += $" -isysroot {sysroot}";
 
-                var libs = new string[] { "runtime.o", "osx_layer.o" };
+                var libs = new string[] { "/runtime.o", "/osx_layer.o" };
                 objectFiles.AddRange(libs.Select(t => libraryPath + t));
             }
 

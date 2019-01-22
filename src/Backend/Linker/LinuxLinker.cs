@@ -43,7 +43,7 @@ namespace Backend.Linker
 
             if (withStdLib)
             {
-                var libs = new string[] { "runtime.o", "libc.a", "crt1.o", "crti.o", "crtn.o" };
+                var libs = new string[] { "/runtime.o", "/libc.a", "/crt1.o", "/crti.o", "/crtn.o" };
                 objectFiles.AddRange(libs.Select(t => libraryPath + t));
             }
 

@@ -60,7 +60,7 @@ namespace Backend.Linker
 
         public void SetLibraryFolder(string path)
         {
-            libraryPath = path;
+            libraryPath = path.Replace("/", "\\");
         }
 
         public ILinker SetOutput(string file)
