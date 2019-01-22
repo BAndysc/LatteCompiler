@@ -18,7 +18,6 @@ namespace Utils
                 procStartInfo.RedirectStandardOutput = true;
                 procStartInfo.UseShellExecute = false;
                 procStartInfo.CreateNoWindow = true;
-
                 using (Process process = new Process())
                 {
                     process.StartInfo = procStartInfo;

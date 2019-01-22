@@ -38,7 +38,7 @@ namespace Backend.Tests
             
             runner.Run(outputProgramFile, "", out programOutput, lines);
             
-            Assert.AreEqual(programProvider.GetOutput(), programOutput);
+            Assert.AreEqual(programProvider.GetOutput().Replace("\r", ""), programOutput.Replace("\r", ""));
         }
     }
 }

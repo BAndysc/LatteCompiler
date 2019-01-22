@@ -1,6 +1,10 @@
 # LatteCompiler
 
-Kompilator języka Latte na przedmiot Metody Realizacji Języków Programowania w języku C#. Kompilator działa na otwartoźródłowej implementacji .net - mono. 
+Kompilator języka Latte na przedmiot Metody Realizacji Języków Programowania w języku C#. Kompilator działa zarówno na otwartoźródłowej implementacji .net - mono jak i .net framework od Microsoftu. 
+
+# Środowisko
+
+Kompilator może kompilować zarówno programy na Linuxie, OS X-ie jak i Windowsie (jednak nie jest możliwa kompilacja skrośna), więcej informacji na dole.
 
 # Kompilacja
 
@@ -80,3 +84,18 @@ Użyte biblioteki:
 
  - Antlr4 to parsowania
  - NUnit do testów (`make test`)
+
+# Targety
+
+## Linux
+
+Do kompilacji na Linuxa wymagane są: `nasm` oraz `gcc`.
+
+## OS X
+
+Do kompilacji na OS X wymagane są: `nasm` oraz `gcc`. Najnowsza wersja Mojave nie jest jednak w stanie skompilować programów 32-bitowych ze względu na brak bibliotek. Należy ściągnąć SDK wersji 10.13 (https://github.com/phracker/MacOSX-SDKs/releases) i ustawić zmienną środowiskową LATTE_OS_X_SDK na ścieżkę do folderu z SDK.
+
+## Windows
+
+Do kompilacji na Windowsie wymagane jest zainstalowane Visual Studio z Visual C++. Dodatkowo należy dodać ścieżkę do kompilatora `cl.exe` do zmiennej środowiskowej `PATH` (zwykle: `C:\Program Files (x86)\Microsoft Visual Studio\[wersja]\[wersja]\VC\Tools\MSVC\[wersja]\bin\Hostx86\x86`), ponadto należy dodać zmienną środowiskową `LIB` oraz `INCLUDE`, na podstawie wartości tej zmiennej z środowiska `Developer Command Prompt for VS`. W tym celu należy uruchomić deweloperski wiersz poleceń, wypisać zmianne `echo %LIB%`, `echo %INCLUDE%`, a następnie ręcznie je dodać.
+Do kompilacji wymagany jest również assembler `nasm`. Należy go ściągnąć (https://www.nasm.us/pub/nasm/releasebuilds/), a ścieżkę do niego dodać do zmieninej `PATH`. 

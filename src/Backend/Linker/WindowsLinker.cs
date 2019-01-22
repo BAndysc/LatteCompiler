@@ -30,6 +30,16 @@ namespace Backend.Linker
 
         public void Link()
         {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LIB")) ||
+                string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INCLUDE")))
+            {
+                throw new Exception("Environment variables LIB and INCLUDE are not set, cl.exe cannot work without them.\n" +
+                                    "Please run `Developer Command Prompt For Visual Studio`, then run following commands:\n" +
+                                    " $ echo %LIB%\n" +
+                                    " $ echo %INCLUDE%\n" +
+                                    "and add those variables to your environment variables");
+            }
+            
             if (withStdLib)
             {
                 objectFiles.Add(libraryPath + @"\runtime.obj");
