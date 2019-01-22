@@ -22,5 +22,12 @@ namespace Backend.Tests.Good
             TestProgram(new TestProgramProviderStructDecrementIncrement());
         }
         
+        [Test]
+        public void StringComparisonTestCase()
+        {
+            TestProgram(new TestProgramProviderStringCompare());
+        }
+
+        
     }
 }
