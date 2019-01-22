@@ -26,7 +26,10 @@ extern void printInt(int v)
 }
 extern void printString(char* v)
 {
-	printf("%s\n", v);
+	if (!v)
+		printf("\n");
+	else
+		printf("%s\n", v);
 }
 
 extern void error()
@@ -42,10 +45,20 @@ extern int readInt()
 	return a;
 }
 
+static int lat_strlen(char* str)
+{
+	if (!str)
+		return 0;
+	return strlen(str);
+}
+
 extern char* concat_string(char* str1, char* str2)
 {
-	int str1_len = strlen(str1);
-	int str2_len = strlen(str2);
+	int str1_len = lat_strlen(str1);
+	int str2_len = lat_strlen(str2);
+	if (str1_len + str2_len == 0)
+		return NULL;
+
 	int totalLen = str1_len + str2_len + 1;
 	char* newstr = malloc(sizeof(char) * totalLen);
 	memcpy(newstr, str1, str1_len);
@@ -77,4 +90,24 @@ extern char* readString()
 		str = append(str, c, &curIndex, &len);
 	}
 	return str;
+}
+
+extern int lat_strcmp(char* str1, char* str2)
+{
+	if (str1 == str2)
+		return 1;
+
+	if (str1 == NULL && *str2 == 0)
+		return 1;
+
+	if (*str1 == 0 && str2 == NULL)
+		return 1;
+
+	while (*str1 == *str2 && *str1 != 0 && *str2 != 0)
+	{
+		str1++;
+		str2++;
+	}
+
+	return *str1 == 0 && *str2 == 0;
 }
