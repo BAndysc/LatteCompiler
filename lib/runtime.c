@@ -1,3 +1,6 @@
+#ifdef _MSC_VER
+#include <stdio.h>
+#else
 #define NULL 0
 typedef unsigned int size_t;
 extern int printf(const char *format, ...);
@@ -10,6 +13,7 @@ extern void *malloc(size_t size);
 extern void free(void *ptr);
 extern void *calloc(size_t nmemb, size_t size);
 extern void *realloc(void *ptr, size_t size);
+#endif
 
 extern int* lat_malloc(int size)
 {

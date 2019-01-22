@@ -20,6 +20,8 @@ namespace Backend.Linker
                 return new LinuxLinker(runner);
             else if (os.IsOSX())
                 return new DarwinLinker(runner);
+            else if (os.IsWindows())
+                return new WindowsLinker(runner);
 
             throw new Exception("Unsupported operating system!");
         }

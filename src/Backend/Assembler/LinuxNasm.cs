@@ -8,5 +8,10 @@ namespace Backend.Assembler
         public LinuxNasm(IRunner runner) : base(runner, NasmTargets.Elf32)
         {
         }
+
+        internal override string GetDebugInfoParameters()
+        {
+            return "-g -F dwarf";
+        }
     }
 }

@@ -38,7 +38,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembler\WindowsNasm.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Linker\WindowsLinker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Assembler\IAssembler.cs" />
     <Compile Include="Assembler\Nasm.cs" />
@@ -78,10 +80,7 @@
       <Name>X86Generator</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Linker\" />
-    <Folder Include="Assembler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

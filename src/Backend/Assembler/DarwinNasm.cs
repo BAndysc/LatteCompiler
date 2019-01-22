@@ -8,5 +8,10 @@ namespace Backend.Assembler
         public DarwinNasm(IRunner runner) : base(runner, NasmTargets.MachO)
         {
         }
+
+        internal override string GetDebugInfoParameters()
+        {
+            return "-g -F dwarf";
+        }
     }
 }

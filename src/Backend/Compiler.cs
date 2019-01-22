@@ -32,7 +32,7 @@ namespace Backend
             assembler = new AssemblerFactory(runner, os).CreateAssembler();
             linker = new LinkerFactory(runner, os).CreateLinker();
 
-            linker.SetLibraryFolder(AppDomain.CurrentDomain.BaseDirectory + "/../lib/");
+            linker.SetLibraryFolder(AppDomain.CurrentDomain.BaseDirectory + @"\..\lib");
         }
         
         

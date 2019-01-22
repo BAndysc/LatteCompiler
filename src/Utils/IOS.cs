@@ -5,5 +5,6 @@ namespace Utils
     {
         bool IsLinux();
         bool IsOSX();
+        bool IsWindows();
     }
 }

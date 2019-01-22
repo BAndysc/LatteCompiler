@@ -22,16 +22,19 @@ namespace Backend.Assembler
             string args = $"-f {target.ToString().ToLower()}";
             args += " " + sourceFile;
             if (withDebug)
-                args += " -g -F dwarf";
+                args += " " + GetDebugInfoParameters();
 
             if (output != null)
                 args += $" -o {output}";
 
             string res;
             runner.Run("nasm", args, out res);
+            Console.WriteLine(res);
         }
 
-        public IAssembler SetOutput(string file)
+        internal abstract string GetDebugInfoParameters();
+
+        public virtual IAssembler SetOutput(string file)
         {
             output = file;
             return this;
@@ -47,6 +50,7 @@ namespace Backend.Assembler
     public enum NasmTargets
     {
         Elf32,
-        MachO
+        MachO,
+        Win32
     }
 }

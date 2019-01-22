@@ -20,7 +20,8 @@ namespace Backend.Assembler
                 return new LinuxNasm(runner);
             else if (os.IsOSX())
                 return new DarwinNasm(runner);
-
+            else if (os.IsWindows())
+                return new WindowsNasm(runner);
             throw new Exception("Unsupported OS!");
         }
     }
