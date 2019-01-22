@@ -85,6 +85,12 @@ namespace LatteBase.AST
         IExpressionNode Right { get; }
     }
 
+    public interface IStringCompareNode : IExpressionNode
+    {
+        IExpressionNode Left { get; }
+        IExpressionNode Right { get; }
+    }
+    
     public interface IFunctionCallNode : IExpressionNode
     {
         string FunctionName { get; }

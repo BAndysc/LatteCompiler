@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -266,7 +267,25 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
             this.functions = functions;
             typeEvaluator = new LatteTypeEvaluator(variables, classes, functions);
         }
-        
+
+        public override IExpressionNode Visit(ICompareNode node)
+        {
+            var left = typeEvaluator.Visit(node.Left);
+            var right = typeEvaluator.Visit(node.Right);
+
+            if (left == LatteType.String &&
+                right == LatteType.String)
+            {
+                if (node.Operator == RelOperator.Equals)
+                    return base.Visit(new StringCompareNode(node.FilePlace, node.Left, node.Right));
+                else if (node.Operator == RelOperator.NotEquals)
+                    return new LogicalNegateNode(base.Visit(new StringCompareNode(node.FilePlace, node.Left, node.Right)), node.FilePlace);
+    
+                throw new Exception("Unexpected operator for strings");
+            }
+            return base.Visit(node);
+        }
+
         public override IExpressionNode Visit(IObjectFieldNode node)
         {
             var objType = typeEvaluator.Visit(node.Object);
@@ -419,6 +438,11 @@ namespace LatteTreeProcessor.CalculateFieldOffsets
         public override ILatteType Visit(INewArrayNode node)
         {
             return new LatteType(node.ArrayType);
+        }
+
+        public override ILatteType Visit(IStringCompareNode node)
+        {
+            return LatteType.Bool;
         }
     }
     

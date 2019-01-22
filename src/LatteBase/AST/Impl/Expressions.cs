@@ -248,4 +248,16 @@ namespace LatteBase.AST.Impl
             Size = size;
         }
     }
+
+    public class StringCompareNode : Node, IStringCompareNode
+    {
+        public StringCompareNode(IFilePlace place, IExpressionNode left, IExpressionNode right) : base(place)
+        {
+            Left = left;
+            Right = right;
+        }
+
+        public IExpressionNode Left { get; }
+        public IExpressionNode Right { get; }
+    }
 }

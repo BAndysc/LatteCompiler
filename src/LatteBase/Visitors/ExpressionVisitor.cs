@@ -25,6 +25,7 @@ namespace LatteBase.Visitors
         public abstract T Visit(IMethodCallWithOffsetNode node);
         public abstract T Visit(IArrayAccessNode node);
         public abstract T Visit(INewArrayNode node);
+        public abstract T Visit(IStringCompareNode node);
 
         public T Visit(IExpressionNode node)
         {

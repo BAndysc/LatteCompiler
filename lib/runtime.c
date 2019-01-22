@@ -97,11 +97,11 @@ extern int lat_strcmp(char* str1, char* str2)
 	if (str1 == str2)
 		return 1;
 
-	if (str1 == NULL && *str2 == 0)
-		return 1;
+	if (str1 == NULL)
+		return *str2 == 0;
 
-	if (*str1 == 0 && str2 == NULL)
-		return 1;
+	if (*str1 == 0)
+		return str2 == NULL;
 
 	while (*str1 == *str2 && *str1 != 0 && *str2 != 0)
 	{

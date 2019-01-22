@@ -204,6 +204,18 @@ namespace QuadruplesGenerator.Generators
             return register;
         }
 
+        public override IRegister Visit(IStringCompareNode node)
+        {
+            var register = program.GetNextRegister();
+
+            var left = Visit(node.Left);
+            var right = Visit(node.Right);
+            
+            program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_strcmp", register, new[]{left, right}));
+
+            return register;
+        }
+
         public override IRegister Visit(IFunctionCallNode node)
         {
             var result = program.GetNextRegister();

@@ -145,6 +145,20 @@ namespace LatteTypeChecker.Visitors
             return LatteType.Bool;
         }
 
+        public override ILatteType Visit(IStringCompareNode node)
+        {
+            var left = Visit(node.Left);
+            var right = Visit(node.Right);
+
+            if (!functions.IsTypeAssignable(left, LatteType.String))
+                throw new InplaceTypeCheckerException(node.FilePlace, "Expected String, instead given: " + left);
+            
+            if (!functions.IsTypeAssignable(right, LatteType.String))
+                throw new InplaceTypeCheckerException(node.FilePlace, "Expected String, instead given: " + right);
+            
+            return LatteType.Bool;
+        }
+
         private bool IsDefinedEquality(ILatteType type)
         {
             return type != LatteType.Void;

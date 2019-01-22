@@ -113,5 +113,10 @@ namespace LatteBase.CodeGenerators
         {
             return $"new NewArrayNode(new DummyFilePlace(), {typeGen.Visit(node.ArrayType)}, {Visit(node.Size)})";
         }
+
+        public override string Visit(IStringCompareNode node)
+        {
+            return $"new StringCompareNode(new DummyFilePlace(), {Visit(node.Left)}, {Visit(node.Right)})";
+        }
     }
 }

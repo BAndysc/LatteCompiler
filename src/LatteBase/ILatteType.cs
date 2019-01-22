@@ -14,7 +14,7 @@ namespace LatteBase
         public bool IsArray { get; }
         public static readonly LatteType Int = new LatteType("int");
         public static readonly LatteType String = new LatteType("string");
-        public static readonly LatteType Bool = new LatteType("bool");
+        public static readonly LatteType Bool = new LatteType("boolean");
         public static readonly LatteType Void = new LatteType("void");
         public static readonly LatteType Null = new LatteType("null");
 

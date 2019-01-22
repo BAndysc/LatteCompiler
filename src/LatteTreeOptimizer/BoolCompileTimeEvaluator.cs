@@ -174,5 +174,10 @@ namespace LatteTreeOptimizer
         {
             return null;
         }
+
+        public override bool? Visit(IStringCompareNode node)
+        {
+            return null;
+        }
     }
 }

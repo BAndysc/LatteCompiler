@@ -113,6 +113,11 @@ namespace LatteBase.Transformers
         {
             return new NewArrayNode(node.FilePlace, node.ArrayType, Visit(node.Size));
         }
+
+        public override IExpressionNode Visit(IStringCompareNode node)
+        {
+            return new StringCompareNode(node.FilePlace, Visit(node.Left), Visit(node.Right));
+        }
     }
 
 }

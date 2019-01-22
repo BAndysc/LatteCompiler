@@ -109,5 +109,10 @@ namespace LatteTypeChecker.Visitors
         {
             return false;
         }
+
+        public override bool Visit(IStringCompareNode node)
+        {
+            return false;
+        }
     }
 }
