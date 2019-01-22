@@ -16,7 +16,13 @@ Polecenie `make test` uruchomi przygotowane testy.
 
 # Zakres
 
-Kompilator składa się z frontendu (sprawdzanie typów, optymalizatora drzewa AST) oraz backendu (generator kodu pośredniego i kompilator do x86). Na ten moment obsługiwna jest podstawowa wersja Latte, bez rozszerzeń.
+Kompilator składa się z frontendu (sprawdzanie typów, optymalizatora drzewa AST) oraz backendu (generator kodu pośredniego i kompilator do x86). Na ten moment obsługiwane są:
+ 
+ * struktury
+ * obiekty
+ * dziedziczenie
+ * metody (wirtualne)
+ * tablice
 
 ## Frontend
 W ramach frontendu sprawdzane są błędy typów, przekraczanie stałych w programie, typy argumentów, nazwy argumentów, występowanie instrukcji return.
@@ -75,6 +81,11 @@ Zastosowano następujące optymalizacje:
  * wyliczenie stałych podczas kompilacji (patrz punkt Frontend)
  * usuwanie nieosiągalnego kodu (na podstawie drzewa AST)
  * optymalizacja rekurencji ogonowej
+ * obiekty tej samej klasy mają wspólną vtable
+ * stałe nie są trzymane na stosie
+ * usuwanie zbędnych instrukcji:
+ 	mov A, B
+ 	mov B, A
 
 # Użyte narzędzia
 

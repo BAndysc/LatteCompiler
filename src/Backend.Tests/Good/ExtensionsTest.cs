@@ -40,5 +40,10 @@ namespace Backend.Tests.Good
         {
             TestProgram(new TestProgramProviderList());
         }
+        [Test]
+        public void TestShapes()
+        {
+            TestProgram(new TestProgramProviderShapes());
+        }
     }
 }
