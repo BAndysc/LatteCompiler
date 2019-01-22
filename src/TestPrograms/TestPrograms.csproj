@@ -123,6 +123,7 @@
     <Compile Include="Good\DeclarationInIfTest.cs" />
     <Compile Include="Good\ExitAsReturnTest.cs" />
     <Compile Include="Good\ForeachTests.cs" />
+    <Compile Include="Good\ForForeach.cs" />
     <Compile Include="Good\StringComparisonTest.cs" />
     <Compile Include="Good\TestProgramProviderNegate.cs" />
     <Compile Include="Good\TestProviderStructIncrementDecrement.cs" />

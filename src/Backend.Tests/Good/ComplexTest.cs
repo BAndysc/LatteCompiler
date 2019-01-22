@@ -28,6 +28,11 @@ namespace Backend.Tests.Good
             TestProgram(new TestProgramProviderStringCompare());
         }
 
+        [Test]
+        public void ForForeachTestCase()
+        {
+            TestProgram(new TestProgramProviderForForeach());
+        }
         
     }
 }

@@ -271,6 +271,8 @@ namespace LatteTypeChecker.Visitors
                 throw new InplaceTypeCheckerException(node.FilePlace, $"{arrayType.BaseType} is not assignable to {node.IteratorType}");
 
             var blockChecker = GetBlockTypeChecker();
+            if (!blockChecker.variables.CanRedefine(new VariableDefinition(node.IteratorName, node.IteratorType)))
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Cannot redefine variable {node.IteratorName} in for-each");
             blockChecker.variables.Define(new VariableDefinition(node.IteratorName, node.IteratorType));
             blockChecker.Visit(node.Body);
         }
