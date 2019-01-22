@@ -54,8 +54,10 @@
     <Compile Include="AST\IStatements.cs" />
     <Compile Include="AST\IFunctionDefinitionNode.cs" />
     <Compile Include="AST\Operators.cs" />
+    <Compile Include="CodeGenerators\ClassCodeGenerator.cs" />
     <Compile Include="CodeGenerators\ExpressionCodeGenerator.cs" />
     <Compile Include="CodeGenerators\FunctionCodeGenerator.cs" />
+    <Compile Include="CodeGenerators\LatteTypeCodeGenerator.cs" />
     <Compile Include="CodeGenerators\ProgramCodeGenerator.cs" />
     <Compile Include="CodeGenerators\StatementCodeGenerator.cs" />
     <Compile Include="ILatteType.cs" />

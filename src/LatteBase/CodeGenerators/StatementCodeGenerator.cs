@@ -6,6 +6,7 @@ namespace LatteBase.CodeGenerators
 {
     public class StatementCodeGenerator : StatementVisitor<string>
     {
+        private LatteTypeCodeGenerator typeGen = new LatteTypeCodeGenerator();
         private readonly ExpressionCodeGenerator expressionGenerator;
         
         public StatementCodeGenerator()
@@ -26,7 +27,7 @@ namespace LatteBase.CodeGenerators
         public override string Visit(IDeclarationNode node)
         {
             var declarations = node.Declarations.Select(t => $"new SingleDeclaration(\"{t.Name}\", {(t.Value == null ? "null" : expressionGenerator.Visit(t.Value))})");
-            return $"new DeclarationNode(new DummyFilePlace(), LatteType.{node.Type}, {string.Join(", ", declarations)})";
+            return $"new DeclarationNode(new DummyFilePlace(), {typeGen.Visit(node.Type)}, {string.Join(", ", declarations)})";
         }
 
         public override string Visit(IAssignmentNode node)
@@ -111,7 +112,7 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IForEachNode node)
         {
-            return $"new ForEachNode(new DummyFilePlace(), LatteType.{node.IteratorType}, \"{node.IteratorName}\", {expressionGenerator.Visit(node.Array)}, {Visit(node.Body)})";
+            return $"new ForEachNode(new DummyFilePlace(), {typeGen.Visit(node.IteratorType)}, \"{node.IteratorName}\", {expressionGenerator.Visit(node.Array)}, {Visit(node.Body)})";
         }
     }
 }

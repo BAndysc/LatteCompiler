@@ -7,6 +7,7 @@ namespace LatteBase.CodeGenerators
 {
     public class ExpressionCodeGenerator : ExpressionVisitor<string>
     {
+        private LatteTypeCodeGenerator typeGen = new LatteTypeCodeGenerator();
         public override string Visit(IIntNode node)
         {
             return $"new IntNode({node.Value}, new DummyFilePlace())";
@@ -74,12 +75,12 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(INewObjectNode node)
         {
-            return $"new NewObjectNode(new DummyFilePlace(), \"{node.Type}\")";
+            return $"new NewObjectNode(new DummyFilePlace(), {typeGen.Visit(node.Type)})";
         }
 
         public override string Visit(ICastExpressionNode node)
         {
-            return $"new CastExpressionNode(new DummyFilePlace(), LatteType.{node.CastType}, {Visit(node.Expression)})";
+            return $"new CastExpressionNode(new DummyFilePlace(), {typeGen.Visit(node.CastType)}, {Visit(node.Expression)})";
         }
 
         public override string Visit(IObjectFieldNode node)
@@ -95,22 +96,22 @@ namespace LatteBase.CodeGenerators
 
         public override string Visit(IMethodCallNode node)
         {
-            return $"new MethodCallNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}});";
+            return $"new MethodCallNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}})";
         }
         
         public override string Visit(IMethodCallWithOffsetNode node)
         {
-            return $"new MethodCallWithOffsetNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}}, {node.ObjectType});";
+            return $"new MethodCallWithOffsetNode(new DummyFilePlace(), {Visit(node.Object)}, \"{node.MethodName}\", new List<IExpressionNode>(){{{string.Join(", ", node.Arguments.Select(Visit))}}}, {node.ObjectType})";
         }
 
         public override string Visit(IArrayAccessNode node)
         {
-            return $"new ArrayAccessNode(new DummyFilePlace(), {Visit(node.Array)}, {Visit(node.Index)}))";
+            return $"new ArrayAccessNode(new DummyFilePlace(), {Visit(node.Array)}, {Visit(node.Index)})";
         }
 
         public override string Visit(INewArrayNode node)
         {
-            return $"new NewArrayNode(new DummyFilePlace(), LatteType.{node.ArrayType}, {Visit(node.Size)})";
+            return $"new NewArrayNode(new DummyFilePlace(), {typeGen.Visit(node.ArrayType)}, {Visit(node.Size)})";
         }
     }
 }
