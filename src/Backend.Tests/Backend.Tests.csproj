@@ -91,6 +91,7 @@
     <Compile Include="Good\Core022Test.cs" />
     <Compile Include="Good\DeclarationInIfTest.cs" />
     <Compile Include="Good\ExitAsReturnTest.cs" />
+    <Compile Include="Good\ExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

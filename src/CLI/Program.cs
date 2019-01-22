@@ -15,7 +15,7 @@ namespace CLI
             {
                 Console.WriteLine("Usage: ./cli [program] ");
                 //Environment.Exit(-1);
-                args = new string[] {"/Users/bartek/Programowanie/LatteCompiler/test.lat"};
+                args = new string[] { @"C:\Users\Bartek\Programowanie\LatteCompiler\structdecr.lat" };
             }
 
             foreach (var arg in args)

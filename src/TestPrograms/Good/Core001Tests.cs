@@ -4,8 +4,8 @@ using LatteBase.AST;
 using LatteBase.AST.Impl;
 
 
-// Author: ...
-// Source: ...
+// Author: p. Marcin Benke
+// Source: https://www.mimuw.edu.pl/~ben/Zajecia/Mrj2018/Latte/lattests121017.tgz
 
 // int main() {
 // 	printInt(fac(10));
