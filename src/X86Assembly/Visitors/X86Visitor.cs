@@ -29,6 +29,10 @@ namespace X86Assembly.Visitors
         public abstract T Visit(SubInstruction instr);
         public abstract T Visit(LabelInstruction instr);
         public abstract T Visit(LeaInstruction instr);
+        public abstract T Visit(SegmentMetaInstruction instr);
+        public abstract T Visit(ExternMetaInstruction instr);
+        public abstract T Visit(GlobalMetaInstruction instr);
+        public abstract T Visit(DataMetaInstruction instr);
 
         public T Visit(IX86Instruction instr)
         {

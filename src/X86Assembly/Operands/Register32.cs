@@ -19,5 +19,23 @@ namespace X86Assembly.Operands
         public int? ImplicitSize => 4;
         
         public int Size => 4;
+
+        protected bool Equals(Register32 other)
+        {
+            return string.Equals(RegisterName, other.RegisterName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Register32) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (RegisterName != null ? RegisterName.GetHashCode() : 0);
+        }
     }
 }

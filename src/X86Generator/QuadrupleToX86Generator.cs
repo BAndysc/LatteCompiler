@@ -14,12 +14,12 @@ namespace X86Generator
     public class QuadrupleToX86Generator : QuadrupleVisitor<IEnumerable<IX86Instruction>>
     {
         private readonly QuadruplesProgram program;
-        private readonly IRegisterAllocation<Memory32> mapping;
+        private readonly IRegisterAllocation<IOperand> mapping;
         private readonly int regsMaxUsedRegisters;
         private readonly List<IX86Instruction> instructions = new List<IX86Instruction>();
         private readonly bool UseVTable;
 
-        public QuadrupleToX86Generator(QuadruplesProgram program, IRegisterAllocation<Memory32> mapping, int regsMaxUsedRegisters, bool useVTable)
+        public QuadrupleToX86Generator(QuadruplesProgram program, IRegisterAllocation<IOperand> mapping, int regsMaxUsedRegisters, bool useVTable)
         {
             this.program = program;
             this.mapping = mapping;
@@ -43,9 +43,9 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit(new MovInstruction(Register32.EAX, a), quadruple);
-            Emit(new AddInstruction(Register32.EAX, b), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
+            Emit(new AddInstruction(Register32.EAX, (dynamic)b), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -56,12 +56,12 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.Value);
             if (dest == a)
-                Emit(new NegateInstruction(a), quadruple);
+                Emit(new NegateInstruction((dynamic)a), quadruple);
             else
             {
-                Emit(new MovInstruction(Register32.EAX, a), quadruple);
+                Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
                 Emit(new NegateInstruction(Register32.EAX), quadruple);
-                Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+                Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
             }
 
             return instructions.ToList();
@@ -72,10 +72,20 @@ namespace X86Generator
             Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.Value);
-            Emit(new CompareInstruction(a, new ImmediateValue32(0)), quadruple);
-            Emit(new SetEInstruction(Register8.AL), quadruple);
-            Emit(new MovzxInstruction(Register32.EAX, Register8.AL), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            if (mapping.IsIntConst(quadruple.Value))
+            {
+                if ((a as ImmediateValue32).Value == 0)
+                    Emit(new MovInstruction((dynamic)dest, new ImmediateValue32(1)), quadruple);
+                else
+                    Emit(new MovInstruction((dynamic)dest, new ImmediateValue32(0)), quadruple);
+            }
+            else
+            {
+                Emit(new CompareInstruction((dynamic)a, new ImmediateValue32(0)), quadruple);
+                Emit(new SetEInstruction(Register8.AL), quadruple);
+                Emit(new MovzxInstruction(Register32.EAX, Register8.AL), quadruple);
+                Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
+            }
 
             return instructions.ToList();
         }
@@ -86,9 +96,9 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit(new MovInstruction(Register32.EAX, a), quadruple);
-            Emit(new SubInstruction(Register32.EAX, b), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
+            Emit(new SubInstruction(Register32.EAX, (dynamic)b), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -99,9 +109,15 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
-            Emit(new MovInstruction(Register32.EAX, a), quadruple);
-            Emit(new MulInstruction(b), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
+            if (mapping.IsIntConst(quadruple.RegisterB))
+            {
+                Emit(new MovInstruction(Register32.EBX, (dynamic)b), quadruple);
+                Emit(new MulInstruction(Register32.EBX), quadruple);
+            }
+            else
+                Emit(new MulInstruction((dynamic)b), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -113,10 +129,18 @@ namespace X86Generator
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
 
-            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
             Emit(new CdqInstruction(), quadruple);
-            Emit(new SignedDivInstruction(b), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            if (mapping.IsIntConst(quadruple.RegisterB))
+            {
+                Emit(new MovInstruction(Register32.EBX, (dynamic)b), quadruple);
+                Emit(new SignedDivInstruction(Register32.EBX), quadruple);
+            }
+            else
+            {
+                Emit(new SignedDivInstruction((dynamic)b), quadruple);
+            }
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
             
             return instructions.ToList();
         }
@@ -127,12 +151,21 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.ResultRegister);
             var a = mapping.Get(quadruple.RegisterA);
             var b = mapping.Get(quadruple.RegisterB);
+
+
             
-            
-            Emit(new MovInstruction(Register32.EAX, a), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)a), quadruple);
             Emit(new CdqInstruction(), quadruple);
-            Emit(new SignedDivInstruction(b), quadruple);
-            Emit(new MovInstruction(dest, Register32.EDX), quadruple);
+            if (mapping.IsIntConst(quadruple.RegisterB))
+            {
+                Emit(new MovInstruction(Register32.EBX, (dynamic)b), quadruple);
+                Emit(new SignedDivInstruction(Register32.EBX), quadruple);
+            }
+            else
+            {
+                Emit(new SignedDivInstruction((dynamic)b), quadruple);
+            }
+            Emit(new MovInstruction((dynamic)dest, Register32.EDX), quadruple);
             return instructions.ToList();
         }
 
@@ -144,10 +177,10 @@ namespace X86Generator
             var b = mapping.Get(quadruple.RegisterB);
             //alignment
             Emit(new SubInstruction(Register32.ESP, new ImmediateValue32(4 * 2)), quadruple);
-            Emit(new PushInstruction(b), quadruple);
-            Emit(new PushInstruction(a), quadruple);
+            Emit(new PushInstruction((dynamic)b), quadruple);
+            Emit(new PushInstruction((dynamic)a), quadruple);
             Emit(new CallInstruction(new X86Label("concat_string")), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
             Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * 4)), quadruple);
 
             return instructions.ToList();
@@ -157,7 +190,8 @@ namespace X86Generator
         {
             Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit(new MovInstruction(dest, new ImmediateValue32(quadruple.Value.AsInt)), quadruple);
+            if (!mapping.IsIntConst(quadruple.ResultRegister))
+                Emit(new MovInstruction((dynamic)dest, new ImmediateValue32(quadruple.Value.AsInt)), quadruple);
 
             return instructions.ToList();
         }
@@ -167,7 +201,7 @@ namespace X86Generator
             Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
             Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EBP, -4 * (quadruple.Local+1))), quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -178,9 +212,9 @@ namespace X86Generator
             Clear();
             var addr = mapping.Get(quadruple.Address);
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit(new MovInstruction(Register32.EAX, addr), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)addr), quadruple);
             Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.Offset)),quadruple);
-            Emit(new MovInstruction(dest, Register32.EAX), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
             
             return instructions.ToList();
         }
@@ -196,7 +230,7 @@ namespace X86Generator
         { 
             Clear();
             var value = mapping.Get(quadruple.ValueRegister);
-            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)value), quadruple);
             Emit(new LeaveInstruction(), quadruple);
             Emit(new RetInstruction(), quadruple);
 
@@ -216,7 +250,7 @@ namespace X86Generator
         {
             Clear();
             var value = mapping.Get(quadruple.Value);
-            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)value), quadruple);
             Emit(new MovInstruction(new Memory32(Register32.EBP, -4 * (quadruple.Local + 1)), Register32.EAX), quadruple);
 
             return instructions.ToList();
@@ -227,8 +261,8 @@ namespace X86Generator
             Clear();
             var value = mapping.Get(quadruple.Value);
             var addr = mapping.Get(quadruple.ObjectAddr);
-            Emit(new MovInstruction(Register32.EDX, addr), quadruple);
-            Emit(new MovInstruction(Register32.EAX, value), quadruple);
+            Emit(new MovInstruction(Register32.EDX, (dynamic)addr), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)value), quadruple);
             Emit(new MovInstruction(new Memory32(Register32.EDX, quadruple.Offset), Register32.EAX), quadruple);
 
             return instructions.ToList();
@@ -244,7 +278,7 @@ namespace X86Generator
             foreach (var arg in quadruple.Arguments.Reverse())
             {
                 var value = mapping.Get(arg);
-                Emit(new PushInstruction(value), quadruple);
+                Emit(new PushInstruction((dynamic)value), quadruple);
             }
 
             Emit(new CallInstruction(new X86Label(quadruple.FunctionName)), quadruple);
@@ -252,7 +286,7 @@ namespace X86Generator
             Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * (alignment + argsCount))), quadruple);
                         
             if (mapping.IsAllocated(quadruple.ResultRegister))
-                Emit(new MovInstruction(mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
+                Emit(new MovInstruction((dynamic)mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -264,7 +298,7 @@ namespace X86Generator
             int argsCount = quadruple.Arguments.Count();
             int alignment = (4 - (argsCount % 4)) % 4;
             
-            Emit(new MovInstruction(Register32.EAX, mapping.Get(quadruple.This)), quadruple); // EAX = this
+            Emit(new MovInstruction(Register32.EAX, (dynamic)mapping.Get(quadruple.This)), quadruple); // EAX = this
             Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, 0)), quadruple); // EAX = vtable ptr 
             Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.MethodOffset)), quadruple);
             
@@ -273,7 +307,7 @@ namespace X86Generator
             foreach (var arg in quadruple.Arguments.Reverse())
             {
                 var value = mapping.Get(arg);
-                Emit(new PushInstruction(value), quadruple);
+                Emit(new PushInstruction((dynamic)value), quadruple);
             }
 
             Emit(new CallInstruction(Register32.EAX), quadruple);
@@ -281,7 +315,7 @@ namespace X86Generator
             Emit(new AddInstruction(Register32.ESP, new ImmediateValue32(4 * (alignment + argsCount))), quadruple);
                         
             if (mapping.IsAllocated(quadruple.ResultRegister))
-                Emit(new MovInstruction(mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
+                Emit(new MovInstruction((dynamic)mapping.Get(quadruple.ResultRegister), Register32.EAX), quadruple);
 
             return instructions.ToList();
         }
@@ -297,7 +331,7 @@ namespace X86Generator
             
             var vTable = new X86Label(@class.VTable.Text);
             
-            Emit(new MovInstruction(Register32.EAX, mapping.Get(quadruple.Addr)), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)mapping.Get(quadruple.Addr)), quadruple);
             Emit(new MovInstruction(new Memory32(Register32.EAX, 0), new ImmediateValue32(vTable)), quadruple);
             
             return instructions.ToList();
@@ -308,8 +342,14 @@ namespace X86Generator
             Clear();
             var a = mapping.Get(quadruple.RegValue);
             var b = mapping.Get(quadruple.CompareTo);
-            Emit(new MovInstruction(Register32.EAX, b), quadruple);
-            Emit(new CompareInstruction(a, Register32.EAX), quadruple);
+            Emit(new MovInstruction(Register32.EAX, (dynamic)b), quadruple);
+            if (mapping.IsIntConst(quadruple.RegValue))
+            {
+                Emit(new MovInstruction(Register32.EBX, (dynamic)a), quadruple);
+                Emit(new CompareInstruction(Register32.EBX, Register32.EAX), quadruple);
+            }
+            else
+                Emit(new CompareInstruction((dynamic)a, Register32.EAX), quadruple);
             return instructions.ToList();
         }
 
@@ -371,7 +411,7 @@ namespace X86Generator
             var dest = mapping.Get(quadruple.Destination);
             
             Emit(new AndInstruction(Register32.ECX, new ImmediateValue32(1)), quadruple);
-            Emit(new MovInstruction(dest, Register32.ECX), quadruple);
+            Emit(new MovInstruction((dynamic)dest, Register32.ECX), quadruple);
             return instructions.ToList();
         }
 
@@ -393,7 +433,7 @@ namespace X86Generator
         {
             Clear();
             var dest = mapping.Get(quadruple.ResultRegister);
-            Emit(new MovInstruction(dest, new ImmediateValue32(new X86Label(quadruple.LabelToLoad.Text))), quadruple);
+            Emit(new MovInstruction((dynamic)dest, new ImmediateValue32(new X86Label(quadruple.LabelToLoad.Text))), quadruple);
             return instructions.ToList();
         }
 

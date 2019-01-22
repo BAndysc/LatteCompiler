@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using X86Assembly;
 using X86Assembly.Instructions;
 using X86Assembly.Visitors;
@@ -173,6 +174,35 @@ namespace X86IntelAsm
         public override string Visit(LabelInstruction instr)
         {
             return Indent($"{instr.Label.Label}:", true);
+        }
+
+        public override string Visit(SegmentMetaInstruction instr)
+        {
+            return Indent($"segment .{instr.Name}", true);
+        }
+
+        public override string Visit(ExternMetaInstruction instr)
+        {
+            return Indent($"extern {instr.Symbol}");
+        }
+
+        public override string Visit(GlobalMetaInstruction instr)
+        {
+            return Indent($"global {instr.Symbol}");
+        }
+
+        public override string Visit(DataMetaInstruction instr)
+        {
+            if (instr.Text != null)
+                return Indent($"{instr.Key}: db `{instr.Text.Replace("`", "\\`")}`, 0");
+            
+            if (instr.ZeroBytes.Value % 4 == 0)
+                return Indent($"{instr.Key}: dd {string.Join(", ", Enumerable.Repeat("0", instr.ZeroBytes.Value / 4))}");
+            
+            if (instr.ZeroBytes.Value % 2 == 0)
+                return Indent($"{instr.Key}: dw {string.Join(", ", Enumerable.Repeat("0", instr.ZeroBytes.Value / 2))}");
+            
+            return Indent($"{instr.Key}: db {string.Join(", ", Enumerable.Repeat("0", instr.ZeroBytes.Value))}");
         }
     }
 }

@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -62,6 +63,10 @@
     <ProjectReference Include="..\X86IntelAsm\X86IntelAsm.csproj">
       <Project>{d9d31555-c264-4bfa-8ce5-73a00fa1ea7f}</Project>
       <Name>X86IntelAsm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X86Optimizer\X86Optimizer.csproj">
+      <Project>{dc3db407-acad-495d-85d8-9f8b57647772}</Project>
+      <Name>X86Optimizer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

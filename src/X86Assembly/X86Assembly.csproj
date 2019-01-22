@@ -56,6 +56,7 @@
     <Compile Include="Instructions\NegateInstruction.cs" />
     <Compile Include="Instructions\PushInstruction.cs" />
     <Compile Include="Instructions\RetInstruction.cs" />
+    <Compile Include="Instructions\SegmentMetaInstruction.cs" />
     <Compile Include="Instructions\SetEInstruction.cs" />
     <Compile Include="Instructions\SetGeInstruction.cs" />
     <Compile Include="Instructions\SetGInstruction.cs" />

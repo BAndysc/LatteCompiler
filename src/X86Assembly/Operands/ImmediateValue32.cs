@@ -25,5 +25,26 @@ namespace X86Assembly.Operands
         public int? ImplicitSize => null;
         
         public int Size => 4;
+
+        protected bool Equals(ImmediateValue32 other)
+        {
+            return Value == other.Value && Equals(Label, other.Label);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ImmediateValue32) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Value.GetHashCode() * 397) ^ (Label != null ? Label.GetHashCode() : 0);
+            }
+        }
     }
 }
