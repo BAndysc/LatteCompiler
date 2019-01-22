@@ -10,5 +10,17 @@ namespace Backend.Tests.Good
         {
             TestProgram(new ComplexTestProvider());
         }
+        
+        [Test]
+        public void ForeachTestCase()
+        {
+            TestProgram(new TestProgramProviderForeach());
+        }
+        [Test]
+        public void StructDecrementIncrementTestCase()
+        {
+            TestProgram(new TestProgramProviderStructDecrementIncrement());
+        }
+        
     }
 }

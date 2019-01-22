@@ -214,7 +214,7 @@ namespace LatteBase.AST.Impl
         }
     }
 
-    public class StructDecrementWithOffsetNode : StructDecrementNode, IStructDecrementNode
+    public class StructDecrementWithOffsetNode : StructDecrementNode, IStructDecrementWithOffsetNode
     {
         public int FieldOffset { get; }
 

@@ -10,5 +10,12 @@ namespace Backend.Tests.Good
         {
             TestProgram(new TestProgramProviderAdd());
         }
+        
+        [Test]
+        public void TestNegate()
+        {
+            TestProgram(new TestProgramProviderNegate());
+        }
+        
     }
 }

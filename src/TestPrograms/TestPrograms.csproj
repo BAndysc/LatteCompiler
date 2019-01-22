@@ -62,6 +62,11 @@
     <Compile Include="Bad\Bad027Tests.cs" />
     <Compile Include="Bad\Classes\BadClassesTests.cs" />
     <Compile Include="Bad\TestProgramProviderFunctionCallAsReturn.cs" />
+    <Compile Include="Community\BfsTestProvider.cs" />
+    <Compile Include="Community\CalculatorTestProvider.cs" />
+    <Compile Include="Community\Heapsort2TestProvider.cs" />
+    <Compile Include="Community\ListTestProvider.cs" />
+    <Compile Include="Community\MergeSortTestProvider.cs" />
     <Compile Include="DummyFilePlace.cs" />
     <Compile Include="Good\AddTests.cs" />
     <Compile Include="Good\Basic\add.cs" />
@@ -109,6 +114,9 @@
     <Compile Include="Good\Core022Tests.cs" />
     <Compile Include="Good\DeclarationInIfTest.cs" />
     <Compile Include="Good\ExitAsReturnTest.cs" />
+    <Compile Include="Good\ForeachTests.cs" />
+    <Compile Include="Good\TestProgramProviderNegate.cs" />
+    <Compile Include="Good\TestProviderStructIncrementDecrement.cs" />
     <Compile Include="IProgramProvider.cs" />
     <Compile Include="Optimization\OptimizeTest1.cs" />
     <Compile Include="Optimization\OptimizeTest3.cs" />

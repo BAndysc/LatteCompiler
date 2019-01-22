@@ -50,10 +50,7 @@ namespace QuadruplesGenerator.Generators
                 if (decl.Value == null)
                 {
                     dest = program.GetNextRegister();
-                    if (dest == LatteType.Bool)
-                        program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectBoolValue(false), dest));                
-                    else
-                        program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), dest));
+                    program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(0), dest));
                 }
                 else
                 {

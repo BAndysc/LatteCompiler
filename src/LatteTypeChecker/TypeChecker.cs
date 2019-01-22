@@ -26,11 +26,6 @@ namespace LatteTypeChecker
             environment.DefineFunction(new FunctionDefinition(LatteType.String, "readString", null, null));
         }
         
-        public TypeChecker(IEnvironment environment)
-        {
-            this.environment = environment;
-        }
-        
         public override bool Visit(IProgram program)
         {
             HashSet<string> classNames = new HashSet<string>();

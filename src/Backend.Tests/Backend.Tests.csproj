@@ -65,6 +65,7 @@
     <Compile Include="Good\Basic\VoidReturnTest.cs" />
     <Compile Include="Good\Basic\WhileTrue2Test.cs" />
     <Compile Include="Good\Basic\WhileTrueTest.cs" />
+    <Compile Include="Good\CommunityTests.cs" />
     <Compile Include="Good\ComplexTest.cs" />
     <Compile Include="Good\Core001Test.cs" />
     <Compile Include="Good\Core002Test.cs" />

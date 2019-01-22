@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using LatteTypeChecker;
 using NUnit.Framework;
 using TestPrograms;
@@ -34,7 +35,7 @@ namespace Backend.Tests
 
             string[] lines = null;
             if (programProvider.GetInput() != null)
-                lines = programProvider.GetInput().Split('\n');
+                lines = programProvider.GetInput().Split('\n').Select(t => t.TrimEnd()).ToArray();
             
             runner.Run(outputProgramFile, "", out programOutput, lines);
 
