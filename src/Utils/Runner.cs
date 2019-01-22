@@ -7,7 +7,6 @@ namespace Utils
     {
         public bool Run(string command, string arguments, out string standardOut, string[] inputs = null)
         {
-            Console.WriteLine("running " + command + " " + arguments);
             try
             {
                 ProcessStartInfo procStartInfo = new ProcessStartInfo();
