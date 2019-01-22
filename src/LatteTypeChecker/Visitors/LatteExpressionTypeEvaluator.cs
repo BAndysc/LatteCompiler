@@ -108,7 +108,7 @@ namespace LatteTypeChecker.Visitors
             if (right != LatteType.Int && (right != LatteType.String || node.Operator != BinaryOperator.Add))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
             
-            if (!Equals(left, right))
+            if (!functions.IsTypeAssignable(left, right))
                 throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.String);
 
             if (left == LatteType.String)
@@ -170,7 +170,7 @@ namespace LatteTypeChecker.Visitors
                 var givenArgumentType = Visit(node.Arguments[i]);
                 var expectedArgumentType = function.ArgumentTypes[i];
 
-                if (!Equals(givenArgumentType, expectedArgumentType))
+                if (!functions.IsTypeAssignable(givenArgumentType, expectedArgumentType))
                     throw new FunctionCallTypeMismatch(function, i, givenArgumentType, node.FilePlace);
             }
             
@@ -245,7 +245,7 @@ namespace LatteTypeChecker.Visitors
                 var givenArgumentType = Visit(node.Arguments[i]);
                 var expectedArgumentType = method.ArgumentTypes[i];
 
-                if (!Equals(givenArgumentType, expectedArgumentType))
+                if (!functions.IsTypeAssignable(givenArgumentType, expectedArgumentType))
                     throw new FunctionCallTypeMismatch(method, i, givenArgumentType, node.FilePlace);
             }
 
