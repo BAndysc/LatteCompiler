@@ -55,6 +55,18 @@ namespace LatteTreeOptimizer
                     return new TrueNode(node.FilePlace);
                 return new FalseNode(node.FilePlace);
             }
+            else
+            {
+                var leftV = boolOptimizer.Visit(node.Left);
+
+                if (leftV.HasValue && leftV.Value)
+                    return Visit(node.Right);
+
+                var rightV = boolOptimizer.Visit(node.Right);
+                
+                if (rightV.HasValue && rightV.Value)
+                    return Visit(node.Left);
+            }
             
             return new AndNode(Visit(node.Left), Visit(node.Right), node.FilePlace);
 
@@ -69,6 +81,18 @@ namespace LatteTreeOptimizer
                 if (val.Value)
                     return new TrueNode(node.FilePlace);
                 return new FalseNode(node.FilePlace);
+            }
+            else
+            {
+                var leftV = boolOptimizer.Visit(node.Left);
+
+                if (leftV.HasValue && !leftV.Value)
+                    return Visit(node.Right);
+
+                var rightV = boolOptimizer.Visit(node.Right);
+                
+                if (rightV.HasValue && !rightV.Value)
+                    return Visit(node.Left);
             }
             
             return new OrNode(Visit(node.Left), Visit(node.Right), node.FilePlace);

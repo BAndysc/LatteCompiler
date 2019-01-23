@@ -49,6 +49,9 @@ namespace LatteTypeChecker.Visitors
             if (declarationType == LatteType.Void)
                 throw new InvalidVariableTypeException(declarationType, node.FilePlace);
             
+            if (!functions.IsTypeDefined(declarationType))
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Type {declarationType} is not defined");
+            
             foreach (var item in node.Declarations)
             {
                 var variableDefinition = new VariableDefinition(item.Name, declarationType);

@@ -15,5 +15,6 @@ namespace LatteTypeChecker.Models
         void DefineClass(IClassDefinition @class);
         IClassDefinition GetClass(string className);
         bool IsTypeAssignable(ILatteType type, ILatteType toType);
+        bool IsTypeDefined(ILatteType latteType);
     }
 }

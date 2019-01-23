@@ -68,6 +68,23 @@ namespace LatteTypeChecker.Models
             return false;
         }
 
+        public bool IsTypeDefined(ILatteType latteType)
+        {
+            if (latteType == LatteType.Int)
+                return true;
+            if (latteType == LatteType.String)
+                return true;
+            if (latteType == LatteType.Bool)
+                return true;
+            if (latteType == LatteType.Void)
+                return true;
+            if (latteType == LatteType.Null)
+                return true;
+            if (latteType.IsArray)
+                return IsTypeDefined(latteType.BaseType);
+            return IsClassDefined(latteType.Name);
+        }
+
         private bool IsSimpleType(ILatteType type)
         {
             return (type == LatteType.Int || type == LatteType.Bool || type == LatteType.String);
