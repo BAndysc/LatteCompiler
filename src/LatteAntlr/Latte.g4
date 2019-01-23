@@ -134,3 +134,5 @@ StringCharacter
     :   ~["\\]
     |   '\\' [tnr"\\]
     ;
+
+ErrorCharacter : . ;

@@ -42,7 +42,7 @@ public partial class LatteParser : Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
 		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		COMMENT=39, MULTICOMMENT=40, INT=41, ID=42, WS=43, STR=44;
+		COMMENT=39, MULTICOMMENT=40, INT=41, ID=42, WS=43, STR=44, ErrorCharacter=45;
 	public const int
 		RULE_program = 0, RULE_topDef = 1, RULE_fieldOrMethodDef = 2, RULE_fieldDef = 3, 
 		RULE_methodDef = 4, RULE_arg = 5, RULE_block = 6, RULE_stmt = 7, RULE_type_ = 8, 
@@ -64,7 +64,8 @@ public partial class LatteParser : Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, "COMMENT", "MULTICOMMENT", "INT", "ID", "WS", "STR"
+		null, null, null, "COMMENT", "MULTICOMMENT", "INT", "ID", "WS", "STR", 
+		"ErrorCharacter"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -2585,7 +2586,7 @@ public partial class LatteParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '.', '\x14A', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '/', '\x14A', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
 		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 

@@ -42,6 +42,7 @@ INT=41
 ID=42
 WS=43
 STR=44
+ErrorCharacter=45
 '('=1
 ')'=2
 'class'=3
