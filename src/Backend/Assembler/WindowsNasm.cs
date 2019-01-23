@@ -20,7 +20,7 @@ namespace Backend.Assembler
 
         internal override string GetDebugInfoParameters()
         {
-            return "";
+            return "-gcv8";
         }
     }
 }

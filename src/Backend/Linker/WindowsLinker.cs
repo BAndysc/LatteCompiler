@@ -48,6 +48,8 @@ namespace Backend.Linker
 
             string args = string.Join(" ", objectFiles);
 
+            args += " /Zi /Debug";
+            
             if (outputFile != null)
                 args += " /Fe" + outputFile;
 
