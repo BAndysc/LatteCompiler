@@ -81,7 +81,7 @@ namespace LatteTypeChecker.Visitors
 
             if (!functions.IsTypeAssignable(type, variables[node.Variable].Type))
             {
-                throw new TypeMismatchException(variables[node.Variable], variable, node.FilePlace);
+                throw new VariableDeclarationTypeMismatch(variables[node.Variable], variable.Type, node.FilePlace);
             }
         }
 

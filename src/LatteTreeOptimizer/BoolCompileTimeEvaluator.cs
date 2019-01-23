@@ -4,7 +4,7 @@ using LatteBase.Visitors;
 
 namespace LatteTreeOptimizer
 {
-    internal class BoolCompileTimeEvaluator : ExpressionVisitor<bool?>
+    public class BoolCompileTimeEvaluator : ExpressionVisitor<bool?>
     {
         public override bool? Visit(IIntNode node)
         {

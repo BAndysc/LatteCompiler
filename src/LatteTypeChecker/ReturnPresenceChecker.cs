@@ -2,6 +2,7 @@ using System.Linq;
 using LatteBase;
 using LatteBase.AST;
 using LatteBase.Visitors;
+using LatteTreeOptimizer;
 using LatteTypeChecker.Exceptions;
 using LatteTypeChecker.Visitors;
 
@@ -82,7 +83,9 @@ namespace LatteTypeChecker
 
         public override bool Visit(IWhileNode node)
         {
-            return false;
+            var eval = new BoolCompileTimeEvaluator().Visit(node.Condition);
+
+            return eval.HasValue && eval.Value;
         }
 
         public override bool Visit(IExpressionStatementNode node)
