@@ -16,6 +16,8 @@ namespace LatteTypeChecker
     {
         private readonly IEnvironment environment;
 
+        private HashSet<string> reservedFunctionNames = new HashSet<string>(){"lat_malloc", "lat_strcmp", "concat_string"};
+        
         public TypeChecker()
         {
             this.environment = new Environment();
@@ -30,7 +32,7 @@ namespace LatteTypeChecker
         {
             HashSet<string> classNames = new HashSet<string>();
             classNames.Add("int");
-            classNames.Add("bool");
+            classNames.Add("boolean");
             classNames.Add("string");
 
             foreach (var @class in program.Classes)
@@ -102,6 +104,12 @@ namespace LatteTypeChecker
                     function.Arguments.Select(t => t.Type).ToList(),
                     function.Arguments.Select(t => t.Name).ToList());
 
+                if (function.Name.Contains("____"))
+                    throw new InplaceTypeCheckerException(function.FilePlace, "Function names containg ____ are Latte reserved names");
+                
+                if (reservedFunctionNames.Contains(function.Name))
+                    throw new InplaceTypeCheckerException(function.FilePlace, $"{function.Name} is reserved Latte function");
+                
                 if (functionDef.ArgumentNames.Distinct().Count() != functionDef.ArgumentNames.Count)
                     throw new RepeatedArgumentNameInFunctionDefinitionException(functionDef, function.FilePlace);
                 
