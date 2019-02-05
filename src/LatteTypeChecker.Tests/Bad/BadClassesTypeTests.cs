@@ -34,5 +34,14 @@ namespace LatteTypeChecker.Tests.Bad
             Assert.Catch<InvalidVariableTypeException>(() =>
                 new StaticAnalysisChecker().Visit(test));
         }
+        
+        [Test]
+        public void OverrideMethodWrongTypeTestCase()
+        {
+            var test = new BadClassesTests().GetOverrideChangeTypeTestCase();
+
+            Assert.Catch<TryingToOverrideMethodTypeException>(() =>
+                new StaticAnalysisChecker().Visit(test));
+        }
     }
 }

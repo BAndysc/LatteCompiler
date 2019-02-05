@@ -57,6 +57,7 @@
     <Compile Include="Exceptions\StartingFunctionInvalidArgumentsCountException.cs" />
     <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />
     <Compile Include="Exceptions\StatementMustBeBlockException.cs" />
+    <Compile Include="Exceptions\TryingToOverrideMethodTypeException.cs" />
     <Compile Include="Exceptions\TypeCheckerException.cs" />
     <Compile Include="Exceptions\TypeMismatchException.cs" />
     <Compile Include="Exceptions\UndeclaredFunctionException.cs" />
