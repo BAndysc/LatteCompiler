@@ -124,23 +124,17 @@ namespace LatteTypeChecker.Visitors
 
             if (node.Operator == RelOperator.Equals || node.Operator == RelOperator.NotEquals)
             {
-                if (!IsDefinedEquality(left))
-                    throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int, LatteType.Bool);
-
-                if (!IsDefinedEquality(right))
-                    throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int, LatteType.Bool);
+                if (!IsDefinedEquality(left) || !IsDefinedEquality(right))
+                    throw new InplaceTypeCheckerException(node.FilePlace, $"Cannot compare {left} and {right}.");
             }
             else
             {
-                if (!IsDefinedComparison(left))
-                    throw new InvalidOperatorUsageException(left, node.FilePlace, LatteType.Int);
-
-                if (!IsDefinedComparison(right))
-                    throw new InvalidOperatorUsageException(right, node.FilePlace, LatteType.Int);    
+                if (!IsDefinedComparison(left) || !IsDefinedComparison(right))
+                    throw new InplaceTypeCheckerException(node.FilePlace, $"Cannot compare {left} and {right}.");
             }
             
             if (!functions.IsTypeAssignable(left, right) && !functions.IsTypeAssignable(right, left))
-                throw new InvalidOperatorUsageException(right, node.FilePlace, left);
+                throw new InplaceTypeCheckerException(node.FilePlace, $"Cannot compare {left} and {right}.");
                         
             return LatteType.Bool;
         }

@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Tests.Bad
         public void Bad020Test()
         {
             var program = new TestProgramProviderBad020().GetProgram();
-            Assert.Catch<InvalidOperatorUsageException>(() => new StaticAnalysisChecker().Visit(program));
+            Assert.Catch<InplaceTypeCheckerException>(() => new StaticAnalysisChecker().Visit(program));
         }
     }
 }

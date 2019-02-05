@@ -15,7 +15,7 @@ namespace LatteTypeChecker.Tests.Bad
         public void Bad009Test()
         {
             var program = new TestProgramProviderBad009().GetProgram();
-            Assert.Catch<TypeMismatchException>(() =>
+            Assert.Catch<VariableDeclarationTypeMismatch>(() =>
                 new StaticAnalysisChecker().Visit(program)
             );
         }
