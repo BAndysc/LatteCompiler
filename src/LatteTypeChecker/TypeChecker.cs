@@ -88,6 +88,11 @@ namespace LatteTypeChecker
                     if (classDefinition.DirectlyHasMethod(function.Name))
                         throw new FunctionRedefinitionException(classDefinition.GetMethod(function.Name), functionDef, function.FilePlace);
 
+                    var baseMethod = classDefinition.GetMethod(function.Name);
+                    
+                    if (baseMethod != null && !environment.IsTypeAssignable(function.ReturnType, baseMethod.ReturnType))
+                        throw new TryingToOverrideMethodTypeException(function.FilePlace, @class.ClassName, function.Name, baseMethod.ReturnType, function.ReturnType);
+                    
                     var voidArgument = function.Arguments.FirstOrDefault(t => t.Type == LatteType.Void);
 
                     if (voidArgument != null)
