@@ -19,6 +19,9 @@ namespace X86IntelAsm
         {
             if (operand.Label != null)
                 return $"[{operand.Label} + {operand.Offset}]";
+            if (operand.OffsetRegister != null)
+                return
+                    $"[{Visit(operand.Register)} + {Visit(operand.OffsetRegister)} * {operand.OffsetRegisterMul} + {operand.Offset}]";
             return $"[{Visit(operand.Register)} + {operand.Offset}]";
         }
 

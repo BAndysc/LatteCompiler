@@ -124,12 +124,12 @@ namespace QuadruplesGenerator.RegisterAllocators
 
         public override HashSet<IRegister> Visit(StoreIndirectQuadruple quadruple)
         {
-            return new HashSet<IRegister>() {quadruple.Value, quadruple.ObjectAddr};
+            return new HashSet<IRegister>() {quadruple.Value, quadruple.ObjectAddr, quadruple.OffsetReg};
         }
 
         public override HashSet<IRegister> Visit(LoadIndirectQuadruple quadruple)
         {
-            return new HashSet<IRegister>() {quadruple.Address};
+            return new HashSet<IRegister>() {quadruple.Address, quadruple.OffsetReg};
         }
 
         public override HashSet<IRegister> Visit(VirtualCallQuadruple quadruple)

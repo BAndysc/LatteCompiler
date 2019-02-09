@@ -211,9 +211,16 @@ namespace X86Generator
         {
             Clear();
             var addr = mapping.Get(quadruple.Address);
+            var offsetReg = quadruple.OffsetReg == null ? null : mapping.Get(quadruple.OffsetReg);
             var dest = mapping.Get(quadruple.ResultRegister);
             Emit(new MovInstruction(Register32.EAX, (dynamic)addr), quadruple);
-            Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.Offset)),quadruple);
+            if (offsetReg == null)
+                Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.Offset)),quadruple);
+            else
+            {
+                Emit(new MovInstruction(Register32.ECX, (dynamic)offsetReg), quadruple);
+                Emit(new MovInstruction(Register32.EAX, new Memory32(Register32.EAX, quadruple.Offset, Register32.ECX, quadruple.OffsetRegMul)), quadruple);
+            }
             Emit(new MovInstruction((dynamic)dest, Register32.EAX), quadruple);
             
             return instructions.ToList();
@@ -260,11 +267,18 @@ namespace X86Generator
         {
             Clear();
             var value = mapping.Get(quadruple.Value);
+            var offset = quadruple.OffsetReg == null ? null : mapping.Get(quadruple.OffsetReg);
             var addr = mapping.Get(quadruple.ObjectAddr);
             Emit(new MovInstruction(Register32.EDX, (dynamic)addr), quadruple);
             Emit(new MovInstruction(Register32.EAX, (dynamic)value), quadruple);
-            Emit(new MovInstruction(new Memory32(Register32.EDX, quadruple.Offset), Register32.EAX), quadruple);
-
+            if (offset == null)
+                Emit(new MovInstruction(new Memory32(Register32.EDX, quadruple.Offset), Register32.EAX), quadruple);
+            else
+            {
+                Emit(new MovInstruction(Register32.ECX, (dynamic)offset), quadruple);   
+                Emit(new MovInstruction(new Memory32(Register32.EDX, quadruple.Offset, Register32.ECX, quadruple.OffsetRegMul), Register32.EAX), quadruple);
+            }
+            
             return instructions.ToList();
         }
 

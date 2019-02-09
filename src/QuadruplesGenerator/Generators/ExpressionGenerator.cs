@@ -285,17 +285,9 @@ namespace QuadruplesGenerator.Generators
         {
             var addr = Visit(node.Array);
             var index = Visit(node.Index);
-            var m4 = program.GetNextRegister();
-            var indexMul4 = program.GetNextRegister();
-            var indexMul4Plus4 = program.GetNextRegister();
             var result = program.GetNextRegister();
-            var realAddr = program.GetNextRegister();
             
-            program.Emit(new ImmediateValueQuadruple(node.FilePlace, new DirectIntValue(4), m4));
-            program.Emit(new MulQuadruple(node.FilePlace, index, m4, indexMul4));
-            program.Emit(new AddQuadruple(node.FilePlace, indexMul4, m4, indexMul4Plus4));
-            program.Emit(new AddQuadruple(node.FilePlace, addr, indexMul4Plus4, realAddr));
-            program.Emit(new LoadIndirectQuadruple(node.FilePlace, realAddr, 0, result));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, index, 4, 4, result));
 
             return result;
         }
@@ -314,7 +306,7 @@ namespace QuadruplesGenerator.Generators
             
             var register = program.GetNextRegister();
             program.Emit(new FunctionCallQuadruple(node.FilePlace, "lat_malloc", register, new []{bytes}));
-            program.Emit(new StoreIndirectQuadruple(node.FilePlace, register, 0, size));
+            program.Emit(new StoreIndirectQuadruple(node.FilePlace, register, null, 0, 0, size));
             return register;
         }
 
@@ -322,7 +314,7 @@ namespace QuadruplesGenerator.Generators
         {
             var addr = Visit(node.Object);
             var result = program.GetNextRegister();
-            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, node.FieldOffset + 4, result));
+            program.Emit(new LoadIndirectQuadruple(node.FilePlace, addr, null, 0, node.FieldOffset + 4, result));
 
             return result;
         }

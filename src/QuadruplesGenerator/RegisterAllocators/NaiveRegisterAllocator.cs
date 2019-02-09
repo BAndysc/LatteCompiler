@@ -69,6 +69,9 @@ namespace QuadruplesGenerator.RegisterAllocators
                 
                 foreach (var reg in usng)
                 {
+                    if (reg == null)
+                        continue;
+                    
                     if (mapping.IsIntConst(reg))
                         continue;
                     
@@ -98,6 +101,9 @@ namespace QuadruplesGenerator.RegisterAllocators
 
                 foreach (var reg in usng)
                 {
+                    if (reg == null)
+                        continue;
+                    
                     if (mapping.IsIntConst(reg))
                         continue;
                     

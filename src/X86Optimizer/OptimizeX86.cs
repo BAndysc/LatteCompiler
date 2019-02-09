@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using X86Assembly;
 using X86Assembly.Instructions;
 using X86Assembly.Operands;

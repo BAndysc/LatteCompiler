@@ -5,11 +5,21 @@ namespace X86Assembly.Operands
         public readonly Register32 Register;
         public readonly X86Label Label;
         public readonly int Offset;
+        public readonly Register32 OffsetRegister;
+        public readonly int OffsetRegisterMul;
 
         public Memory32(Register32 register, int offset)
         {
             this.Register = register;
             this.Offset = offset;
+        }
+        
+        public Memory32(Register32 register, int offset, Register32 offsetRegister, int offsetRegisterMul)
+        {
+            this.Register = register;
+            this.Offset = offset;
+            this.OffsetRegister = offsetRegister;
+            this.OffsetRegisterMul = offsetRegisterMul;
         }
         
         public Memory32(X86Label label, int offset)

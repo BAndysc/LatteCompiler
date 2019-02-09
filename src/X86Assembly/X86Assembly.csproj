@@ -65,6 +65,7 @@
     <Compile Include="Instructions\SetNeInstruction.cs" />
     <Compile Include="Instructions\SignedDivInstruction.cs" />
     <Compile Include="Instructions\SubInstruction.cs" />
+    <Compile Include="Instructions\X86Instruction.cs" />
     <Compile Include="IOperand.cs" />
     <Compile Include="IX86Instruction.cs" />
     <Compile Include="Operands\IImmediate.cs" />
