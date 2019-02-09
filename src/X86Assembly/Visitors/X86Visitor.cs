@@ -33,7 +33,8 @@ namespace X86Assembly.Visitors
         public abstract T Visit(ExternMetaInstruction instr);
         public abstract T Visit(GlobalMetaInstruction instr);
         public abstract T Visit(DataMetaInstruction instr);
-
+        public abstract T Visit(DataVtableInstruction instr);
+        
         public T Visit(IX86Instruction instr)
         {
             return Visit((dynamic) instr);

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace X86Assembly.Instructions
 {
     public class SegmentMetaInstruction : X86Instruction
@@ -45,6 +47,18 @@ namespace X86Assembly.Instructions
         public DataMetaInstruction(string key, int zeroBytes)
         {
             ZeroBytes = zeroBytes;
+            Key = key;
+        }
+    }
+    
+    public class DataVtableInstruction : X86Instruction
+    {
+        public readonly string Key;
+        public readonly IEnumerable<string> Labels;
+
+        public DataVtableInstruction(string key, IEnumerable<string> methods)
+        {
+            Labels = methods;
             Key = key;
         }
     }

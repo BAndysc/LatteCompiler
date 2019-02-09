@@ -456,9 +456,6 @@ namespace X86Generator
             Clear();
             Emit(new LabelInstruction(new X86Label(quadruple.FunctionName)), quadruple);
             
-            if (quadruple.FunctionName == "main" && UseVTable)
-                Emit(new CallInstruction(new X86Label("lat_initvtable")), quadruple);
-            
             Emit(new PushInstruction(Register32.EBP), quadruple);
             Emit(new MovInstruction(Register32.EBP, Register32.ESP), quadruple);
             // alignment to 16 bytes

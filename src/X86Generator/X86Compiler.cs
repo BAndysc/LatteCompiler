@@ -33,7 +33,17 @@ namespace X86Generator
                 {
                     cls.VTable = program.GetNextLabel();
                     hasVtable = true;
-                    instructions.Add(new DataMetaInstruction(cls.VTable.Text, vtableSize * 4));
+                    
+                    List<string> methods = new List<string>();
+                    
+                    foreach (var method in cls.AllMethods())
+                    {
+                        var classWithMethod = cls.GetDefiningClass(method);
+
+                        methods.Add($"{classWithMethod.ClassName}____{method}");
+                    }
+                    
+                    instructions.Add(new DataVtableInstruction(cls.VTable.Text, methods));
                 }
             }
 
@@ -49,27 +59,6 @@ namespace X86Generator
             instructions.Add(new ExternMetaInstruction("lat_strcmp"));
             
             var translator = new IntelAsmTranslator(withIndent: true);
-
-            if (hasVtable)
-            {
-                instructions.Add(new LabelInstruction(new X86Label("lat_initvtable")));
-                
-                foreach (var cls in program.Classes)
-                {
-                    int offset = 0;
-                    foreach (var method in cls.AllMethods())
-                    {
-                        var classWithMethod = cls.GetDefiningClass(method);
-                        
-                        var instr  = new MovInstruction(new Memory32(new X86Label(cls.VTable.Text), offset), new ImmediateValue32(new X86Label($"{classWithMethod.ClassName}____{method}")));
-
-                        instructions.Add(instr);
-                        offset += 4;
-                    }
-                }
-
-                instructions.Add(new RetInstruction());
-            }
             
             foreach (var func in program.Functions)
             {

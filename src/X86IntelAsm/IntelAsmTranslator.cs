@@ -191,6 +191,11 @@ namespace X86IntelAsm
             return Indent($"global {instr.Symbol}");
         }
 
+        public override string Visit(DataVtableInstruction instr)
+        {
+            return Indent($"{instr.Key}: dd {string.Join(", ", instr.Labels)}");
+        }
+        
         public override string Visit(DataMetaInstruction instr)
         {
             if (instr.Text != null)
