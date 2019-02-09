@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class NegateInstruction : IX86Instruction
+    public class NegateInstruction : X86Instruction
     {
         public readonly IOperand What;
         

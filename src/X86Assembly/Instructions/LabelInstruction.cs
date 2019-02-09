@@ -1,6 +1,6 @@
 namespace X86Assembly.Instructions
 {
-    public class LabelInstruction : IX86Instruction
+    public class LabelInstruction : X86Instruction
     {
         public readonly X86Label Label;
 

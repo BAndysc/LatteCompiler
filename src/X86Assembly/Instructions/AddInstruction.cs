@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class AddInstruction : IX86Instruction
+    public class AddInstruction : X86Instruction
     {
         public readonly IOperand To;
         public readonly IOperand Value;

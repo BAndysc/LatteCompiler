@@ -1,6 +1,6 @@
 namespace X86Assembly.Instructions
 {
-    public class CdqInstruction : IX86Instruction
+    public class CdqInstruction : X86Instruction
     {
         
     }

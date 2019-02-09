@@ -1,6 +1,6 @@
 namespace X86Assembly.Instructions
 {
-    public class LeaveInstruction : IX86Instruction
+    public class LeaveInstruction : X86Instruction
     {
         
     }

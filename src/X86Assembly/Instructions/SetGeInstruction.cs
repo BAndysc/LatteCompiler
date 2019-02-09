@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class SetGeInstruction : IX86Instruction
+    public class SetGeInstruction : X86Instruction
     {
         public readonly Register8 Register;
 

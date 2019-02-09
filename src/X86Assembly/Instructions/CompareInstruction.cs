@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class CompareInstruction : IX86Instruction
+    public class CompareInstruction : X86Instruction
     {
         public readonly IOperand A;
         public readonly IOperand B;

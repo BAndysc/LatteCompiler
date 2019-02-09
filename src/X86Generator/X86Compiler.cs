@@ -80,7 +80,11 @@ namespace X86Generator
 
                 foreach (var quad in func.Instructions)
                 {
-                    var instrs = generator.Visit(quad);
+                    var instrs = generator.Visit(quad).ToList();
+                    foreach (var i in instrs)
+                    {
+                        i.Comment = quad.ToString();
+                    }
                     instructions.AddRange(instrs);
                 }
             }
@@ -94,7 +98,7 @@ namespace X86Generator
                 Console.WriteLine($"Optimized x86 assembly from {instructions.Count} to {optimized.Count} instructions");
             }
                 
-            return string.Join("\n", optimized.Select(translator.Visit));
+            return string.Join("\n", optimized.Select(x => $"{translator.Visit(x)}               ; {x.Comment}"));
         }
 
         internal class EndlessStackRegisterProvider : IRegisterProvider<IOperand>

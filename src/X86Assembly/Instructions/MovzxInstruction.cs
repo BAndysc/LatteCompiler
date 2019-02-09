@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class MovzxInstruction : IX86Instruction
+    public class MovzxInstruction : X86Instruction
     {
         public readonly Register32 To;
         public readonly Register8 From;

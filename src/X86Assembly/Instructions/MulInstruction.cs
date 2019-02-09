@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class MulInstruction : IX86Instruction
+    public class MulInstruction : X86Instruction
     {
         public readonly IOperand Factor;
         

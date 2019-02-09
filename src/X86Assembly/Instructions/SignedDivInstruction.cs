@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class SignedDivInstruction : IX86Instruction
+    public class SignedDivInstruction : X86Instruction
     {
         public readonly IOperand Divisor;
         

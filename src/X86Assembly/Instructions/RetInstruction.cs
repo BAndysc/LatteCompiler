@@ -1,6 +1,6 @@
 namespace X86Assembly.Instructions
 {
-    public class RetInstruction : IX86Instruction
+    public class RetInstruction : X86Instruction
     {
         
     }

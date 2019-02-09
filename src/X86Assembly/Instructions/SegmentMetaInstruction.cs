@@ -1,6 +1,6 @@
 namespace X86Assembly.Instructions
 {
-    public class SegmentMetaInstruction : IX86Instruction
+    public class SegmentMetaInstruction : X86Instruction
     {
         public readonly string Name;
 
@@ -10,7 +10,7 @@ namespace X86Assembly.Instructions
         }
     }
     
-    public class ExternMetaInstruction : IX86Instruction
+    public class ExternMetaInstruction : X86Instruction
     {
         public readonly string Symbol;
 
@@ -20,7 +20,7 @@ namespace X86Assembly.Instructions
         }
     }
     
-    public class GlobalMetaInstruction : IX86Instruction
+    public class GlobalMetaInstruction : X86Instruction
     {
         public readonly string Symbol;
 
@@ -30,7 +30,7 @@ namespace X86Assembly.Instructions
         }
     }
     
-    public class DataMetaInstruction : IX86Instruction
+    public class DataMetaInstruction : X86Instruction
     {
         public readonly string Key;
         public readonly string Text;

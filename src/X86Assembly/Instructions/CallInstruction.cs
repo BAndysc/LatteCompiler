@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class CallInstruction : IX86Instruction
+    public class CallInstruction : X86Instruction
     {
         public readonly X86Label Function;
         public readonly Register32 Register;

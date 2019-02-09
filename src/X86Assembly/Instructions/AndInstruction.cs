@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class AndInstruction : IX86Instruction
+    public class AndInstruction : X86Instruction
     {
         public readonly IOperand What;
         public readonly IOperand With;

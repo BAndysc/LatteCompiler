@@ -2,7 +2,7 @@ using X86Assembly.Operands;
 
 namespace X86Assembly.Instructions
 {
-    public class PushInstruction : IX86Instruction
+    public class PushInstruction : X86Instruction
     {
         public readonly IOperand Source;
 
