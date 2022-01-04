@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using LatteBase.AST;
 using LatteBase.Visitors;
-using LatteTypeChecker.Visitors;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
 

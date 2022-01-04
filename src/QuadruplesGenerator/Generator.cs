@@ -6,7 +6,7 @@ using LatteBase;
 using LatteBase.AST;
 using LatteBase.AST.Impl;
 using LatteBase.Visitors;
-using LatteTypeChecker.Visitors;
+using LatteTreeProcessor;
 using QuadruplesCommon;
 using QuadruplesCommon.Quadruples;
 using QuadruplesGenerator.Generators;
@@ -21,7 +21,7 @@ namespace QuadruplesGenerator
         {
             prog = new QuadruplesProgram();
 
-            program = new LatteTreeProcessor.ReplaceClassFieldAccessors().Visit(program);
+            program = new ReplaceClassFieldAccessors().Visit(program);
             program = new LatteTreeProcessor.CalculateFieldOffsets.CalculateFieldOffsetProcessor().Visit(program);
             
             foreach (var cls in program.Classes)

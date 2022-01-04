@@ -1,132 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BAEB8708-254F-4AC8-89B8-4A61714B4401}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LatteTypeChecker.Tests</RootNamespace>
-    <AssemblyName>LatteTypeChecker.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
-      <HintPath>..\..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Bad\Bad003Tests.cs" />
-    <Compile Include="Bad\Bad006Tests.cs" />
-    <Compile Include="Bad\Bad007Tests.cs" />
-    <Compile Include="Bad\Bad008Tests.cs" />
-    <Compile Include="Bad\Bad009Tests.cs" />
-    <Compile Include="Bad\Bad010Tests.cs" />
-    <Compile Include="Bad\Bad011Tests.cs" />
-    <Compile Include="Bad\Bad012Tests.cs" />
-    <Compile Include="Bad\Bad013Tests.cs" />
-    <Compile Include="Bad\Bad015Tests.cs" />
-    <Compile Include="Bad\Bad016Tests.cs" />
-    <Compile Include="Bad\Bad017Tests.cs" />
-    <Compile Include="Bad\Bad018Tests.cs" />
-    <Compile Include="Bad\Bad019Tests.cs" />
-    <Compile Include="Bad\Bad020Tests.cs" />
-    <Compile Include="Bad\Bad021Tests.cs" />
-    <Compile Include="Bad\Bad022Tests.cs" />
-    <Compile Include="Bad\Bad023Tests.cs" />
-    <Compile Include="Bad\Bad024Tests.cs" />
-    <Compile Include="Bad\Bad025Tests.cs" />
-    <Compile Include="Bad\Bad026Tests.cs" />
-    <Compile Include="Bad\Bad027Tests.cs" />
-    <Compile Include="Bad\BadClassesTypeTests.cs" />
-    <Compile Include="Bad\FunctionCallAsReturnTests.cs" />
-    <Compile Include="Good\AddTests.cs" />
-    <Compile Include="Good\Core001Tests.cs" />
-    <Compile Include="Good\Core002Tests.cs" />
-    <Compile Include="Good\Core003Tests.cs" />
-    <Compile Include="Good\Core004Tests.cs" />
-    <Compile Include="Good\Core005Tests.cs" />
-    <Compile Include="Good\Core006Tests.cs" />
-    <Compile Include="Good\Core007Tests.cs" />
-    <Compile Include="Good\Core008Tests.cs" />
-    <Compile Include="Good\Core009Tests.cs" />
-    <Compile Include="Good\Core010Tests.cs" />
-    <Compile Include="Good\Core011Tests.cs" />
-    <Compile Include="Good\Core012Tests.cs" />
-    <Compile Include="Good\Core013Tests.cs" />
-    <Compile Include="Good\Core014Tests.cs" />
-    <Compile Include="Good\Core015Tests.cs" />
-    <Compile Include="Good\Core016Tests.cs" />
-    <Compile Include="Good\Core017Tests.cs" />
-    <Compile Include="Good\Core018Tests.cs" />
-    <Compile Include="Good\Core019Tests.cs" />
-    <Compile Include="Good\Core020Tests.cs" />
-    <Compile Include="Good\Core021Tests.cs" />
-    <Compile Include="Good\Core022Tests.cs" />
-    <Compile Include="Good\ExitAsReturnTests.cs" />
-    <Compile Include="Optimization\OptimizeTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LatteBase\LatteBase.csproj">
-      <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
-      <Name>LatteBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteTreeOptimizer\LatteTreeOptimizer.csproj">
-      <Project>{70a0fea2-5e7e-4eef-ac43-b34b80775e03}</Project>
-      <Name>LatteTreeOptimizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteTypeChecker\LatteTypeChecker.csproj">
-      <Project>{bef6d4e6-4745-4140-b4aa-919b7a05ddce}</Project>
-      <Name>LatteTypeChecker</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestPrograms\TestPrograms.csproj">
-      <Project>{37ab0326-2b41-4459-ab37-c491c81c1caf}</Project>
-      <Name>TestPrograms</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit.3.11.0\build\NUnit.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
+
+    <ItemGroup>
+      <ProjectReference Include="..\LatteTypeChecker\LatteTypeChecker.csproj" />
+      <ProjectReference Include="..\TestPrograms\TestPrograms.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="3.13.2" />
+    </ItemGroup>
+
 </Project>

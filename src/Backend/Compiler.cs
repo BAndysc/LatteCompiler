@@ -42,6 +42,15 @@ namespace Backend
             
             var quadProgram = new Generator().Visit(treeOptimizer.Visit(program));
 
+            foreach (var f in quadProgram.Functions)
+            {
+                Console.WriteLine(f.FunctionName + ": ");
+                foreach (var q in f.Instructions)
+                {
+                    Console.WriteLine("  " + q.ToString());
+                }
+            }
+            
             if (intermediateOutputFile != null)
             {
                 var content = "";

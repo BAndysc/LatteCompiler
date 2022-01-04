@@ -1,80 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{66036B17-D9C1-4FB0-BD55-487764C59D24}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>X86Generator</RootNamespace>
-    <AssemblyName>X86Generator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuadrupleToX86Generator.cs" />
-    <Compile Include="X86Compiler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LatteBase\LatteBase.csproj">
-      <Project>{72b0740b-4914-45f7-9a77-058cede43acc}</Project>
-      <Name>LatteBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuadruplesCommon\QuadruplesCommon.csproj">
-      <Project>{2acaf98e-a6cc-4e55-be0e-0b0bce19309d}</Project>
-      <Name>QuadruplesCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuadruplesGenerator\QuadruplesGenerator.csproj">
-      <Project>{d60b2e15-165f-4489-aee9-ab24dcfa0ef1}</Project>
-      <Name>QuadruplesGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X86Assembly\X86Assembly.csproj">
-      <Project>{e8d451e6-c26d-4940-92c8-a80468e69d55}</Project>
-      <Name>X86Assembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X86IntelAsm\X86IntelAsm.csproj">
-      <Project>{d9d31555-c264-4bfa-8ce5-73a00fa1ea7f}</Project>
-      <Name>X86IntelAsm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\X86Optimizer\X86Optimizer.csproj">
-      <Project>{dc3db407-acad-495d-85d8-9f8b57647772}</Project>
-      <Name>X86Optimizer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QuadruplesCommon\QuadruplesCommon.csproj" />
+      <ProjectReference Include="..\QuadruplesGenerator\QuadruplesGenerator.csproj" />
+      <ProjectReference Include="..\X86Assembly\X86Assembly.csproj" />
+      <ProjectReference Include="..\X86IntelAsm\X86IntelAsm.csproj" />
+      <ProjectReference Include="..\X86Optimizer\X86Optimizer.csproj" />
+    </ItemGroup>
+
 </Project>

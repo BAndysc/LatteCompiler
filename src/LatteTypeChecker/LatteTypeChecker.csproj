@@ -1,109 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BEF6D4E6-4745-4140-B4AA-919B7A05DDCE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LatteTypeChecker</RootNamespace>
-    <AssemblyName>LatteTypeChecker</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Exceptions\ArgumentsCountMismatchException.cs" />
-    <Compile Include="Exceptions\BadCastException.cs" />
-    <Compile Include="Exceptions\DuplicateClassDefinitionException.cs" />
-    <Compile Include="Exceptions\DuplicateClassFieldException.cs" />
-    <Compile Include="Exceptions\ExpectedReturnInFunctionException.cs" />
-    <Compile Include="Exceptions\FieldTypeMismatchException.cs" />
-    <Compile Include="Exceptions\FunctionCallTypeMismatch.cs" />
-    <Compile Include="Exceptions\FunctionRedefinitionException.cs" />
-    <Compile Include="Exceptions\InvalidConditionTypeException.cs" />
-    <Compile Include="Exceptions\InvalidFunctionArgumentTypeException.cs" />
-    <Compile Include="Exceptions\InvalidOperatorUsageException.cs" />
-    <Compile Include="Exceptions\InvalidReturnExpressionException.cs" />
-    <Compile Include="Exceptions\InvalidReturnTypeException.cs" />
-    <Compile Include="Exceptions\InvalidVariableTypeException.cs" />
-    <Compile Include="Exceptions\NoStartingPointException.cs" />
-    <Compile Include="Exceptions\RepeatedArgumentNameInFunctionDefinitionException.cs" />
-    <Compile Include="Exceptions\StartingFunctionInvalidArgumentsCountException.cs" />
-    <Compile Include="Exceptions\StartingFunctionWrongReturnTypeException.cs" />
-    <Compile Include="Exceptions\StatementMustBeBlockException.cs" />
-    <Compile Include="Exceptions\TryingToOverrideMethodTypeException.cs" />
-    <Compile Include="Exceptions\TypeCheckerException.cs" />
-    <Compile Include="Exceptions\TypeMismatchException.cs" />
-    <Compile Include="Exceptions\UndeclaredFunctionException.cs" />
-    <Compile Include="Exceptions\UndeclaredVariableException.cs" />
-    <Compile Include="Exceptions\UnknownFieldInClassException.cs" />
-    <Compile Include="Exceptions\VariableDeclarationTypeMismatch.cs" />
-    <Compile Include="Exceptions\VariableRedefinitionException.cs" />
-    <Compile Include="Models\ClassDefinition.cs" />
-    <Compile Include="Models\ClassesEnvironment.cs" />
-    <Compile Include="Models\ClassField.cs" />
-    <Compile Include="Models\Environment.cs" />
-    <Compile Include="Models\FunctionDefinition.cs" />
-    <Compile Include="Models\IClassDefinition.cs" />
-    <Compile Include="Models\IClassesEnvironment.cs" />
-    <Compile Include="Models\IClassField.cs" />
-    <Compile Include="Models\IEnvironment.cs" />
-    <Compile Include="Models\IFunctionDefinition.cs" />
-    <Compile Include="ReturnPresenceChecker.cs" />
-    <Compile Include="StaticAnalysisChecker.cs" />
-    <Compile Include="TypeChecker.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Visitors\IsExpressionExitCall.cs" />
-    <Compile Include="Visitors\IsStatementBlockNode.cs" />
-    <Compile Include="Visitors\LatteExpressionTypeEvaluator.cs" />
-    <Compile Include="Visitors\StatementTypeChecker.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{1bde038e-6d2e-4d4a-bb9d-3d021467b666}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteBase\LatteBase.csproj">
-      <Project>{72B0740B-4914-45F7-9A77-058CEDE43ACC}</Project>
-      <Name>LatteBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteTreeOptimizer\LatteTreeOptimizer.csproj">
-      <Project>{70a0fea2-5e7e-4eef-ac43-b34b80775e03}</Project>
-      <Name>LatteTreeOptimizer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\LatteBase\LatteBase.csproj" />
+      <ProjectReference Include="..\LatteTreeOptimizer\LatteTreeOptimizer.csproj" />
+    </ItemGroup>
+
 </Project>
