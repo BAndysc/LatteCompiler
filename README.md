@@ -1,112 +1,111 @@
 # LatteCompiler
 
-Kompilator języka Latte na przedmiot Metody Realizacji Języków Programowania w języku C#. Kompilator działa zarówno na otwartoźródłowej implementacji .net - mono jak i .net framework od Microsoftu. 
+A compiler for the Latte language, developed as part of the Programming Language Implementation Methods course, written in C#. The compiler is compatible with both the open-source .NET implementation, Mono, and Microsoft’s .NET Framework.
 
-# Środowisko
+# Environment
 
-Kompilator może kompilować zarówno programy na Linuxie, OS X-ie jak i Windowsie (jednak nie jest możliwa kompilacja skrośna), więcej informacji na dole.
+The compiler can compile programs on Linux, macOS, and Windows (however, cross-compilation is not supported). More information is provided below.
 
-# Kompilacja
+# Compilation
 
-Do budowania używa standardowej metody kompilacji programów w dot net na mono - xbuild. Polecenie `make` wywołuje program xbuild, który buduje program, potem kopiuje zbdowany program do katalogu latc_data/ a następnie kopiuje skrypt scripts/latc_x86 do głównego katalogu. Ten skrypt po prostu uruchamia kompilator z folderu lib.
+Building uses the standard method for compiling .NET programs with Mono, using `xbuild`. The `make` command triggers `xbuild`, which builds the program, then copies the built program to the `latc_data/` directory and copies the `scripts/latc_x86` script to the main directory. This script simply runs the compiler from the `lib` folder.
 
-# Testy
+# Tests
 
-Polecenie `make test` uruchomi przygotowane testy.
+Running `make test` executes the prepared tests.
 
-# Zakres
+# Scope
 
-Kompilator składa się z frontendu (sprawdzanie typów, optymalizatora drzewa AST) oraz backendu (generator kodu pośredniego i kompilator do x86). Na ten moment obsługiwane są:
+The compiler includes a frontend (type checking, AST tree optimizer) and a backend (intermediate code generator and x86 compiler). Currently, the following features are supported:
  
- * struktury
- * obiekty
- * dziedziczenie
- * metody (wirtualne)
- * tablice
+ * Structures
+ * Objects
+ * Inheritance
+ * Methods (virtual)
+ * Arrays
 
 ## Frontend
-W ramach frontendu sprawdzane są błędy typów, przekraczanie stałych w programie, typy argumentów, nazwy argumentów, występowanie instrukcji return.
 
-Dodatkowo następuje wyliczenie i optymalizacja stałych. Przykładowo program
+The frontend checks for type errors, constant overflows, argument types, argument names, and the presence of `return` statements. Additionally, constants are evaluated and optimized. For example, the program:
 
     int main() {
         if (!(true == false))
             return 1 + 2;
     }
 
-zostanie wyoptymalizowany do postaci
+is optimized to:
 
     int main() {
         return 3;
     }
 
-Z tego też powodu program zostanie zaakceptowany, mimo że return znajduje się w ifie bez else, czyli teoretycznie nie wiadomo czy w funkcji main zawsze zostanie zwrócowna wartość. Po wyoptymalizowaniu stałych jest to już oczywiste.
+As a result, the program is accepted even though the `return` statement is within an `if` without an `else`, which theoretically makes it unclear if a value will always be returned in `main`. After optimizing constants, it becomes clear that a value is always returned.
 
 ## Backend
 
-Backend składa się z dwóch części:
+The backend consists of two parts:
 
- * generator kodu pośredniego (quadruples) z drzewa AST
- * translator kodu pośredniego na ASM x86
+ * An intermediate code generator (quadruples) from the AST
+ * An intermediate code translator to x86 assembly
 
-Kod pośredni oparty jest na wirtualnych rejestrach, które są następnie przypisywane do sprzętowych rejestrów. Dzięki temu bardzo łatwo dodać inne backendy, np. x86_64 czy asm.
+The intermediate code is based on virtual registers, which are then assigned to hardware registers. This design makes it straightforward to add other backends, such as x86_64 or other assembly languages.
 
-# Projekty
+# Projects
 
-Program składa się z następujących projektów:
+The program consists of the following projects:
 
- * `Backend` - projekt odpowiadający za inicjalizację struktur kompilatora, przekazanie programu (drzewa AST) do kompilacji i zapis pliku assembly i wywołanie `nasma` oraz `ld`
- * `Backend.Tests` - testy integracyjne kompilatora. Program jest kompilowany do pliku binarnego, a następnie uruchamiany żeby porównać output
- * `CLI` - interfejs linii komend, odpowiadający za odczytanie argumentów od użytkownika, przekazanie do frontendu, później do backendu
- * `Frontend` - projekt odpowiadający za inicjalizację struktur fronendu, w tym przekształcenie pliku tekstowego na drzewo i sprawdzenie typów
- * `LatteAntlr` - pliki wygenerowane przez Antlr do parsowania Latte oraz generator drzewa AST z drzewa CST (concrete syntax tree) od Antlra
- * `LatteBase` - podstawowe struktury drzewa AST Latte
- * `LatteTreeOptimizer` - klasy optymalizujące drzewo AST (wyliczenie stałych)
- * `LatteTypeChecker` - klasa sprawdzająca typy w drzewie AST
- * `LatteTypeChecker.Tests` - testy do type checkera
- * `QuadruplesCommon` - podstawowe struktury kodu pośredniego
- * `QuadruplesGenerator` - generator kodu pośredniego na podstawie drzewa AST (zakłada, że drzewo jest poprawne)
- * `QuadruplesGenerator.Tests` - testy do generatora kodu pośredniego
- * `TestPrograms` - projekt z drzewami AST programów testowych
- * `Utils` - pomocnicze narzędzia
- * `X86Assembly` - podstawowe struktury reprezentujące Assembly x86
- * `X86Generator` - generator assembly x86 na podstawie kodu pośredniego
- * `X86IntelAsm` - generator reprezentacji tekstowej assembly x86 na podstawie struktur z X86Assembly
+ * `Backend` - Initializes the compiler's structures, passes the program (AST) for compilation, writes the assembly file, and calls `nasm` and `ld`.
+ * `Backend.Tests` - Integration tests for the compiler. The program is compiled to a binary file, then run to compare output.
+ * `CLI` - Command line interface, responsible for reading user arguments, then passing them to the frontend and backend.
+ * `Frontend` - Initializes the frontend's structures, including converting the text file to an AST and type-checking.
+ * `LatteAntlr` - Files generated by Antlr for parsing Latte and generating an AST from Antlr's CST (Concrete Syntax Tree).
+ * `LatteBase` - Basic Latte AST structures.
+ * `LatteTreeOptimizer` - Classes for optimizing the AST (constant evaluation).
+ * `LatteTypeChecker` - Class for type-checking the AST.
+ * `LatteTypeChecker.Tests` - Tests for the type checker.
+ * `QuadruplesCommon` - Basic structures for intermediate code.
+ * `QuadruplesGenerator` - Intermediate code generator based on the AST (assumes the tree is correct).
+ * `QuadruplesGenerator.Tests` - Tests for the intermediate code generator.
+ * `TestPrograms` - Project with ASTs of test programs.
+ * `Utils` - Helper tools.
+ * `X86Assembly` - Basic structures representing x86 Assembly.
+ * `X86Generator` - x86 assembly generator based on intermediate code.
+ * `X86IntelAsm` - Textual x86 assembly generator based on structures from `X86Assembly`.
 
+# Optimizations
 
-# Optymaliacje
+The following optimizations are applied:
 
-Zastosowano następujące optymalizacje:
+ * Constant evaluation during compilation (see the Frontend section)
+ * Removal of unreachable code (based on the AST)
+ * Tail recursion optimization
+ * Shared vtable for objects of the same class
+ * Constants are not stored on the stack
+ * Removal of redundant instructions:
+   ```assembly
+   mov A, B
+   mov B, A
+   ```
 
- * wyliczenie stałych podczas kompilacji (patrz punkt Frontend)
- * usuwanie nieosiągalnego kodu (na podstawie drzewa AST)
- * optymalizacja rekurencji ogonowej
- * obiekty tej samej klasy mają wspólną vtable
- * stałe nie są trzymane na stosie
- * usuwanie zbędnych instrukcji:
- 	mov A, B
- 	mov B, A
+# Tools Used
 
-# Użyte narzędzia
+The compiler is written in C# and tested with Mono.
 
-Kompilator jest napisany w języku C#, sprawdzony na mono.
+Libraries used:
 
-Użyte biblioteki:
+ - Antlr4 for parsing
+ - NUnit for tests (`make test`)
 
- - Antlr4 to parsowania
- - NUnit do testów (`make test`)
-
-# Targety
+# Targets
 
 ## Linux
 
-Do kompilacji na Linuxa wymagane są: `nasm` oraz `gcc`.
+For Linux compilation, `nasm` and `gcc` are required.
 
-## OS X
+## macOS
 
-Do kompilacji na OS X wymagane są: `nasm` oraz `gcc`. Najnowsza wersja Mojave nie jest jednak w stanie skompilować programów 32-bitowych ze względu na brak bibliotek. Należy ściągnąć SDK wersji 10.13 (https://github.com/phracker/MacOSX-SDKs/releases) i ustawić zmienną środowiskową LATTE_OS_X_SDK na ścieżkę do folderu z SDK.
+For macOS compilation, `nasm` and `gcc` are required. The latest Mojave version cannot compile 32-bit programs due to missing libraries. You need to download the 10.13 SDK (https://github.com/phracker/MacOSX-SDKs/releases) and set the `LATTE_OS_X_SDK` environment variable to the SDK folder path.
 
 ## Windows
 
-Do kompilacji na Windowsie wymagane jest zainstalowane Visual Studio z Visual C++. Dodatkowo należy dodać ścieżkę do kompilatora `cl.exe` do zmiennej środowiskowej `PATH` (zwykle: `C:\Program Files (x86)\Microsoft Visual Studio\[wersja]\[wersja]\VC\Tools\MSVC\[wersja]\bin\Hostx86\x86`), ponadto należy dodać zmienną środowiskową `LIB` oraz `INCLUDE`, na podstawie wartości tej zmiennej z środowiska `Developer Command Prompt for VS`. W tym celu należy uruchomić deweloperski wiersz poleceń, wypisać zmianne `echo %LIB%`, `echo %INCLUDE%`, a następnie ręcznie je dodać.
-Do kompilacji wymagany jest również assembler `nasm`. Należy go ściągnąć (https://www.nasm.us/pub/nasm/releasebuilds/), a ścieżkę do niego dodać do zmieninej `PATH`. 
+For Windows compilation, Visual Studio with Visual C++ is required. Additionally, the path to the `cl.exe` compiler must be added to the `PATH` environment variable (typically: `C:\Program Files (x86)\Microsoft Visual Studio\[version]\[version]\VC\Tools\MSVC\[version]\bin\Hostx86\x86`). Also, the `LIB` and `INCLUDE` environment variables need to be set based on values from the `Developer Command Prompt for VS`. Run the developer command prompt, use `echo %LIB%` and `echo %INCLUDE%`, then manually add these values. The assembler `nasm` is also required. Download it from https://www.nasm.us/pub/nasm/releasebuilds/ and add its path to the `PATH` variable.
